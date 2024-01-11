@@ -1,0 +1,32 @@
+/* VerticalNavbar.css */
+
+.vertical-navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #333;
+  height: 100vh;
+  color: white;
+  padding: 20px;
+}
+
+@media only screen and (max-width: 599px) {
+  .vertical-navbar  {
+  }
+}
+
+.NavbarHeader ul {
+  list-style-type: none; /* Remove list bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.NavbarHeader li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+nav li:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,26 @@
+body{
+  color:aliceblue
+}
+
+.timer{
+margin-top: 2px;
+height: 332px;
+}
+.timerText{
+    font-size: 77px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+    /* Tablet styles go here */
+  }
+  
+  /* Media query for mobile devices (portrait and landscape) */
+  @media only screen and (max-width: 599px) {
+    .scramble{
+      font-size: 0.19em;
+    }
+  }
+  

@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.scrambleArea {
+  height: 90px;
+  width: 100%;
+  /* You can add other styling as needed */
+}
+.scramble{
+  font-size: 0.89em;
+}
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+  /* Tablet styles go here */
+}
+
+/* Media query for mobile devices (portrait and landscape) */
+@media only screen and (max-width: 599px) {
+  .scramble{
+    font-size: 0.49em;
+  }
+}
