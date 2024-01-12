@@ -31,6 +31,7 @@ function Timer(
       if (event.code === "Space") event.preventDefault();
       if (event.code === "Space") setHandlePress(true);
     } else {
+      saveSolveTime()
       setIsRunning(false);
       if (event.code === "Space") event.preventDefault();
     }
@@ -60,6 +61,7 @@ function Timer(
 
   const handleMouseDown = () => {
     if (isRunning) {
+      saveSolveTime()
       setIsRunning(false);
     } else {
       setHoldTimeStart(Date.now());
@@ -72,7 +74,6 @@ function Timer(
     if (holdTimeStart && handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-
       if (holdtime > 200) {
         if (isRunning) {
           setIsRunning(false);
@@ -100,7 +101,21 @@ function Timer(
       if (event.code === "Space") event.preventDefault(); // Prevent default touch behavior
     },
   }));
+const saveSolveTime=()=>{
 
+  const currSession=localStorage.getItem("currSession")
+  console.log(elapsedTime)
+  // { solveTime: 12000, scramble: 'R U' ,puzzle:'3x3x3',  date: new Date().toISOString()},
+  const sessions=JSON.parse(localStorage.getItem("sessions"))
+  console.log(sessions)
+  sessions.map((session,index)=>{
+    if(session.id===currSession){
+      session.solves.push({ solveTime: timerTextRef.current.innerText, scramble: {currScramble} ,puzzle:{currPuzzle},  date: new Date().toISOString()})
+      localStorage.setItem("sessions",JSON.stringify(sessions))
+    }
+  })
+
+}
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
@@ -145,7 +160,7 @@ function Timer(
 
     const pad = (value) => (value < 10 ? `0${value}` : value);
 
-    return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
+    return `${(minutes!=0) ? pad(minutes)+":": ""}${pad(seconds)}:${pad(milliseconds)}`;
   };
 
   return (
