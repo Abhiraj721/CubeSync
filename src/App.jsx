@@ -1,5 +1,7 @@
 import "./App.css";
-import { useState } from "react";
+import { useState,useRef,
+  
+ } from "react";
 import Timer from "./components/Timer";
 import PuzzleSettings from "./components/PuzzleSettings";
 import ScrambleVisualizer from "./components/ScrambleVisualizer";
@@ -11,7 +13,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
   const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
-
+  const apiRef = useRef(null);
   return (
     <div className="App row">
       <div className="col col-lg-2 col-md-1 col-12" style={{ padding: 0 }}>
@@ -20,7 +22,8 @@ function App() {
 
       <div className="col col-lg-8 col-md-8 col-12" style={{ padding: 0 }}>
         {/* Content of the middle column */}
-        <div className="timerPlayGround" style={{ width: "100%" }}>
+        <div className="timerPlayGround" style={{ width: "100%" }}    onTouchStart={(event)=>apiRef.current.handleTouchStart(event)}
+      onTouchEnd={(event)=>apiRef.current.handleTouchEnd(event)}>
           <PuzzleSettings
             currScramble={currScramble}
             setCurrScramble={setCurrScramble}
@@ -35,6 +38,7 @@ function App() {
             setIsRunning={setIsRunning}
             currPuzzle={currPuzzle}
             setCurrPuzzle={setCurrPuzzle}
+            ref={apiRef}
           />
         </div>
       </div>
