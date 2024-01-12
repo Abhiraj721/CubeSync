@@ -13,6 +13,8 @@
 
 @media only screen and (max-width: 599px) {
   .vertical-navbar  {
+  height: 10vh;
+
   }
 }
 
