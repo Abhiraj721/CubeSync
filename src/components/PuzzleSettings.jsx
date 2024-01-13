@@ -10,23 +10,26 @@ export default function PuzzleSettings({
   currSession,
   setCurrsession,
 }) {
-  useLayoutEffect(() => {
-    const sessions = JSON.parse(localStorage.getItem("sessions"));
-    console.log(sessions)
-    console.log(sessions);
-    setSession(sessions);
-  }, []);
-
   function createNewSession() {
-    console.log(sessions.length)
+    const newSessionName= `session_${sessions.length+1}`
     const newlyCreatedSession= {
-      id: `session_${sessions.length+1}`,
-      puzzleType: '3x3x3',
+      id:newSessionName,
+      puzzleType: currPuzzle,
       solves: [],
     }
-    setSession( [...sessions, newlyCreatedSession]);
-    localStorage.setItem("sessions",JSON.stringify([...sessions, newlyCreatedSession]))
+    setSession(prevSessions => {
+      const updatedSessions = [...prevSessions, newlyCreatedSession];
+      localStorage.setItem("sessions", JSON.stringify(updatedSessions));
+      return updatedSessions;
+    });
+    console.log(newSessionName)
+    setCurrsession(newSessionName)
+    localStorage.setItem("currSession",newSessionName)
+
   }
+  useEffect(()=>{
+console.log(currSession+"555")
+  },[])
   return (
     <div className="scrambleArea container-fluid">
       <select
@@ -59,9 +62,10 @@ export default function PuzzleSettings({
         onChange={(e) => {
           if(e.target.value=="newSession"){
             createNewSession()
-            e.target.value="session_1"
+          }else{
+            setCurrsession(e.target.value);
+            localStorage.setItem("currSession",e.target.value)
           }
-          setCurrsession(e.target.value);
           console.log(e.target.value)
         }}
       >

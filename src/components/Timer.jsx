@@ -15,6 +15,8 @@ function Timer(
     setIsRunning,
     currPuzzle,
     setCurrPuzzle,
+    currSession,
+    setSession
   },
   ref
 ) {
@@ -103,7 +105,6 @@ function Timer(
   }));
 const saveSolveTime=()=>{
 
-  const currSession=localStorage.getItem("currSession")
   console.log(elapsedTime)
   // { solveTime: 12000, scramble: 'R U' ,puzzle:'3x3x3',  date: new Date().toISOString()},
   const sessions=JSON.parse(localStorage.getItem("sessions"))
@@ -111,6 +112,7 @@ const saveSolveTime=()=>{
   sessions.map((session,index)=>{
     if(session.id===currSession){
       session.solves.push({ solveTime: timerTextRef.current.innerText, scramble: {currScramble} ,puzzle:{currPuzzle},  date: new Date().toISOString()})
+      setSession(sessions)
       localStorage.setItem("sessions",JSON.stringify(sessions))
     }
   })

@@ -1,6 +1,5 @@
 import "./App.css";
-import { useState,useRef, useEffect,
-  
+import { useState,useRef, useEffect,useLayoutEffect
  } from "react";
 import Timer from "./components/Timer";
 import PuzzleSettings from "./components/PuzzleSettings";
@@ -13,7 +12,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
   const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
-  const [currSession,setCurrsession]=useState("session")
+  const [currSession,setCurrsession]=useState("session_3")
   const [sessions,setSession]=useState([])
   const touchRef = useRef(null);
   
@@ -30,8 +29,16 @@ if(sessions==null){
   localStorage.setItem("sessions",JSON.stringify(sessions))
   localStorage.setItem("currSession","session_1")
   setCurrsession("session_1")
+}else{
+  setCurrsession(localStorage.getItem("currSession"))
+  console.log("sjsj")
 }
 },[])
+useLayoutEffect(() => {
+  const sessions = JSON.parse(localStorage.getItem("sessions"));
+  console.log(sessions)
+  setSession(sessions);
+}, []);
 
   return (
     <div className="App row">
@@ -61,13 +68,16 @@ if(sessions==null){
             setIsRunning={setIsRunning}
             currPuzzle={currPuzzle}
             setCurrPuzzle={setCurrPuzzle}
+            currSession={currSession}
+            setSession={setSession}
             ref={touchRef}
+
           />
         </div>
       </div>
 
       <div className="col col-lg-2 col-md-3 col-12" style={{ padding: 0 }}>
-        <Solves></Solves>
+        <Solves sessions={sessions} currSession={currSession}></Solves>
       </div>
 
       <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} />
