@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
-import { puzzleOptions, scrambleFontSize } from "./PuzzleOptions";
+import { puzzleOptions, scrambleFontSize } from "../Data/PuzzleOptions";
 import { isBrowser, isMobile, isWindows } from "mobile-device-detect";
 import "./Scramble.css";
 export default function Scramble({

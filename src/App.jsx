@@ -1,18 +1,18 @@
 import "./App.css";
 import { useState,useRef, useEffect,useLayoutEffect
  } from "react";
-import Timer from "./components/Timer";
-import PuzzleSettings from "./components/PuzzleSettings";
-import ScrambleVisualizer from "./components/ScrambleVisualizer";
-import Navbar from "./components/Navbar";
+import Timer from "./components/Timer/Timer";
+import PuzzleSettings from "./components/PuzzleSettings/PuzzleSettings";
+import ScrambleVisualizer from "./components/ScrambleVisualizer/ScrambleVisualizer";
+import Navbar from "./components/Navbar/Navbar";
 import { isMobile, isTablet } from "mobile-device-detect";
-import MobileNavbar from "./components/MobileNavbar";
-import Solves from "./components/Solves";
+import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
+import Solves from "./components/Solves/Solves";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
-  const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
-  const [currSession,setCurrsession]=useState("session_3")
+  const [currPuzzle, setCurrPuzzle] = useState("");
+  const [currSession,setCurrsession]=useState("")
   const [sessions,setSession]=useState([])
   const touchRef = useRef(null);
   
@@ -31,7 +31,6 @@ if(sessions==null){
   setCurrsession("session_1")
 }else{
   setCurrsession(localStorage.getItem("currSession"))
-  console.log("sjsj")
 }
 },[])
 useLayoutEffect(() => {
@@ -77,7 +76,7 @@ useLayoutEffect(() => {
       </div>
 
       <div className="col col-lg-2 col-md-3 col-12" style={{ padding: 0 }}>
-        <Solves sessions={sessions} currSession={currSession}></Solves>
+        <Solves sessions={sessions} currSession={currSession} setCurrPuzzle={setCurrPuzzle}></Solves>
       </div>
 
       <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import "./PuzzleSettings.css";
 import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
-import { puzzleOptions } from "./PuzzleOptions";
+import { puzzleOptions } from "../Data/PuzzleOptions";
 export default function PuzzleSettings({
   currPuzzle,
   setCurrPuzzle,
@@ -27,9 +27,17 @@ export default function PuzzleSettings({
     localStorage.setItem("currSession",newSessionName)
 
   }
-  useEffect(()=>{
-console.log(currSession+"555")
-  },[])
+  useLayoutEffect(()=>{
+
+sessions.map((session)=>{
+
+  if(session.id==currSession){
+    session.puzzleType=currPuzzle
+    localStorage.setItem("sessions",JSON.stringify(sessions))
+  }
+  
+})
+  },[currPuzzle])
   return (
     <div className="scrambleArea container-fluid">
       <select

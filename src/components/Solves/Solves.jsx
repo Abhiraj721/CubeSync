@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-
-export default function Solves({sessions,currSession}) {
+import "./Solves.css"
+export default function Solves({sessions,currSession,setCurrPuzzle}) {
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   useEffect(() => {
-    console.log(sessions)
     if (sessions != null) {
       sessions.map((session, index) => {
         if (session.id === currSession) {
           console.log("4444444")
-          setCurrSessionsSolves(session.solves);
+          setCurrSessionsSolves(session.solves.reverse());
+          setCurrPuzzle(session.puzzleType)
         }
       });
     }
   }, [sessions,currSession]);
   return (
-    <div>
+    <div className="solvesContainer">
       {currSessionsSolves &&
         currSessionsSolves.map((solve, index) => {
-          return <p style={{ color: "black" }}>{solve.solveTime}</p>;
+          return <div>{solve.sno+solve.solveTime}</div>;
         })}
     </div>
   );
