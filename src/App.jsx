@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { isMobile, isTablet } from "mobile-device-detect";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Solves from "./components/Solves/Solves";
+
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -82,9 +83,10 @@ function App() {
           currSession={currSession}
           setCurrPuzzle={setCurrPuzzle}
         ></Solves>
+         {/* <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} /> */}
       </div>
 
-      <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} />
+     
     </div>
   );
 }

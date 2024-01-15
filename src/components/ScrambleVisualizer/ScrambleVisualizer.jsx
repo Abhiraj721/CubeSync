@@ -3,7 +3,7 @@ import React from 'react'
 export default function ScrambleVisualizer({currPuzzle,currScramble}) {
   return (
     <div>
-      {/* <twisty-player  
+      <twisty-player  
       alg={currScramble}
       puzzle={currPuzzle}
       hint-facelets="none"
@@ -12,7 +12,7 @@ export default function ScrambleVisualizer({currPuzzle,currScramble}) {
       control-panel="none"
       background="none"
       
-      ></twisty-player> */}
+      ></twisty-player>
     </div>
   )
 }

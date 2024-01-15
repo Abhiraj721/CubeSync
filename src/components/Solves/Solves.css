@@ -1,40 +1,53 @@
 .solvesContainer {
   background-color: rgb(16, 13, 30);
-   color: rgb(22, 21, 21);
-   max-height: 50vh;
-   overflow: auto;
- }
- .solveTime{
+  color: rgb(22, 21, 21);
+  max-height: 50vh;
+  overflow: auto;
+}
+.solveTime {
   color: green;
   width: 82px;
- }
- .solveSno{
+}
+.solveSno {
   color: aliceblue;
- }
- .solveDNF{
+  width: 45px;
+}
+.solveDNF {
   color: grey;
- }
- .solvePlus2 {
-  color:grey
- }
- .solveDelete{
-  color:grey
- }
- .scrollableContainer {
-   overflow-y: auto;
-   height: 100%; /* This makes the inner container take up 100% height of its parent */
- }
-.solve{
-   display: flex;
-   justify-content: space-around;
-   margin-bottom: 5px;
 }
-.solveTimeBtn{
+.solveDNF:hover {
+  color: white;
 }
-.solveTimeBtn:hover{
-  p{
+.solveDNF:hover {
+  color: white;
+  cursor: pointer;
+}
+.solvePlus2 {
+  color: grey;
+  cursor: pointer;
+}
+.solvePlus2:hover {
+  color: white;
+  cursor: pointer;
+}
+.solveDelete {
+  color: grey;
+}
+.scrollableContainer {
+  overflow-y: auto;
+  height: 100%; /* This makes the inner container take up 100% height of its parent */
+}
+.solve {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5px;
+}
+.solveTimeBtn:hover {
+  p {
     color: red;
     text-decoration: underline;
-    cursor:pointer;
+    cursor: pointer;
   }
+}
+.solveTimeBtn{
 }

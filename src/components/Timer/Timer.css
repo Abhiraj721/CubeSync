@@ -6,8 +6,13 @@ body{
 margin-top: 2px;
 height: 332px;
 }
+@font-face {
+  font-family: timefont;
+  src: url(../../utility/SfDigitalReadoutHeavy-AwVg.ttf);
+}
 .timerText{
     font-size: 77px;
+    font-family: timefont;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;

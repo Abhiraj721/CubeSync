@@ -1,0 +1,21 @@
+.puzzleType{
+    font-size: 17px;
+}
+.solveInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.scrambleNotesBtns button{
+    width: 93px;
+    height: 35px;
+    margin-right: 4px;
+    font-size: medium;
+}
+.scrambleNotesBtns{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+
+}
