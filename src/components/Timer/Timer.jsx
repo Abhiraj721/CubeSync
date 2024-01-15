@@ -16,7 +16,7 @@ function Timer(
     currPuzzle,
     setCurrPuzzle,
     currSession,
-    setSession
+    setSession,
   },
   ref
 ) {
@@ -27,15 +27,15 @@ function Timer(
   const timerTextRef = useRef(null);
 
   const handleKeyDown = (event) => {
+
     if (event.code === "Space" && !isRunning) {
       if (timerTextRef.current) timerTextRef.current.style.color = "orange";
       setHoldTimeStart(Date.now());
       if (event.code === "Space") event.preventDefault();
       if (event.code === "Space") setHandlePress(true);
-    } else {
-      console.log(Date.now()-startTime)
+    } else if(event.code === "Space") {
+      saveSolveTime();
       setIsRunning(false);
-      saveSolveTime()
       if (event.code === "Space") event.preventDefault();
     }
   };
@@ -45,7 +45,7 @@ function Timer(
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
 
-      if (holdtime > 400) {
+      if (holdtime > 200) {
         if (isRunning) {
           setIsRunning(false);
           setElapsedTime(Date.now() - startTime);
@@ -64,9 +64,8 @@ function Timer(
 
   const handleMouseDown = () => {
     if (isRunning) {
-      console.log(elapsedTime)
       setIsRunning(false);
-      saveSolveTime()
+      saveSolveTime();
     } else {
       setHoldTimeStart(Date.now());
       setHandlePress(true);
@@ -105,20 +104,67 @@ function Timer(
       if (event.code === "Space") event.preventDefault(); // Prevent default touch behavior
     },
   }));
-const saveSolveTime=()=>{
-  console.log(elapsedTime)
-  // { solveTime: 12000, scramble: 'R U' ,puzzle:'3x3x3',  date: new Date().toISOString()},
-  const sessions=JSON.parse(localStorage.getItem("sessions"))
-  console.log(sessions)
-  sessions.map((session,index)=>{
-    if(session.id===currSession){
-      session.solves.push({sno:session.solves.length+1, solveTime: timerTextRef.current.innerText, scramble: {currScramble} ,puzzle:{currPuzzle},  date: new Date().toISOString()})
-      setSession(sessions)
-      localStorage.setItem("sessions",JSON.stringify(sessions))
+  const timeStrToInt = (formattedTime) => {
+    const parts = formattedTime.split(":");
+    let totalMilliseconds = 0;
+  
+    // Extract hours, minutes, seconds, and milliseconds from the formatted string
+    if (parts.length === 4) {
+      // Format: HH:MM:SS:SS
+      totalMilliseconds +=
+        parseInt(parts[0]) * 60 * 60 * 1000 + // hours
+        parseInt(parts[1]) * 60 * 1000 + // minutes
+        parseInt(parts[2]) * 1000 + // seconds
+        parseInt(parts[3]) * 10; // milliseconds
+    } else if (parts.length === 3) {
+      // Format: MM:SS:SS
+      totalMilliseconds +=
+        parseInt(parts[0]) * 60 * 1000 + // minutes
+        parseInt(parts[1]) * 1000 + // seconds
+        parseInt(parts[2]) * 10; // milliseconds
+    } else if (parts.length === 2) {
+      // Format: SS:SS
+      totalMilliseconds +=
+        parseInt(parts[0]) * 1000 + // seconds
+        parseInt(parts[1]) * 10; // milliseconds
+    } else {
+      // Invalid format
+      throw new Error("Invalid time format");
     }
-  })
-
-}
+  
+    return totalMilliseconds;
+  };
+  
+  
+  const saveSolveTime = () => {
+    const solveTimeMilli = timeStrToInt(timerTextRef.current.innerText);
+    
+    const sessions = JSON.parse(localStorage.getItem("sessions"));
+    console.log(sessions);
+  
+    const updatedSessions = sessions.map((session) => {
+      if (session.id === currSession) {
+        const newSolve = {
+          sno: session.solves.length + 1,
+          solveTime: timerTextRef.current.innerText,
+          solveTimeInt: solveTimeMilli,
+          scramble: currScramble, // Assuming currScramble is a string
+          puzzle: currPuzzle, // Assuming currPuzzle is a string
+          date: new Date().toISOString(),
+        };
+  
+        // Add the new solve to the front of the solves array
+        const solvesArray = [newSolve, ...session.solves];
+  
+        // Update the session with the new solves array
+        return { ...session, solves: solvesArray };
+      }
+      return session;
+    });
+  
+    setSession(updatedSessions);
+    localStorage.setItem("sessions", JSON.stringify(updatedSessions));
+  };
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
@@ -126,7 +172,6 @@ const saveSolveTime=()=>{
     // document.addEventListener("mouseup", handleMouseUp);
     // document.addEventListener("touchstart", handleTouchStart);
     // document.addEventListener("touchend", handleTouchEnd);
-
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
@@ -163,9 +208,10 @@ const saveSolveTime=()=>{
 
     const pad = (value) => (value < 10 ? `0${value}` : value);
 
-    return `${(hours !== 0) ? pad(hours) + ":" : ""}${(minutes !== 0) ? pad(minutes) + ":" : ""}${pad(seconds)}:${pad(milliseconds)}`;
-};
-
+    return `${hours !== 0 ? pad(hours) + ":" : ""}${
+      minutes !== 0 ? pad(minutes) + ":" : ""
+    }${pad(seconds)}:${pad(milliseconds)}`;
+  };
 
   return (
     <div className="timer">
@@ -176,10 +222,11 @@ const saveSolveTime=()=>{
         currPuzzle={currPuzzle}
         setCurrPuzzle={setCurrPuzzle}
       ></Scramble>
+      {/* {console.log(elapsedTime)} */}
       <p ref={timerTextRef} className="timerText">
         {formatTime(elapsedTime)}
       </p>
-     
+
       <br />
     </div>
   );
