@@ -4,3 +4,13 @@
     width: 90%;
     margin: 0 auto;
 }
+.scrambleVisuals{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+.threeDViewBtn{
+font-size: small;
+margin-right: 23px;
+height: 23px;
+}

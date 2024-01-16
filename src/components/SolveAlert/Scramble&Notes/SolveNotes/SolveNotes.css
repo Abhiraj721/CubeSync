@@ -1,0 +1,14 @@
+.notesText{
+    font-size: 15px; 
+}
+.notesTextWrap{
+    height: 90px;
+    background-color: aliceblue;
+    border: 1px solid black;
+    width: 100%;
+    overflow: auto;
+}
+.notesTextarea{
+    width: 100%;
+    font-size: medium;
+}

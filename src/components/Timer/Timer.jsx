@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import "./Timer.css";
 import Scramble from "../Scramble/Scramble";
+import FormetTime from "../Data/FormetTime";
 function Timer(
   {
     currScramble,
@@ -151,6 +152,8 @@ function Timer(
           scramble: currScramble, // Assuming currScramble is a string
           puzzle: currPuzzle, // Assuming currPuzzle is a string
           date:  new Date().toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }),
+          isPlus2:false,
+          isDNF:false,
           notes:""
         };
   
@@ -201,18 +204,6 @@ function Timer(
   //   setIsRunning(false);
   //   setElapsedTime(0);
   // };
-  const formatTime = (time) => {
-    const hours = Math.floor(time / (60 * 60 * 1000));
-    const minutes = Math.floor((time % (60 * 60 * 1000)) / (60 * 1000));
-    const seconds = Math.floor((time % (60 * 1000)) / 1000);
-    const milliseconds = Math.floor((time % 1000) / 10);
-
-    const pad = (value) => (value < 10 ? `0${value}` : value);
-
-    return `${hours !== 0 ? pad(hours) + ":" : ""}${
-      minutes !== 0 ? pad(minutes) + ":" : ""
-    }${pad(seconds)}.${pad(milliseconds)}`;
-  };
 
   return (
     <div className="timer">
@@ -225,7 +216,7 @@ function Timer(
       ></Scramble>
       {/* {console.log(elapsedTime)} */}
       <p ref={timerTextRef} className="timerText">
-        {formatTime(elapsedTime)}
+        {FormetTime(elapsedTime)}
       </p>
 
       <br />

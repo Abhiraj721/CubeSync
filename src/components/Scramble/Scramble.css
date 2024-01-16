@@ -2,12 +2,15 @@
   font-size: 30px;
   user-select: none;
   -moz-user-select: none;
+  justify-content: center;
+  align-items: center;
   -webkit-user-select: none;
   -ms-user-select: none;
 }
 .scramblePlayround {
-    margin: 0 auto;
-  max-width: 75%;
+  display: flex;
+    /* background-color: black; */
+  /* max-width: 75%; */
 }
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
   /* Tablet styles go here */
