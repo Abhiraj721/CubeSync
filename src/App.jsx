@@ -11,7 +11,7 @@ import SessionInsights from "./components/SessionInsights/SessionInsights";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
-  const [currPuzzle, setCurrPuzzle] = useState("");
+  const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
   const [currSession, setCurrsession] = useState("");
   const [sessions, setSession] = useState([]);
   const touchRef = useRef(null);
@@ -21,7 +21,12 @@ function App() {
       const sessions = [
         {
           id: "session_1",
-          puzzleType: "3x3x3",
+          puzzleType: currPuzzle,
+          pb:"",
+          ao5Pb:"",
+          ao5PbSolves:[],
+          ao12Pb:"",
+          ao12PbSolves:[],
           solves: [],
         },
       ];
@@ -84,7 +89,7 @@ function App() {
           currSession={currSession}
           setCurrPuzzle={setCurrPuzzle}
         ></Solves>
-        <SessionInsights sessions={sessions} currSession={currSession}/>
+        <SessionInsights sessions={sessions} setSession={setSession} currSession={currSession}/>
          {/* <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} /> */}
       </div>
 

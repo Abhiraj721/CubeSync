@@ -15,6 +15,11 @@ export default function PuzzleSettings({
     const newlyCreatedSession= {
       id:newSessionName,
       puzzleType: currPuzzle,
+      pb:"",
+      ao5Pb:"",
+      ao5PbSolves:[],
+      ao12Pb:"",
+      ao12PbSolves:[],
       solves: [],
     }
     setSession(prevSessions => {
@@ -47,7 +52,6 @@ sessions.map((session)=>{
         onChange={(e) => setCurrPuzzle(e.target.value)}
       >
         <option value="3x3x3">3x3x3</option>
-        {console.log(puzzleOptions[currPuzzle])}
         <option value="custom">custom</option>
         <option value="2x2x2">2x2x2</option>
         <option value="4x4x4">4x4x4</option>

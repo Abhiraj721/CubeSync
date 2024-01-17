@@ -67,6 +67,23 @@ function handleDNF(solve)
     });
   }
 }
+function checkIfPlus2IsPbSolve(solve){
+  setSession((prevSessions) => {
+    const tempSession = [...prevSessions]; // Create a shallow copy of the sessions array
+    tempSession.forEach((session) => {
+      if (session.id === currSession) {
+        session.ao5PbSolves.forEach((currSolve) => {
+          if (solve.sno === currSolve.sno) {
+            session.ao5Pb+=400
+            console.log(session)
+          }
+        });
+      }
+    });
+    localStorage.setItem("sessions", JSON.stringify(tempSession));
+    return tempSession; // Return the modified array to update state
+  });
+}
   return (
     <div className="solvesContainer">
        <div className="scrollableContainer">
@@ -76,7 +93,11 @@ function handleDNF(solve)
             <div className="solve">
               <div><p className="solveSno">{solve.sno}</p></div>
              <div onClick={()=>fireAlert(solve)} className="solveTimeBtn"><p className="solveTime">{solve.isDNF ? "DNF" :solve.solveTime}</p></div>
-             <div><p style={solve.isPlus2 ?{color:"red"}:{}} onClick={()=>handlePlus2(solve)} className="solvePlus2">+2</p></div>
+             <div><p style={solve.isPlus2 ?{color:"red"}:{}} onClick={()=>{
+              handlePlus2(solve)
+              checkIfPlus2IsPbSolve(solve)
+            }
+              } className="solvePlus2">+2</p></div>
               <div><p style={solve.isDNF ?{color:"purple"}:{}} onClick={(()=>handleDNF(solve))} className="solveDNF">DNF</p></div>
               <div><p className="solveDelete">X</p></div>
             </div>
