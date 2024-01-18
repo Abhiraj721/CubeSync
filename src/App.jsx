@@ -92,7 +92,6 @@ function App() {
         <SessionInsights sessions={sessions} setSession={setSession} currSession={currSession}/>
          {/* <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} /> */}
       </div>
-
     </div>
   );
 }
