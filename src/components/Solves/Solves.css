@@ -12,6 +12,15 @@
   color: aliceblue;
   width: 45px;
 }
+.solveDelete{
+  color: grey;
+
+}
+.solveDelete:hover {
+  color: white;
+  cursor: pointer;
+
+}
 .solveDNF {
   color: grey;
 }

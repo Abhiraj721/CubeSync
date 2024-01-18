@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import "./Solves.css";
 import 'animate.css';
 import SolveAlert from "../SolveAlert/SolveAlert";
-import FormetTime from "../Data/FormetTime";
+import {FormatTime,timeStrToInt} from "../Data/FormetTime";
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 export default function Solves({ sessions,setSession, currSession, setCurrPuzzle }) {
@@ -26,38 +26,43 @@ export default function Solves({ sessions,setSession, currSession, setCurrPuzzle
 
 }
 function handlePlus2(solve) {
-  if(!solve.isPlus2){
   setSession((prevSessions) => {
-    const tempSession = [...prevSessions]; // Create a shallow copy of the sessions array
-    tempSession.forEach((session) => {
+    const tempSession = prevSessions.map((session) => {
       if (session.id === currSession) {
-        session.solves.forEach((currSolve) => {
+        const updatedSolves = session.solves.map((currSolve) => {
           if (solve.sno === currSolve.sno) {
-            const solveWithPlus2 = currSolve.solveTimeInt + 2000;
+            const solveWithPlus2 = solve.solveTimeInt + (solve.isPlus2 ? -2000 : 2000);
             currSolve.solveTimeInt = solveWithPlus2;
-            currSolve.solveTime = FormetTime(solveWithPlus2);
-            console.log(FormetTime(solveWithPlus2) + " " + solveWithPlus2);
-            currSolve.isPlus2=true;
+            currSolve.solveTime = FormatTime(solveWithPlus2);
+            currSolve.isPlus2 = !solve.isPlus2; // Toggle the isPlus2 property
+            console.log(FormatTime(solveWithPlus2) + " " + solveWithPlus2);
           }
+          return currSolve;
         });
+
+        return {
+          ...session,
+          solves: updatedSolves,
+        };
       }
+      return session;
     });
+
     localStorage.setItem("sessions", JSON.stringify(tempSession));
     return tempSession; // Return the modified array to update state
   });
 }
-}
 function handleDNF(solve)
 {
-  if(!solve.isDNF){
     setSession((prevSessions) => {
       const tempSession = [...prevSessions]; // Create a shallow copy of the sessions array
       tempSession.forEach((session) => {
         if (session.id === currSession) {
           session.solves.forEach((currSolve) => {
             if (solve.sno === currSolve.sno) {
-              currSolve.isDNF=true;
-              currSolve.solveTimeInt=-1
+              currSolve.isDNF=!currSolve.isDNF;
+              currSolve.solveTimeInt= currSolve.isDNF?-1 :timeStrToInt(currSolve.solveTime)
+              console.log( currSolve.solveTimeInt)
             }
           });
         }
@@ -65,24 +70,37 @@ function handleDNF(solve)
       localStorage.setItem("sessions", JSON.stringify(tempSession));
       return tempSession; // Return the modified array to update state
     });
-  }
+  
 }
-function checkIfPlus2IsPbSolve(solve){
+function handleDeleteSolve (solve){
   setSession((prevSessions) => {
     const tempSession = [...prevSessions]; // Create a shallow copy of the sessions array
     tempSession.forEach((session) => {
       if (session.id === currSession) {
-        session.ao5PbSolves.forEach((currSolve) => {
+        session.solves.forEach((currSolve,index) => {
           if (solve.sno === currSolve.sno) {
-            session.ao5Pb+=400
-            console.log(session)
+          session.solves.splice(index,1)
           }
         });
       }
     });
+    setSession(tempSession)
     localStorage.setItem("sessions", JSON.stringify(tempSession));
     return tempSession; // Return the modified array to update state
   });
+
+}
+function rearrangeSno(){
+  sessions.map((session)=>{
+
+  if(session.id==currSession){
+    let newSno=session.solves.length
+      session.solves.map((solve)=>{
+        solve.sno=newSno
+        newSno--
+    })
+  }
+  })
 }
   return (
     <div className="solvesContainer">
@@ -95,11 +113,13 @@ function checkIfPlus2IsPbSolve(solve){
              <div onClick={()=>fireAlert(solve)} className="solveTimeBtn"><p className="solveTime">{solve.isDNF ? "DNF" :solve.solveTime}</p></div>
              <div><p style={solve.isPlus2 ?{color:"red"}:{}} onClick={()=>{
               handlePlus2(solve)
-              checkIfPlus2IsPbSolve(solve)
             }
               } className="solvePlus2">+2</p></div>
               <div><p style={solve.isDNF ?{color:"purple"}:{}} onClick={(()=>handleDNF(solve))} className="solveDNF">DNF</p></div>
-              <div><p className="solveDelete">X</p></div>
+              <div><p className="solveDelete" onClick={()=>{
+                handleDeleteSolve(solve)
+                rearrangeSno()
+                }} >X</p></div>
             </div>
 
           );

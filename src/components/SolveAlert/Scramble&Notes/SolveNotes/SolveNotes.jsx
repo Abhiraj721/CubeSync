@@ -40,9 +40,8 @@ function SolveNotes({ sessions, setSession, currSession, solve }, ref) {
         });
       }
     });
-    console.log(tempSesession);
-    setSession(tempSesession);
-    localStorage.setItem("sessions", JSON.stringify(tempSesession));
+    setSession(tempSession);
+    localStorage.setItem("sessions", JSON.stringify(tempSession));
     console.log("4sa");
   }
   async function editNoteAlert() {
