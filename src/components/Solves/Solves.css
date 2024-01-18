@@ -1,7 +1,7 @@
 .solvesContainer {
   background-color: rgb(16, 13, 30);
   color: rgb(22, 21, 21);
-  max-height: 50vh;
+  min-height: 50vh;
   overflow: auto;
 }
 .solveTime {
@@ -19,7 +19,6 @@
 .solveDelete:hover {
   color: white;
   cursor: pointer;
-
 }
 .solveDNF {
   color: grey;
@@ -59,4 +58,17 @@
   }
 }
 .solveTimeBtn{
+}
+
+.noSolvesTitle{
+  color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 45%;
+}
+.noSolvesTitle p{
+
 }

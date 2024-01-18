@@ -1,81 +1,64 @@
 .angry-grid {
-    display: grid; 
- 
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    
-    gap: 5px;
-    height: 50%;
-    
- }
-   
- #item-0 {
- 
-    background-color: #BCBABB; 
-    grid-row-start: 1;
-    grid-column-start: 1;
- 
-    grid-row-end: 3;
-    grid-column-end: 3;
-    
- }
- #item-1 {
- 
-    background-color: #6B9998; 
-    grid-row-start: 1;
-    grid-column-start: 3;
- 
-    grid-row-end: 2;
-    grid-column-end: 5;
-    
- }
- #item-2 {
- 
-    background-color: #6D9A6C; 
-    grid-row-start: 2;
-    grid-column-start: 3;
- 
-    grid-row-end: 3;
-    grid-column-end: 5;
-    
- }
- #item-3 {
- 
-    background-color: #9779B6; 
-    grid-row-start: 3;
-    grid-column-start: 3;
- 
-    grid-row-end: 4;
-    grid-column-end: 5;
-    
- }
- #item-4 {
- 
-    background-color: #4e4f24; 
-    grid-row-start: 4;
-    grid-column-start: 3;
- 
-    grid-row-end: 5;
-    grid-column-end: 5;
-    
- }
- #item-5 {
- 
-    background-color: #F6A9B6; 
-    grid-row-start: 3;
-    grid-column-start: 1;
- 
-    grid-row-end: 4;
-    grid-column-end: 3;
-    
- }
- #item-6 {
- 
-    background-color: #77DDF6; 
-    grid-row-start: 4;
-    grid-column-start: 1;
- 
-    grid-row-end: 5;
-    grid-column-end: 3;
-    
- }
+   display: grid; 
+   grid-template-rows: 1fr 1fr 1fr 1fr;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+   gap: 5px;
+   height: 50%;
+}
+
+#item-0 {
+   background-color: #BCBABB; 
+   grid-row-start: 1;
+   grid-column-start: 1;
+   grid-row-end: 3;
+   grid-column-end: 3;
+}
+
+#item-1-2 {
+   background-color: #6B9998; 
+   grid-row-start: 1;
+   grid-column-start: 3;
+   grid-row-end: 3;
+   grid-column-end: 5;
+}
+
+#item-3 {
+   background-color: #9779B6; 
+   grid-row-start: 3;
+   grid-column-start: 3;
+   grid-row-end: 4;
+   grid-column-end: 5;
+}
+
+#item-4 {
+   background-color: #4e4f24; 
+   grid-row-start: 4;
+   grid-column-start: 3;
+   grid-row-end: 5;
+   grid-column-end: 5;
+}
+
+#item-5 {
+   background-color: #F6A9B6; 
+   grid-row-start: 3;
+   grid-column-start: 1;
+   grid-row-end: 4;
+   grid-column-end: 3;
+}
+
+#item-6 {
+   background-color: #77DDF6; 
+   grid-row-start: 4;
+   grid-column-start: 1;
+   grid-row-end: 5;
+   grid-column-end: 3;
+}
+
+.combined-item {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   padding: 5px;
+   color: white;
+}

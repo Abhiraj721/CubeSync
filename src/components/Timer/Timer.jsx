@@ -34,7 +34,7 @@ function Timer(
       setHoldTimeStart(Date.now());
       if (event.code === "Space") event.preventDefault();
       if (event.code === "Space") setHandlePress(true);
-    } else if(event.code === "Space") {
+    } else if(event.code === "Space" && timeStrToInt(timerTextRef.current.innerText)>10) {
       saveSolveTime();
       setIsRunning(false);
       if (event.code === "Space") event.preventDefault();
