@@ -32,7 +32,7 @@ export default function PuzzleSettings({
     localStorage.setItem("currSession",newSessionName)
 
   }
-  useLayoutEffect(()=>{
+  useEffect(()=>{
 
 sessions.map((session)=>{
 
@@ -81,7 +81,7 @@ sessions.map((session)=>{
           console.log(e.target.value)
         }}
       >
-        {sessions.map((session) => {
+        {sessions && sessions.map((session) => {
           return <option value={session.id}>{session.id}</option>;
         })}
          <option value="newSession">New Session</option>

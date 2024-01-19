@@ -113,7 +113,7 @@ export default function Solves({
   return (
     <div className="solvesContainer">
       <div className="scrollableContainer">
-        {currSessionsSolves.length != 0 ? (
+          {currSessionsSolves && currSessionsSolves.length != 0 ? (
           currSessionsSolves.map((solve, index) => {
             return (
               <div className="solve">
