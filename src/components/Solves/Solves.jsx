@@ -11,21 +11,10 @@ export default function Solves({
   setSession,
   currSession,
   setCurrPuzzle,
+  solvesArr,
 }) {
-  const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
-  useEffect(() => {
-    if (sessions != null) {
-      console.log("4sa");
-      sessions.map((session, index) => {
-        if (session.id === currSession) {
-          const solves = session.solves;
-          if (solves.length > 0 && solves[0].sno == 1) solves.reverse();
-          setCurrSessionsSolves(solves);
-          setCurrPuzzle(session.puzzleType);
-        }
-      });
-    }
-  }, [sessions, currSession]);
+
+
   const fireAlert = (solve) => {
     MySwal.fire(
       <SolveAlert
@@ -96,10 +85,17 @@ export default function Solves({
               if(currSolve.sno==solve.sno){
                 session.ao5PbSolves.splice(index, 1);
               }
+              console.log( session.ao5PbSolves.length)
+              if(session.ao5PbSolves.length<=4){
+                session.ao5PbSolves=[]
+              }
           })
           session.ao12PbSolves.map((currSolve,index)=>{
             if(currSolve.sno==solve.sno){
               session.ao12PbSolves.splice(index, 1);
+            }
+            if(session.ao12PbSolves.length<=11){
+              session.ao12PbSolves=[]
             }
         })
         }
@@ -124,8 +120,8 @@ export default function Solves({
   return (
     <div className="solvesContainer">
       <div className="scrollableContainer">
-          {currSessionsSolves && currSessionsSolves.length != 0 ? (
-          currSessionsSolves.map((solve, index) => {
+          {solvesArr && solvesArr.length != 0 ? (
+          solvesArr.map((solve, index) => {
             return (
               <div className="solve">
                 <div>

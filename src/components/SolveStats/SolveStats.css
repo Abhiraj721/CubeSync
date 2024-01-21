@@ -51,3 +51,13 @@
 .statsOptionLabel{
   font-size: 16px;
 }
+.statsHead{
+  font-size:13px;
+}
+.statsSolveTime{
+  color: blue;
+  text-decoration: underline;
+}
+.statsSolveTime:hover{
+  color: white;
+}

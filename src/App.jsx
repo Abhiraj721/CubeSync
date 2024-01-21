@@ -14,6 +14,7 @@ function App() {
   const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
   const [currSession, setCurrsession] = useState("");
   const [sessions, setSession] = useState([]);
+  const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   const touchRef = useRef(null);
   useEffect(() => {
     const sessions = localStorage.getItem("sessions");
@@ -42,7 +43,19 @@ function App() {
     console.log(sessions);
     setSession(sessions);
   }, []);
-
+  useEffect(() => {
+    if (sessions != null) {
+      console.log("4sa");
+      sessions.map((session, index) => {
+        if (session.id === currSession) {
+          const solves = session.solves;
+          if (solves.length > 0 && solves[0].sno == 1) solves.reverse();
+          setCurrSessionsSolves(solves);
+          setCurrPuzzle(session.puzzleType);
+        }
+      });
+    }
+  }, [sessions, currSession]);
   return (
     <div className="App row">
       <div className="col col-lg-2 col-md-1 col-12" style={{ padding: 0 }}>
@@ -88,6 +101,7 @@ function App() {
           setSession={setSession}
           currSession={currSession}
           setCurrPuzzle={setCurrPuzzle}
+          solvesArr={currSessionsSolves}
         ></Solves>
         <SessionInsights sessions={sessions} setSession={setSession} currSession={currSession}/>
          {/* <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} /> */}
