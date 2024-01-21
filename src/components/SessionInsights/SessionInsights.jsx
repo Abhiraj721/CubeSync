@@ -13,7 +13,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
   const [pb, setPb] = useState("--");
   const [ao5Pb, setAo5Pb] = useState("--");
   const [ao12Pb, setAo12Pb] = useState("--");
-  const [avg,setAvg]=useState("--")
+  const [avg, setAvg] = useState("--");
   function getCurrAvgSolves() {
     const tempSession = sessions;
 
@@ -40,14 +40,13 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
             const avgAo5 = sumAo5 / 5;
             setAo5(FormatTime(avgAo5));
           }
-          setCurrAo5Solves(ao5Solves)
         } else {
           setAo5("--");
         }
 
         if (solves.length >= 12) {
           let sumAo12 = 0;
-          let ao12Solves=[]
+          let ao12Solves = [];
           const dnfCount = solves
             .slice(0, 12)
             .map((solve) => solve.isDNF)
@@ -58,7 +57,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
               setAo12(sumAo12);
               break;
             }
-            ao12Solves.push(solves[i])
+            ao12Solves.push(solves[i]);
             sumAo12 += solves[i].solveTimeInt;
           }
           if (sumAo12 !== "DNF") {
@@ -66,11 +65,9 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
 
             setAo12(FormatTime(avgAo12));
           }
-          setCurrAo12Solves(ao12Solves)
         } else {
           setAo12("--");
         }
-
       }
     });
   }
@@ -112,16 +109,16 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
         if (solves.length >= 5) {
           let bestAo5Time = Infinity;
           let bestAo5DnfCount = Infinity;
-          let ao5PbSolves=[]
+          let ao5PbSolves = [];
+  
           for (let i = 0; i <= solves.length - 5; i++) {
-            let ao5Arr=[]
+            let ao5Arr = [];
             const ao5SolveTimes = solves.slice(i, i + 5).map((solve) => {
-              ao5Arr.push(solve)
-              if(solve.isDNF)return -1
-              else return solve.solveTimeInt
-
+              ao5Arr.push(solve);
+              if (solve.isDNF) return -1;
+              else return solve.solveTimeInt;
             });
-            ao5PbSolves=ao5Arr
+  
             const dnfCount = ao5SolveTimes.filter((time) => time === -1).length;
             if (dnfCount <= 1) {
               if (
@@ -130,9 +127,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
                   ao5SolveTimes.reduce(
                     (acc, time) => acc + (time === -1 ? 0 : time),
                     0
-                  ) /
-                    5 <
-                    bestAo5Time)
+                  ) / 5 < bestAo5Time)
               ) {
                 bestAo5Time =
                   ao5SolveTimes.reduce(
@@ -140,6 +135,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
                     0
                   ) / 5;
                 bestAo5DnfCount = dnfCount;
+                ao5PbSolves = [...ao5Arr]; // Move this line here
               }
             }
           }
@@ -147,22 +143,19 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
           if (bestAo5DnfCount === 0 || bestAo5DnfCount === 1) {
             setAo5Pb(FormatTime(bestAo5Time));
             session.ao5Pb = FormatTime(bestAo5Time);
-
           } else {
             setAo5Pb("DNF");
             session.ao5Pb = "DNF";
-
           }
-          session.ao5PbSolves=ao5PbSolves
+          session.ao5PbSolves = ao5PbSolves;
         } else {
           setAo5Pb("--");
         }
       }
       return session;
     });
-    console.log(sessions)
+    console.log(sessions);
   }
-  
   
   function getBestAo12() {
     sessions.map((session) => {
@@ -171,39 +164,42 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
         if (solves.length >= 12) {
           let bestAo12Time = Infinity;
           let bestAo12DnfCount = Infinity;
-          let ao12PbSolves=[]
-          
+          let ao12PbSolves = [];
+
           for (let i = 0; i <= solves.length - 12; i++) {
             const ao12Solves = solves.slice(i, i + 12);
-  
+
             // Count the number of DNFs in the current Ao12 set
-            const dnfCount = ao12Solves.filter((solve) => solve.isDNF === true).length;
-            
-            // Only consider this Ao12 set if it has at most one DNF
-            if (dnfCount <= 1) {
-              // Update best Ao12 time and DNF count
-              ao12PbSolves=ao12Solves
-              const ao12TimeSum = ao12Solves.reduce((acc, solve) => acc + (solve.isDNF ? 0 : solve.solveTimeInt), 0);
-              const avgAo12Time = ao12TimeSum / 12;
-  
-              if (dnfCount < bestAo12DnfCount || (dnfCount === bestAo12DnfCount && avgAo12Time < bestAo12Time)) {
-                bestAo12Time = avgAo12Time;
-                bestAo12DnfCount = dnfCount;
-              }
+            const dnfCount = ao12Solves.filter(
+              (solve) => solve.isDNF === true
+            ).length;
+
+            // Update best Ao12 time and DNF count
+            const ao12TimeSum = ao12Solves.reduce(
+              (acc, solve) => acc + solve.solveTimeInt,
+              0
+            );
+
+            if (
+              dnfCount <= bestAo12DnfCount ||
+              (dnfCount === bestAo12DnfCount && ao12TimeSum < bestAo12Time)
+            ) {
+              bestAo12Time = ao12TimeSum;
+              bestAo12DnfCount = dnfCount;
+              ao12PbSolves = ao12Solves.slice(); // Copy the solves for the best Ao12 set
             }
           }
-            session.ao12PbSolves=ao12PbSolves
-  
-          // Set Ao12 PB based on the best Ao12 set
-          if (bestAo12DnfCount === 0 || bestAo12DnfCount === 1) {
-            setAo12Pb(FormatTime(bestAo12Time));
-            session.ao12Pb = FormatTime(bestAo12Time);
 
+          // Set Ao12 PB based on the best Ao12 set
+          if (bestAo12DnfCount < 12) {
+            setAo12Pb(FormatTime(bestAo12Time / (12 - bestAo12DnfCount)));
+            session.ao12Pb = FormatTime(bestAo12Time / (12 - bestAo12DnfCount));
           } else {
             setAo12Pb("DNF");
             session.ao12Pb = "DNF";
-
           }
+
+          session.ao12PbSolves = ao12PbSolves;
         } else {
           setAo12Pb("--");
         }
@@ -211,74 +207,126 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
       return session;
     });
   }
-  
-function getAvgOfAllSolves(){
-  let avgOfSolves=0
-  let nofSolves=0
-  sessions.map((session)=>{
-    if(session.id==currSession){
-      session.solves.map((solve)=>{
-        
-       if(solve.isDNF===false){ 
-        avgOfSolves+=solve.solveTimeInt
-        nofSolves++;
-      }
-      })
-    }
-  })
-  avgOfSolves=avgOfSolves/nofSolves
-  setAvg(FormatTime(avgOfSolves))
 
-}
+  function getAvgOfAllSolves() {
+    let avgOfSolves = 0;
+    let nofSolves = 0;
+    sessions.map((session) => {
+      if (session.id == currSession) {
+        session.solves.map((solve) => {
+          if (solve.isDNF === false) {
+            avgOfSolves += solve.solveTimeInt;
+            nofSolves++;
+          }
+        });
+      }
+    });
+    avgOfSolves = avgOfSolves / nofSolves;
+    setAvg(FormatTime(avgOfSolves));
+  }
+  function NumOfSolves() {
+    let numofSolves = 0;
+    sessions.map((session) => {
+      if (session.id == currSession) {
+        numofSolves = session.solves.length;
+      }
+    });
+    return numofSolves;
+  }
   useEffect(() => {
-  if(sessions){    getCurrAvgSolves();
-    getPbSingle();
-    getBestAo5();
-    getAvgOfAllSolves()
-    getBestAo12();}
+    if (sessions) {
+      getCurrAvgSolves();
+      getPbSingle();
+      getBestAo5();
+      getAvgOfAllSolves();
+      getBestAo12();
+      getCurrAo5Solves();
+      getCurrAo12Solves();
+    }
   }, [sessions, currSession]);
-function getAo5PbSolves(){
-  let ao5PbSolves=[]
-  sessions.map((session)=>{
-    if(session.id==currSession){
-      ao5PbSolves=session.ao5PbSolves
-    }
-  })
-  return ao5PbSolves
-}
-function getAo12PbSolves(){
-  let ao12PbSolves=[]
-  sessions.map((session)=>{
-    if(session.id==currSession){
-      ao12PbSolves=session.ao12PbSolves
-    }
-  })
-  return ao12PbSolves
-}
-  function showSolveStats(solves){
-    console.log(solves)
-   MySwal.fire(<SolveStats solves={solves}/>)
+  function getAo5PbSolves() {
+    console.log("gajab");
+    let ao5PbSolves = [];
+    sessions.map((session) => {
+      if (session.id == currSession) {
+        ao5PbSolves = session.ao5PbSolves;
+      }
+    });
+    return ao5PbSolves;
+  }
+  function getAo12PbSolves() {
+    let ao12PbSolves = [];
+    sessions.map((session) => {
+      if (session.id == currSession) {
+        ao12PbSolves = session.ao12PbSolves;
+      }
+    });
+    return ao12PbSolves;
+  }
+  function getCurrAo5Solves() {
+    sessions.map((session) => {
+      if (session.id == currSession) {
+        setCurrAo5Solves(session.solves.slice(0, 5));
+      }
+    });
+  }
+  function getCurrAo12Solves() {
+    sessions.map((session) => {
+      if (session.id == currSession) {
+        setCurrAo12Solves(session.solves.slice(0, 12));
+      }
+    });
+  }
+  function showSolveStats(solves) {
+    console.log(sessions[0].ao5PbSolves);
+    MySwal.fire(<SolveStats solves={solves} />);
   }
   return (
     <div className="angry-grid">
-         <div id="item-0">
-          <p onClick={() => showSolveStats()}>{pb} pb</p>
-        </div>
-        <div id="item-1-2" className="combined-item">
-          <p onClick={() =>showSolveStats() }>{avg}</p>
-        </div>
-        <div id="item-3">
-          <p onClick={() =>showSolveStats(currAo5Solves) }>{ao5} ao5</p>
-        </div>
-        <div id="item-4">
-          <p onClick={() => showSolveStats(currao12Solves)}>{ao12} ao12</p>
-        </div>
-        <div id="item-5">
-          <p onClick={() => showSolveStats(getAo5PbSolves())}>{ao5Pb} ao5Pb</p>
-        </div>
-        <div id="item-6">
-          <p onClick={() => showSolveStats(getAo12PbSolves())}>{ao12Pb} ao12Pb</p>
-        </div>
+      <div id="item-0">
+        <p onClick={() => showSolveStats()}>{pb} pb</p>
+      </div>
+      <div id="item-1-2" className="combined-item">
+        <p onClick={() => showSolveStats()}>{avg}</p>
+      </div>
+      <div id="item-3">
+        <p
+          onClick={() => {
+            if (NumOfSolves() >= 5) showSolveStats(currAo5Solves);
+          }}
+        >
+          {ao5} ao5
+        </p>
+      </div>
+      <div id="item-4">
+        <p
+          onClick={() => {
+            if (NumOfSolves() >= 12) showSolveStats(currao12Solves);
+          }}
+        >
+          {ao12} ao12
+        </p>
+      </div>
+      <div id="item-5">
+        {
+          <p
+            onClick={() => {
+              if (NumOfSolves() >= 5) showSolveStats(getAo5PbSolves());
+            }}
+          >
+            {ao5Pb} ao5Pb
+          </p>
+        }
+      </div>
+      <div id="item-6">
+        <p
+          onClick={() => {
+            if (NumOfSolves() >= 12) showSolveStats(getAo12PbSolves());
+          }}
+        >
+          {ao12Pb} ao12Pb
+        </p>
+      </div>
     </div>
   );
 }

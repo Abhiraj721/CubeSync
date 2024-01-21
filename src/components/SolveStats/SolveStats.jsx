@@ -5,25 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-text-to-clipboard";
 
 export default function SolveStats({ solves }) {
-  // const [isDate,setIsDate]=useState(false)
-  // const [isScramble,setIsScramble]=useState(true)
-  // const [isPuzzleType,setIsPuzzleType]=useState(false)
-  const [statsOptions,setStatsOptions]=useState([
-  {
-    Name:"Scramble",
-    Active:"true"
-  },
-  {
-   Name:"Date",
- Active:"false"
-  },
-  {
-    Name:"Puzzle Type",
-    Active:"false"
-  },
-])
- 
-
+  const [isScrambleActive, setScrambleActive] = useState(true);
+  const [isDateActive, setDateActive] = useState(false);
+  const [isPuzzleTypeActive, setPuzzleTypeActive] = useState(false);
+  const optionsArr = [
+    { Name: "Scramble", isActive: isScrambleActive },
+    { Name: "Date", isActive: isDateActive },
+    { Name: "Puzzle Type", isActive: isPuzzleTypeActive },
+  ];
   useEffect(() => {
     // Add any necessary logic inside useEffect
   }, []); // Empty dependency array to run the effect only once
@@ -43,17 +32,54 @@ export default function SolveStats({ solves }) {
 
     return solves
       .map((solve) => {
-        const timePadding = " ".repeat(
-          maxLengths.time - solve.solveTime.length + 2
-        );
-        const scramblePadding = " ".repeat(
-          maxLengths.scramble - solve.scramble.length + 2
-        );
-        const datePadding = " ".repeat(maxLengths.date - solve.date.length + 2);
+        let formattedText = "";
 
-        return `${solve.solveTime}${timePadding}${solve.scramble}${scramblePadding}${solve.date}${datePadding}`;
+        if (isScrambleActive) {
+          const timePadding = " ".repeat(
+            maxLengths.time - solve.solveTime.length + 2
+          );
+          formattedText += `${solve.solveTime}${timePadding}`;
+        }
+
+        if (isScrambleActive) {
+          const scramblePadding = " ".repeat(
+            maxLengths.scramble - solve.scramble.length + 2
+          );
+          formattedText += `${solve.scramble}${scramblePadding}`;
+        }
+
+        if (isDateActive) {
+          const datePadding = " ".repeat(
+            maxLengths.date - solve.date.length + 2
+          );
+          formattedText += `${solve.date}${datePadding}`;
+        }
+        if (isPuzzleTypeActive) {
+          const datePadding = " ".repeat(
+            maxLengths.date - solve.date.length + 2
+          );
+          formattedText += `${solve.puzzle}${datePadding}`;
+        }
+
+        return formattedText;
       })
       .join("\n");
+  };
+
+  const handleCheckboxChange = (option) => {
+    switch (option) {
+      case "Scramble":
+        setScrambleActive(!isScrambleActive);
+        break;
+      case "Date":
+        setDateActive(!isDateActive);
+        break;
+      case "Puzzle Type":
+        setPuzzleTypeActive(!isPuzzleTypeActive);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleCopyText = () => {
@@ -64,20 +90,20 @@ export default function SolveStats({ solves }) {
   return (
     <div className="solveStatscontainer">
       <div className="ChooseStatsFleids">
-   {   statsOptions.map((option)=>{
-        return <div className="checkbox-wrapper-15  statsOptions">
-        <input className="inp-cbx" id="cbx-15" type="checkbox" style={{ display: 'none' }} />
-        <label className="cbx" htmlFor="cbx-15">
-          <span>
-            <svg width="12px" height="9px" viewBox="0 0 12 9">
-              <polyline points="1 5 4 8 11 1"></polyline>
-            </svg>
-          </span>
-          <span>{option.Name}</span>
-        </label>
-      </div>
-      
-      })}
+        {optionsArr.map((option, index) => (
+          <div key={index} className="statsOptions">
+            <input
+              className="statsOptionInput"
+              checked={option.isActive}
+              onChange={() => handleCheckboxChange(option.Name)}
+              id={`checkbox-${index}`}
+              type="checkbox"
+            />
+            <label className="statsOptionLabel" htmlFor={`checkbox-${index}`}>
+              {option.Name}
+            </label>
+          </div>
+        ))}
       </div>
       <div className="text-slider">
         <button className="copySolveBtn" onClick={handleCopyText}>
@@ -88,18 +114,26 @@ export default function SolveStats({ solves }) {
             <thead>
               <tr>
                 <th>Sno</th>
-                <th>Time</th>
-                <th>Scramble</th>
-                <th>Date</th>
+                {<th>Time</th>}
+                {isScrambleActive && <th>Scramble</th>}
+                {isDateActive && <th>Date</th>}
+                {isPuzzleTypeActive && <th>Puzzle Type</th>}
               </tr>
             </thead>
             <tbody>
               {solves.map((solve, index) => (
                 <tr key={index} className="statsSolve">
                   <td>{solves.length - index}</td>
-                  <td>{solve.solveTime}</td>
-                  <td>{solve.scramble}</td>
-                  <td>{solve.date}</td>
+                  {
+                    <td>
+                      {solve.isDNF
+                        ? " DNF(" + solve.solveTime + ") "
+                        : solve.solveTime}
+                    </td>
+                  }
+                  {isScrambleActive && <td>{solve.scramble}</td>}
+                  {isDateActive && <td>{solve.date}</td>}
+                  {isPuzzleTypeActive && <td>{solve.puzzle}</td>}
                 </tr>
               ))}
             </tbody>

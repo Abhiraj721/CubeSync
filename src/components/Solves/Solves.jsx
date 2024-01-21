@@ -92,12 +92,23 @@ export default function Solves({
               session.solves.splice(index, 1);
             }
           });
+          session.ao5PbSolves.map((currSolve,index)=>{
+              if(currSolve.sno==solve.sno){
+                session.ao5PbSolves.splice(index, 1);
+              }
+          })
+          session.ao12PbSolves.map((currSolve,index)=>{
+            if(currSolve.sno==solve.sno){
+              session.ao12PbSolves.splice(index, 1);
+            }
+        })
         }
       });
       setSession(tempSession);
       localStorage.setItem("sessions", JSON.stringify(tempSession));
       return tempSession; // Return the modified array to update state
     });
+
   }
   function rearrangeSno() {
     sessions.map((session) => {
