@@ -3,7 +3,7 @@
    grid-template-rows: 1fr 1fr 1fr 1fr;
    grid-template-columns: 1fr 1fr 1fr 1fr;
    gap: 5px;
-   height: 50%;
+   height: 50vh;
 }
 
 #item-0 {

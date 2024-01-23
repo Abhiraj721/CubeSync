@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-text-to-clipboard";
 import { FormatTime } from "../Data/FormetTime";
 import SolveAlert from "../SolveAlert/SolveAlert";
+import handleAvgs from "../Data/HandleAvgsCriteria";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
@@ -43,15 +44,13 @@ export default function SolveStats({ solves, statsType }) {
     copy(formattedText);
   };
   function getAvgOfCurrStats() {
-    let sum = 0;
-    solves.forEach((solve, index) => {
-      sum += solve.solveTimeInt;
-    });
+
     if (statsType == "pb") {
       return solves[0]; ///uptade this code later ()
     }
-    return FormatTime(sum / solves.length);
+   return handleAvgs(solves)
   }
+  
 
   return (
     <div className="solveStatscontainer">

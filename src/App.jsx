@@ -8,6 +8,7 @@ import { isMobile, isTablet } from "mobile-device-detect";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Solves from "./components/Solves/Solves";
 import SessionInsights from "./components/SessionInsights/SessionInsights";
+
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -15,7 +16,36 @@ function App() {
   const [currSession, setCurrsession] = useState("");
   const [sessions, setSession] = useState([]);
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
+  const [layout, setLayout] = useState({
+    dashboard_1: "solves",
+    dashboard_2: "stats",
+  });
+  const [scrambleDimension,setScrambleDimension]=useState("2D")
+
+  const stats = (
+    <SessionInsights sessions={sessions} setSession={setSession} currSession={currSession} />
+  );
+
+  const solves = (
+    <Solves
+      sessions={sessions}
+      setSession={setSession}
+      currSession={currSession}
+      setCurrPuzzle={setCurrPuzzle}
+      solvesArr={currSessionsSolves}
+    />
+  );
+  const scramble =<> <ScrambleVisualizer visualDimension={scrambleDimension} currPuzzle={currPuzzle} currScramble={currScramble} /> <button onClick={()=>toggleScrambleDimension(scrambleDimension)} className="toggleScrambleDimension">{scrambleDimension}</button></>;
+    function toggleScrambleDimension(currDimension){
+      if(currDimension=="2D"){
+      setScrambleDimension("3D")
+      }
+      else setScrambleDimension("2D")
+    }
+ 
+
   const touchRef = useRef(null);
+
   useEffect(() => {
     const sessions = localStorage.getItem("sessions");
     if (sessions == null) {
@@ -23,11 +53,11 @@ function App() {
         {
           id: "session_1",
           puzzleType: currPuzzle,
-          pb:"",
-          ao5Pb:"",
-          ao5PbSolves:[],
-          ao12Pb:"",
-          ao12PbSolves:[],
+          pb: "",
+          ao5Pb: "",
+          ao5PbSolves: [],
+          ao12Pb: "",
+          ao12PbSolves: [],
           solves: [],
         },
       ];
@@ -38,24 +68,32 @@ function App() {
       setCurrsession(localStorage.getItem("currSession"));
     }
   }, []);
+
   useLayoutEffect(() => {
     const sessions = JSON.parse(localStorage.getItem("sessions"));
-    console.log(sessions);
     setSession(sessions);
   }, []);
+
   useEffect(() => {
     if (sessions != null) {
-      console.log("4sa");
-      sessions.map((session, index) => {
+      sessions.forEach((session, index) => {
         if (session.id === currSession) {
           const solves = session.solves;
-          if (solves.length > 0 && solves[0].sno == 1) solves.reverse();
+          if (solves.length > 0 && solves[0].sno === 1) solves.reverse();
           setCurrSessionsSolves(solves);
           setCurrPuzzle(session.puzzleType);
         }
       });
     }
   }, [sessions, currSession]);
+
+  const dashboardComponent = (dashboardType) => {
+    if (dashboardType === "solves") return solves;
+    if (dashboardType === "stats") return stats;
+    if (dashboardType === "scramble") return scramble;
+    return stats;
+  };
+
   return (
     <div className="App row">
       <div className="col col-lg-2 col-md-1 col-12" style={{ padding: 0 }}>
@@ -63,13 +101,7 @@ function App() {
       </div>
 
       <div className="col col-lg-7 col-md-7 col-12" style={{ padding: 0 }}>
-        {/* Content of the middle column */}
-        <div
-          className="timerPlayGround"
-          style={{ width: "100%" }}
-          onTouchStart={(event) => touchRef.current.handleTouchStart(event)}
-          onTouchEnd={(event) => touchRef.current.handleTouchEnd(event)}
-        >
+        <div className="timerPlayGround" style={{ width: "100%" }}>
           <PuzzleSettings
             currScramble={currScramble}
             setCurrScramble={setCurrScramble}
@@ -96,17 +128,52 @@ function App() {
       </div>
 
       <div className="col col-lg-3 col-md-4 col-12" style={{ padding: 0 }}>
-        <Solves
-          sessions={sessions}
-          setSession={setSession}
-          currSession={currSession}
-          setCurrPuzzle={setCurrPuzzle}
-          solvesArr={currSessionsSolves}
-        ></Solves>
-        <SessionInsights sessions={sessions} setSession={setSession} currSession={currSession}/>
-         {/* <ScrambleVisualizer currPuzzle={currPuzzle} currScramble={currScramble} /> */}
+        <div className="dashboard_1">
+          <div className="dashboardSelect">
+          <select
+            name=""
+            id=""
+            onChange={(e) =>
+              setLayout((prevLayout) => {
+                prevLayout.dashboard_1 = e.target.value;
+                return { ...prevLayout };
+              })
+            }
+          >
+            <option value="stats">Stats</option>
+            <option value="solves">Solves</option>
+            <option value="scramble">Scramble</option>
+
+          </select>
+          </div>
+          {dashboardComponent(layout.dashboard_1)}
+        </div>
+
+        <div className="dashboard_2">
+        <div className="dashboardSelect">
+
+          <select
+            name=""
+            id=""
+            onChange={(e) =>
+              setLayout((prevLayout) => {
+                prevLayout.dashboard_2 = e.target.value;
+                return { ...prevLayout };
+              })
+            }
+          >
+            <option value="stats">Stats</option>
+            <option value="solves">Solves</option>
+            <option value="scramble">Scramble</option>
+
+          </select>
+        </div>
+
+          {dashboardComponent(layout.dashboard_2)}
+        </div>
       </div>
     </div>
   );
 }
+
 export default App;

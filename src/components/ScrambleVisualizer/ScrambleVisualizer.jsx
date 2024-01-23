@@ -1,10 +1,10 @@
 import React from 'react'
-
+import "./ScrambleVisualizer.css"
 export default function ScrambleVisualizer({currPuzzle,currScramble,visualDimension}) {
   return (
-    <div>
+    <div className='scrambleContainer'>
       <twisty-player  
-       style={{width:"200px",height:"200px"}}
+       style={{width:"300px",height:"300px"}}
       alg={currScramble}
       puzzle={currPuzzle}
       hint-facelets="none"
