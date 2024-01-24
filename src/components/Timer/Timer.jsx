@@ -18,6 +18,8 @@ function Timer(
     setCurrPuzzle,
     currSession,
     setSession,
+    isScramEditing,
+    setIsScramEditing
   },
   ref
 ) {
@@ -29,7 +31,7 @@ function Timer(
 
   const handleKeyDown = (event) => {
 
-    if (event.code === "Space" && !isRunning) {
+  if(!isScramEditing){  if (event.code === "Space" && !isRunning) {
       if (timerTextRef.current) timerTextRef.current.style.color = "orange";
       setHoldTimeStart(Date.now());
       if (event.code === "Space") event.preventDefault();
@@ -38,7 +40,7 @@ function Timer(
       saveSolveTime();
       setIsRunning(false);
       if (event.code === "Space") event.preventDefault();
-    }
+    }}
   };
 
   const handleKeyUp = (event) => {
@@ -64,7 +66,7 @@ function Timer(
   };
 
   const handleMouseDown = () => {
-    if (isRunning) {
+    if (!isScramEditing && isRunning) {
       setIsRunning(false);
       saveSolveTime();
     } else {
@@ -183,6 +185,8 @@ function Timer(
         isRunning={isRunning}
         currPuzzle={currPuzzle}
         setCurrPuzzle={setCurrPuzzle}
+        isScramEditing={isScramEditing}
+        setIsScramEditing={setIsScramEditing}
       ></Scramble>
       {/* {console.log(elapsedTime)} */}
       <p ref={timerTextRef} className="timerText">

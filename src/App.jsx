@@ -16,6 +16,7 @@ function App() {
   const [currSession, setCurrsession] = useState("");
   const [sessions, setSession] = useState([]);
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
+  const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
   const [layout, setLayout] = useState({
     dashboard_1: "solves",
     dashboard_2: "stats",
@@ -122,6 +123,8 @@ function App() {
             setCurrPuzzle={setCurrPuzzle}
             currSession={currSession}
             setSession={setSession}
+            isScramEditing={isScramEditing}
+            setIsScramEditing={setIsScramEditing}
             ref={touchRef}
           />
         </div>
