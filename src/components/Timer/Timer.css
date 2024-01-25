@@ -4,6 +4,10 @@ body{
 
 .timer{
 margin-top: 2px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 height: 332px;
 }
 @font-face {

@@ -1,0 +1,14 @@
+.dashboard_1{
+    position: relative;
+    min-height: 50vh;
+    max-height: 50vh;
+    
+    overflow: auto;
+  }
+  
+  .dashboardSelect{
+    position:absolute;
+    left: 1px;
+    z-index: 1;
+    
+  }

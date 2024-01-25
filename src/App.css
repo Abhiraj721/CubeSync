@@ -49,9 +49,7 @@
   
   overflow: auto;
 }
-.dashboard_2{
-  position: relative;
-}
+
 .dashboardSelect{
   position:absolute;
   left: 1px;

@@ -30,8 +30,8 @@ function Timer(
   const timerTextRef = useRef(null);
 
   const handleKeyDown = (event) => {
-
-  if(!isScramEditing){  if (event.code === "Space" && !isRunning) {
+    console.log(isScramEditing)
+    if (event.code === "Space" && !isRunning && !isScramEditing) {
       if (timerTextRef.current) timerTextRef.current.style.color = "orange";
       setHoldTimeStart(Date.now());
       if (event.code === "Space") event.preventDefault();
@@ -39,8 +39,8 @@ function Timer(
     } else if(event.code === "Space" && timeStrToInt(timerTextRef.current.innerText)>10) {
       saveSolveTime();
       setIsRunning(false);
-      if (event.code === "Space") event.preventDefault();
-    }}
+      if (event.code === "Space" && !isScramEditing) event.preventDefault();
+    }
   };
 
   const handleKeyUp = (event) => {
@@ -156,7 +156,7 @@ function Timer(
       // document.removeEventListener("touchstart", handleTouchStart);
       // document.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [isRunning, startTime, handlePress]);
+  }, [isRunning, startTime, handlePress,isScramEditing]);
 
   useEffect(() => {
     let requestId;

@@ -8,7 +8,7 @@ import { isMobile, isTablet } from "mobile-device-detect";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Solves from "./components/Solves/Solves";
 import SessionInsights from "./components/SessionInsights/SessionInsights";
-
+import DashboardSelect from "./components/DashboardSelect/DashboardSelect";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -17,10 +17,7 @@ function App() {
   const [sessions, setSession] = useState([]);
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
-  const [layout, setLayout] = useState({
-    dashboard_1: "solves",
-    dashboard_2: "stats",
-  });
+
   const [scrambleDimension,setScrambleDimension]=useState("2D")
 
   const stats = (
@@ -91,8 +88,7 @@ function App() {
   const dashboardComponent = (dashboardType) => {
     if (dashboardType === "solves") return solves;
     if (dashboardType === "stats") return stats;
-    if (dashboardType === "scramble") return scramble;
-    return stats;
+    if (dashboardType === "scramble") return scramble
   };
 
   return (
@@ -131,49 +127,10 @@ function App() {
       </div>
 
       <div className="col col-lg-3 col-md-4 col-12" style={{ padding: 0 }}>
-        <div className="dashboard_1">
-          <div className="dashboardSelect">
-          <select
-            name=""
-            id=""
-            onChange={(e) =>
-              setLayout((prevLayout) => {
-                prevLayout.dashboard_1 = e.target.value;
-                return { ...prevLayout };
-              })
-            }
-          >
-            <option value="stats">Stats</option>
-            <option value="solves">Solves</option>
-            <option value="scramble">Scramble</option>
+        <DashboardSelect  dashboardComponent={dashboardComponent}/>
 
-          </select>
-          </div>
-          {dashboardComponent(layout.dashboard_1)}
-        </div>
+        <DashboardSelect  dashboardComponent={dashboardComponent}/>
 
-        <div className="dashboard_2">
-        <div className="dashboardSelect">
-
-          <select
-            name=""
-            id=""
-            onChange={(e) =>
-              setLayout((prevLayout) => {
-                prevLayout.dashboard_2 = e.target.value;
-                return { ...prevLayout };
-              })
-            }
-          >
-            <option value="stats">Stats</option>
-            <option value="solves">Solves</option>
-            <option value="scramble">Scramble</option>
-
-          </select>
-        </div>
-
-          {dashboardComponent(layout.dashboard_2)}
-        </div>
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ export default function Scramble({
 
   const handleScrambleChange = () => {
     const inputElement = scrambleTextRef.current;
-    const userInput = inputElement.value.trim();
+    const userInput = inputElement.value;
     setCurrScramble(userInput);
   };
 useEffect(()=>{
@@ -63,7 +63,9 @@ useEffect(()=>{
       </p>
       :
       <textarea
-  
+        rows={23}
+        cols={23}
+
         ref={scrambleTextRef}
         value={currScramble}
         onChange={handleScrambleChange}
