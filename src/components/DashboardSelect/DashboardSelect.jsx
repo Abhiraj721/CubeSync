@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-
+import "./dashboardSelect.css"
 export default function DashboardSelect({dashboardComponent}) {
   const [layout, setLayout] = useState({
     dashboard: "solves",
   });
+  const [selectVisible,setSelectVisible]=useState(false)
   return (
-    <div className="dashboard_1">
+    <div className="dashboard" onMouseEnter={()=>setSelectVisible(true)} onMouseLeave={()=>setSelectVisible(false)}>
     <div className="dashboardSelect">
 
-      <select
+     { selectVisible && <select
         name=""
         id=""
         onChange={(e) =>
@@ -22,7 +23,7 @@ export default function DashboardSelect({dashboardComponent}) {
         <option value="solves">Solves</option>
         <option value="scramble">Scramble</option>
 
-      </select>
+      </select>}
     </div>
 
       {dashboardComponent(layout.dashboard)}

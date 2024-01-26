@@ -1,9 +1,11 @@
-.dashboard_1{
+.dashboard{
     position: relative;
     min-height: 50vh;
     max-height: 50vh;
-    
     overflow: auto;
+    border: 1px solid black;
+    margin: 4px;
+    overflow: hidden;
   }
   
   .dashboardSelect{

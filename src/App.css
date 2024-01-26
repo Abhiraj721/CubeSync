@@ -42,20 +42,7 @@
   height: 100vh;
 }
 
-.dashboard_1{
-  position: relative;
-  min-height: 50vh;
-  max-height: 50vh;
-  
-  overflow: auto;
-}
 
-.dashboardSelect{
-  position:absolute;
-  left: 1px;
-  z-index: 1;
-  
-}
 .toggleScrambleDimension{
   position: absolute;
   bottom:12px;

@@ -5,7 +5,9 @@
   max-height: 50vh;
 
   overflow: auto;
+  overflow-x: hidden;
 }
+
 .solveTime {
   color: green;
   width: 82px;
@@ -43,7 +45,7 @@
 .solveDelete {
   color: grey;
 }
-.scrollableContainer {
+.solvesContainer {
   overflow-y: auto;
   height: 100%; /* This makes the inner container take up 100% height of its parent */
 }
@@ -74,3 +76,35 @@
 .noSolvesTitle p{
 
 }
+
+
+
+.solvesContainer {
+  --sb-track-color: #142d29;
+  --sb-thumb-color: #ffffff;
+  --sb-size: 7px;
+
+  scrollbar-color: var(--sb-thumb-color) 
+                   var(--sb-track-color);
+}
+
+.solvesContainer::-webkit-scrollbar {
+  width: var(--sb-size) 
+}
+
+.solvesContainer::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 18px;
+}
+
+.solvesContainer::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 18px;
+  
+  }
+
+.solvesContainer::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 18px;
+  
+  }
