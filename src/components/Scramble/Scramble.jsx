@@ -5,7 +5,7 @@ import { faEdit, faCopy, faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-text-to-clipboard";
 import "./Scramble.css";
-import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
+import { randomScrambleForEvent } from "cubing/scramble";
 
 export default function Scramble({
   currScramble,
@@ -86,7 +86,6 @@ useEffect(()=>{
           <FontAwesomeIcon icon={faRefresh} />
         </button>
       </div>
-      {console.log(isScramEditing)}
     </div>
   );
 }

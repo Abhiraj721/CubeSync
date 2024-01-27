@@ -17,6 +17,7 @@
 }
 .scramblePlayround .scrambleText {
   user-select: none;
+  width: 91%;
   -moz-user-select: none;
   justify-content: center;
   align-items: center;
@@ -26,12 +27,17 @@
 .scramblePlayround {
   /* display: flex; */
   /* background-color: black; */
+  width: 100%;
   /* max-width: 75%; */
 }
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
   /* Tablet styles go here */
   .scramblePlayround {
     max-width: 80%;
+  }
+  .scramblePlayround .scrambleText {
+    font-size:20px   !important;
+  
   }
 }
 

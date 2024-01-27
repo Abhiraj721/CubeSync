@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import "./PuzzleSettings.css";
-import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
+import { randomScrambleForEvent } from "cubing/scramble";
 import { puzzleOptions } from "../Data/PuzzleOptions";
 export default function PuzzleSettings({
   currPuzzle,
