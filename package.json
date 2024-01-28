@@ -30,7 +30,7 @@
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
-    "cubing": "^0.45.0",
+    "cubing": "^0.45.1",
     "eslint": "^8.55.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -41,7 +41,12 @@
     "react-scripts": "^5.0.1",
     "react-timer-hook": "^3.0.7",
     "typed.js": "^2.1.0",
-    "vite": "^5.0.8",
+    "vite": "^5.0.12",
     "web-vitals": "^2.1.4"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
