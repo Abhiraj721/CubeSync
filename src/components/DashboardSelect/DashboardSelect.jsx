@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "./dashboardSelect.css"
+import "./DashboardSelect.css"
 export default function DashboardSelect({dashboardComponent}) {
   const [layout, setLayout] = useState({
     dashboard: "solves",
