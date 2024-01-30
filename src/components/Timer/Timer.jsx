@@ -7,7 +7,8 @@ import React, {
 } from "react";
 import "./Timer.css";
 import Scramble from "../Scramble/Scramble";
-import {FormatTime,timeStrToInt} from "../Data/FormetTime";
+import { FormatTime, timeStrToInt } from "../Data/FormetTime";
+
 function Timer(
   {
     currScramble,
@@ -28,31 +29,77 @@ function Timer(
   const [holdTimeStart, setHoldTimeStart] = useState(null);
   const [handlePress, setHandlePress] = useState(false);
   const timerTextRef = useRef(null);
+  const [inspectionCompleted, setInspectionCompleted] = useState(false);
+  const [isInspectionPressed, setisInspectionPressed] = useState(false);
+  const [inspectionTime, setInspectionTime] = useState(15);
+  const [isInspectionRunning, setIsInspectionRunning] = useState(false);
+  const [inspectionID,setInspectionID]=useState(null)
+  const[inspection,setinspection]=useState(true)
 
+  function helper() {
+    setInspectionTime((prev) => {
+      return prev - 1;
+    });
+  }
+
+  const inspectionKeydown = (event) => {
+    if (event.code === "Space" && inspectionCompleted === false && !isInspectionPressed) {
+      // Use setTimeout instead of setInterval
+      // Save the intervalId in state to clear it later
+      if (event.code === "Space") event.preventDefault();
+      setisInspectionPressed(true);
+      setInspectionCompleted(false); // Reset the completion flag
+    }
+  };
+
+  const inspectionKeyup = (event) => {
+    if (event.code === "Space" && inspectionCompleted === false  ) {
+      const intervalId = setInterval(helper, 1000);
+      setIsInspectionRunning(true)
+      setInspectionID(intervalId)
+      if (event.code === "Space") event.preventDefault();
+
+      setInspectionCompleted(true);
+    }
+  };
+
+
+function clearInspectionInterval(){
+  setIsInspectionRunning(false)
+  clearInterval(inspectionID);
+}
   const handleKeyDown = (event) => {
-    console.log(isScramEditing)
-    if (event.code === "Space" && !isRunning && !isScramEditing) {
+    if( inspection && event.code === "Space" && !inspectionCompleted){   
+      event.preventDefault();
+      return
+    }
+    if (event.code === "Space" && !isRunning && !isScramEditing ) {
       if (timerTextRef.current) timerTextRef.current.style.color = "orange";
       setHoldTimeStart(Date.now());
       if (event.code === "Space") event.preventDefault();
       if (event.code === "Space") setHandlePress(true);
-    } else if(event.code === "Space" && timeStrToInt(timerTextRef.current.innerText)>10) {
+    } else if (event.code === "Space" && timeStrToInt(timerTextRef.current.innerText) > 10 ) {
       saveSolveTime();
       setIsRunning(false);
-      if (event.code === "Space" && !isScramEditing) event.preventDefault();
     }
+    if (event.code === "Space" && !isScramEditing) event.preventDefault();
   };
 
   const handleKeyUp = (event) => {
+    if( inspection && event.code === "Space" && !inspectionCompleted){   
+      event.preventDefault();
+      return
+    }
     if (event.code === "Space" && handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-
       if (holdtime > 200) {
         if (isRunning) {
           setIsRunning(false);
+
           setElapsedTime(Date.now() - startTime);
         } else {
+          clearInspectionInterval()
           if (timerTextRef.current) timerTextRef.current.style.color = "black";
 
           setStartTime(Date.now());
@@ -61,7 +108,20 @@ function Timer(
         }
       } else {
         if (timerTextRef.current) timerTextRef.current.style.color = "black";
+
       }
+    }
+    else if(event.code === "Space" && !handlePress){
+      console.log(inspectionCompleted)
+      resetInspectionParams();
+    }
+
+
+    function resetInspectionParams() {
+      setInspectionCompleted(false);
+      setInspectionTime(15);
+      setisInspectionPressed(false);
+      setIsInspectionRunning(false);
     }
   };
 
@@ -97,6 +157,7 @@ function Timer(
       setHoldTimeStart(null);
     }
   };
+
   useImperativeHandle(ref, () => ({
     handleTouchStart(event) {
       handleMouseDown();
@@ -107,14 +168,13 @@ function Timer(
       if (event.code === "Space") event.preventDefault(); // Prevent default touch behavior
     },
   }));
- 
-  
+
   const saveSolveTime = () => {
     const solveTimeMilli = timeStrToInt(timerTextRef.current.innerText);
-    
+
     const sessions = JSON.parse(localStorage.getItem("sessions"));
     console.log(sessions);
-  
+
     const updatedSessions = sessions.map((session) => {
       if (session.id === currSession) {
         const newSolve = {
@@ -123,25 +183,29 @@ function Timer(
           solveTimeInt: solveTimeMilli,
           scramble: currScramble, // Assuming currScramble is a string
           puzzle: currPuzzle, // Assuming currPuzzle is a string
-          date:  new Date().toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }),
-          isPlus2:false,
-          isDNF:false,
-          notes:""
+          date: new Date().toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }),
+          isPlus2: false,
+          isDNF: false,
+          notes: ""
         };
-  
+
         // Add the new solve to the front of the solves array
         const solvesArray = [newSolve, ...session.solves];
-  
+
         // Update the session with the new solves array
         return { ...session, solves: solvesArray };
       }
       return session;
     });
-  
+
     setSession(updatedSessions);
     localStorage.setItem("sessions", JSON.stringify(updatedSessions));
   };
+
   useEffect(() => {
+  if(inspection){    document.addEventListener("keydown", inspectionKeydown);
+    document.addEventListener("keyup", inspectionKeyup);
+}
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     // document.addEventListener("mousedown", handleMouseDown);
@@ -149,6 +213,10 @@ function Timer(
     // document.addEventListener("touchstart", handleTouchStart);
     // document.addEventListener("touchend", handleTouchEnd);
     return () => {
+      if(inspection){ 
+      document.removeEventListener("keydown", inspectionKeydown);
+      document.removeEventListener("keyup", inspectionKeyup);
+      }
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
       // document.removeEventListener("mousedown", handleMouseDown);
@@ -156,7 +224,7 @@ function Timer(
       // document.removeEventListener("touchstart", handleTouchStart);
       // document.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [isRunning, startTime, handlePress,isScramEditing]);
+  }, [isRunning, startTime, handlePress, isScramEditing, inspectionCompleted, isInspectionPressed]);
 
   useEffect(() => {
     let requestId;
@@ -188,9 +256,8 @@ function Timer(
         isScramEditing={isScramEditing}
         setIsScramEditing={setIsScramEditing}
       ></Scramble>
-      {/* {console.log(elapsedTime)} */}
       <p ref={timerTextRef} className="timerText">
-        {FormatTime(elapsedTime)}
+        {isInspectionRunning ? inspectionTime : FormatTime(elapsedTime)}
       </p>
 
       <br />
