@@ -37,7 +37,7 @@ function Timer(
   const [inspection, setinspection] = useState(true);
   const [inspectionElapsed, setInspectionElpased] = useState(false);
 
-  function helper() {
+  function decrementInspectionTimer() {
     setInspectionTime((prev) => {
       return prev - 1;
     });
@@ -55,7 +55,8 @@ function Timer(
     if (
       event.code === "Space" &&
       inspectionCompleted === false &&
-      !isInspectionPressed
+      !isInspectionPressed && 
+      !isScramEditing
     ) {
       event.preventDefault();
       setisInspectionPressed(true);
@@ -64,8 +65,9 @@ function Timer(
   };
 
   const inspectionKeyup = (event) => {
-    if (event.code === "Space" && inspectionCompleted === false) {
-      const intervalId = setInterval(helper, 1000);
+    if (event.code === "Space" && inspectionCompleted === false && 
+    !isScramEditing) {
+      const intervalId = setInterval(decrementInspectionTimer, 1000);
       setIsInspectionRunning(true);
       setInspectionID(intervalId);
        event.preventDefault();
@@ -79,7 +81,7 @@ function Timer(
     clearInterval(inspectionID);
   }
   const handleKeyDown = (event) => {
-    if (inspection && event.code === "Space" && !inspectionCompleted) {
+    if (inspection && event.code === "Space" && !inspectionCompleted && !isScramEditing) {
       event.preventDefault();
       return;
     }
@@ -182,7 +184,7 @@ function Timer(
     const solveTimeMilli = timeStrToInt(timerTextRef.current.innerText);
     const sessions = JSON.parse(localStorage.getItem("sessions"));
 
-    if (inspectionElapsed) solveTimeStr = FormatTime(solveTimeMilli + 2000);
+    if (inspectionElapsed=="+2") solveTimeStr = FormatTime(solveTimeMilli + 2000);
 
     const updatedSessions = sessions.map((session) => {
       if (session.id === currSession) {

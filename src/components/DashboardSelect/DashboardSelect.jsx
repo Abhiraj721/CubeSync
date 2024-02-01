@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import "./DashboardSelect.css"
-export default function DashboardSelect({dashboardComponent}) {
+export default function DashboardSelect({dashboardComponent,intialDashboard,dashboardHeight}) {
   const [layout, setLayout] = useState({
-    dashboard: "solves",
+    dashboard: intialDashboard,
   });
   const [selectVisible,setSelectVisible]=useState(false)
   return (
-    <div className="dashboard" onMouseEnter={()=>setSelectVisible(true)} onMouseLeave={()=>setSelectVisible(false)}>
+    <div className="dashboard" style={{maxHeight:dashboardHeight,minHeight:dashboardHeight}} onMouseEnter={()=>setSelectVisible(true)} onMouseLeave={()=>setSelectVisible(false)}>
     <div className="dashboardSelect">
 
      { selectVisible && <select
         name=""
         id=""
+        value={layout.dashboard}
         onChange={(e) =>
           setLayout((prevLayout) => {
             prevLayout.dashboard = e.target.value;
@@ -25,7 +26,6 @@ export default function DashboardSelect({dashboardComponent}) {
 
       </select>}
     </div>
-
       {dashboardComponent(layout.dashboard)}
     </div>
   )

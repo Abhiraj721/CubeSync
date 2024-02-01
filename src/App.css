@@ -39,7 +39,7 @@
 }
 .timerPlayGround{
   background-color: #282c34;
-  height: 100vh;
+  height:100vh;
 }
 
 
@@ -47,4 +47,23 @@
   position: absolute;
   bottom:12px;
   right: 5px;
+}
+
+
+
+.collapsible-container {
+  overflow:hidden;
+  transition: transform 0.3s ease-in-out;
+  height: auto;
+}
+
+.collapsed {
+  transform: translateY(-100%);
+  position: absolute;
+  width: 100%;
+}
+
+.collapsible-content {
+  background-color: #f1f1f1;
+  padding: 15px;
 }

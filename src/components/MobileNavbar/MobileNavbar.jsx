@@ -4,7 +4,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import "./MobileNavbar.css"
 export default function MobileNavbar() {
   return (
-    <div className='mobileNavbar'>
+    <div className='mobileNavbar' style={{height:"45px"}}>
       <div class="dropdown">
   <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
   <FontAwesomeIcon icon={faBars} />

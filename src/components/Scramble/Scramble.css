@@ -33,7 +33,7 @@
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
   /* Tablet styles go here */
   .scramblePlayround {
-    -width: 100%;
+    width: 100%;
   }
   .scramblePlayround .scrambleText {
     

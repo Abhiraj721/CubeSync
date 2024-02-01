@@ -9,6 +9,8 @@ import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Solves from "./components/Solves/Solves";
 import SessionInsights from "./components/SessionInsights/SessionInsights";
 import DashboardSelect from "./components/DashboardSelect/DashboardSelect";
+import Button from "react-bootstrap/Button";
+import Collapse from "react-bootstrap/Collapse";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -17,13 +19,20 @@ function App() {
   const [sessions, setSession] = useState([]);
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
+  const [isFooterVisible, setIsFooterVisible] = useState(true);
+  const [scrambleDimension, setScrambleDimension] = useState("2D");
+    const [isFooterdashboardVisible, setisFooterdashboardVisible] = useState(false);
 
-  const [scrambleDimension,setScrambleDimension]=useState("2D")
-
+  const toogleFooterDashboard = () => {
+    setisFooterdashboardVisible(!isFooterdashboardVisible);
+  };
   const stats = (
-    <SessionInsights sessions={sessions} setSession={setSession} currSession={currSession} />
+    <SessionInsights
+      sessions={sessions}
+      setSession={setSession}
+      currSession={currSession}
+    />
   );
-
   const solves = (
     <Solves
       sessions={sessions}
@@ -33,14 +42,27 @@ function App() {
       solvesArr={currSessionsSolves}
     />
   );
-  const scramble =<> <ScrambleVisualizer visualDimension={scrambleDimension} currPuzzle={currPuzzle} currScramble={currScramble} /> <button onClick={()=>toggleScrambleDimension(scrambleDimension)} className="toggleScrambleDimension">{scrambleDimension}</button></>;
-    function toggleScrambleDimension(currDimension){
-      if(currDimension=="2D"){
-      setScrambleDimension("3D")
-      }
-      else setScrambleDimension("2D")
-    }
- 
+  const scramble = (
+    <>
+      {" "}
+      <ScrambleVisualizer
+        visualDimension={scrambleDimension}
+        currPuzzle={currPuzzle}
+        currScramble={currScramble}
+      />{" "}
+      <button
+        onClick={() => toggleScrambleDimension(scrambleDimension)}
+        className="toggleScrambleDimension"
+      >
+        {scrambleDimension}
+      </button>
+    </>
+  );
+  function toggleScrambleDimension(currDimension) {
+    if (currDimension == "2D") {
+      setScrambleDimension("3D");
+    } else setScrambleDimension("2D");
+  }
 
   const touchRef = useRef(null);
 
@@ -72,7 +94,7 @@ function App() {
     setSession(sessions);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (sessions != null) {
       sessions.forEach((session, index) => {
         if (session.id === currSession) {
@@ -88,9 +110,11 @@ function App() {
   const dashboardComponent = (dashboardType) => {
     if (dashboardType === "solves") return solves;
     if (dashboardType === "stats") return stats;
-    if (dashboardType === "scramble") return scramble
+    if (dashboardType === "scramble") return scramble;
   };
-
+  const toggleFooter = () => {
+    setIsFooterVisible(!isFooterVisible);
+  };
   return (
     <div className="App row">
       <div className="col col-lg-2 col-md-1 col-12" style={{ padding: 0 }}>
@@ -127,11 +151,38 @@ function App() {
       </div>
 
       <div className="col col-lg-3 col-md-4 col-12" style={{ padding: 0 }}>
-        <DashboardSelect  dashboardComponent={dashboardComponent}/>
+        <DashboardSelect
+          dashboardComponent={dashboardComponent}
+          intialDashboard={"solves"}
+        />
 
-        <DashboardSelect  dashboardComponent={dashboardComponent}/>
-
+        {window.innerWidth >= 767 ? (
+          <DashboardSelect
+            dashboardComponent={dashboardComponent}
+            intialDashboard={"scramble"}
+          />
+        ) : (
+          ""
+        )}
+ {window.innerWidth <= 767 && <div className="fixed-bottom bg-dark p-2">
+        <Button
+          variant="secondary"
+          onClick={toogleFooterDashboard}
+        >
+          Toggle Content
+        </Button>
+        <Collapse in={isFooterdashboardVisible}>
+          <div>
+          <DashboardSelect
+          dashboardComponent={dashboardComponent}
+          intialDashboard={"solves"}
+          dashboardHeight="30vh"
+        />
+          </div>
+        </Collapse>
+      </div>}
       </div>
+       
     </div>
   );
 }
