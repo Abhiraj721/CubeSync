@@ -21,7 +21,8 @@ function App() {
   const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
   const [isFooterVisible, setIsFooterVisible] = useState(true);
   const [scrambleDimension, setScrambleDimension] = useState("2D");
-    const [isFooterdashboardVisible, setisFooterdashboardVisible] = useState(false);
+  const [isFooterdashboardVisible, setisFooterdashboardVisible] =
+    useState(false);
 
   const toogleFooterDashboard = () => {
     setisFooterdashboardVisible(!isFooterdashboardVisible);
@@ -122,7 +123,8 @@ function App() {
       </div>
 
       <div className="col col-lg-7 col-md-7 col-12" style={{ padding: 0 }}>
-        <div className="timerPlayGround" style={{ width: "100%" }}>
+        <div className="timerPlayGround" style={{ width: "100%" }} onTouchStart={(event)=>touchRef.current.handleTouchStart(event)}
+      onTouchEnd={(event)=>touchRef.current.handleTouchEnd(event)}>
           <PuzzleSettings
             currScramble={currScramble}
             setCurrScramble={setCurrScramble}
@@ -151,38 +153,37 @@ function App() {
       </div>
 
       <div className="col col-lg-3 col-md-4 col-12" style={{ padding: 0 }}>
-        <DashboardSelect
-          dashboardComponent={dashboardComponent}
-          intialDashboard={"solves"}
-        />
-
         {window.innerWidth >= 767 ? (
-          <DashboardSelect
-            dashboardComponent={dashboardComponent}
-            intialDashboard={"scramble"}
-          />
+          <>
+            <DashboardSelect
+              dashboardComponent={dashboardComponent}
+              intialDashboard={"scramble"}
+            />
+            <DashboardSelect
+              dashboardComponent={dashboardComponent}
+              intialDashboard={"solves"}
+            />
+          </>
         ) : (
           ""
         )}
- {window.innerWidth <= 767 && <div className="fixed-bottom bg-dark p-2">
-        <Button
-          variant="secondary"
-          onClick={toogleFooterDashboard}
-        >
-          Toggle Content
-        </Button>
-        <Collapse in={isFooterdashboardVisible}>
-          <div>
-          <DashboardSelect
-          dashboardComponent={dashboardComponent}
-          intialDashboard={"solves"}
-          dashboardHeight="30vh"
-        />
+        {window.innerWidth <= 767 && (
+          <div className="fixed-bottom bg-dark p-2">
+            <Button variant="secondary" onClick={toogleFooterDashboard}>
+              Toggle Content
+            </Button>
+            <Collapse in={isFooterdashboardVisible}>
+              <div>
+                <DashboardSelect
+                  dashboardComponent={dashboardComponent}
+                  intialDashboard={"solves"}
+                  dashboardHeight="30vh"
+                />
+              </div>
+            </Collapse>
           </div>
-        </Collapse>
-      </div>}
+        )}
       </div>
-       
     </div>
   );
 }

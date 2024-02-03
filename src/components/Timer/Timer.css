@@ -32,4 +32,9 @@ height: 332px;
       font-size: 0.19em;
     }
   }
-  
+  .smDeviceScramblevisual{
+    position: absolute;
+
+    bottom: 0px;
+    /* background-color: red; */
+  }

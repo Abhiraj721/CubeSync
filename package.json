@@ -17,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-scripts": "^5.0.1",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.3",
     "sweetalert2-react-content": "^5.0.7"
   },

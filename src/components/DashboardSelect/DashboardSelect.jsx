@@ -6,7 +6,7 @@ export default function DashboardSelect({dashboardComponent,intialDashboard,dash
   });
   const [selectVisible,setSelectVisible]=useState(false)
   return (
-    <div className="dashboard" style={{maxHeight:dashboardHeight,minHeight:dashboardHeight}} onMouseEnter={()=>setSelectVisible(true)} onMouseLeave={()=>setSelectVisible(false)}>
+    <div className="dashboard" style={dashboardHeight ?{maxHeight:dashboardHeight,minHeight:dashboardHeight,overflow:"auto"}:{}} onMouseEnter={()=>setSelectVisible(true)} onMouseLeave={()=>setSelectVisible(false)}>
     <div className="dashboardSelect">
 
      { selectVisible && <select

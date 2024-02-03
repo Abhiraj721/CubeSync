@@ -3,11 +3,12 @@ import "./ScrambleInfo.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import ScrambleVisualizer from "../../../ScrambleVisualizer/ScrambleVisualizer";
+import isAlertOpened from "../../../Data/CheckForAlert";
 const MySwal = withReactContent(Swal);
-
 export default function ScrambleInfo({ solveInfo }) {
   return (
     <div>
+            <p className="scrambleText">{solveInfo.scramble}</p>
       <center>
         <div className="scrambleVisuals">
           <ScrambleVisualizer
@@ -17,6 +18,7 @@ export default function ScrambleInfo({ solveInfo }) {
           ></ScrambleVisualizer>
           <button
             onClick={() => {
+              console.log(isAlertOpened())
               MySwal.fire(
                 <center>
                   <p style={{fontSize:"17px"}}>{solveInfo.scramble}</p>
@@ -34,7 +36,6 @@ export default function ScrambleInfo({ solveInfo }) {
           </button>
         </div>
       </center>
-      <p className="scrambleText">{solveInfo.scramble}</p>
     </div>
   );
 }

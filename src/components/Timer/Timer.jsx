@@ -8,6 +8,8 @@ import React, {
 import "./Timer.css";
 import Scramble from "../Scramble/Scramble";
 import { FormatTime, timeStrToInt } from "../Data/FormetTime";
+import ScrambleVisualizer from "../ScrambleVisualizer/ScrambleVisualizer";
+import isAlertOpened from "../Data/CheckForAlert";
 
 function Timer(
   {
@@ -34,7 +36,7 @@ function Timer(
   const [inspectionTime, setInspectionTime] = useState(15);
   const [isInspectionRunning, setIsInspectionRunning] = useState(false);
   const [inspectionID, setInspectionID] = useState(null);
-  const [inspection, setinspection] = useState(true);
+  const [inspection, setinspection] = useState(false);
   const [inspectionElapsed, setInspectionElpased] = useState(false);
 
   function decrementInspectionTimer() {
@@ -45,32 +47,34 @@ function Timer(
   useEffect(() => {
     if (inspectionTime === 0) {
       setInspectionElpased("+2");
-    }
-    else if(inspectionTime === -2){
+    } else if (inspectionTime === -2) {
       setInspectionElpased("DNF");
     }
   }, [inspectionTime]);
 
   const inspectionKeydown = (event) => {
     if (
-      event.code === "Space" &&
+      (event.code === "Space" || event === "touch") &&
       inspectionCompleted === false &&
-      !isInspectionPressed && 
-      !isScramEditing
+      !isInspectionPressed &&
+      !isScramEditing && !isAlertOpened()
     ) {
-      event.preventDefault();
+      if (event.code === "Space") event.preventDefault();
       setisInspectionPressed(true);
       setInspectionCompleted(false); // Reset the completion flag
     }
   };
 
   const inspectionKeyup = (event) => {
-    if (event.code === "Space" && inspectionCompleted === false && 
-    !isScramEditing) {
+    if (
+      (event.code === "Space" || event == "touch") &&
+      inspectionCompleted === false &&
+      !isScramEditing && !isAlertOpened()
+    ) {
       const intervalId = setInterval(decrementInspectionTimer, 1000);
       setIsInspectionRunning(true);
       setInspectionID(intervalId);
-       event.preventDefault();
+      if (event.code === "Space") event.preventDefault();
 
       setInspectionCompleted(true);
     }
@@ -81,7 +85,12 @@ function Timer(
     clearInterval(inspectionID);
   }
   const handleKeyDown = (event) => {
-    if (inspection && event.code === "Space" && !inspectionCompleted && !isScramEditing) {
+    if (
+      inspection &&
+      event.code === "Space" &&
+      !inspectionCompleted &&
+      !isScramEditing && !isAlertOpened()
+    ) {
       event.preventDefault();
       return;
     }
@@ -98,7 +107,7 @@ function Timer(
   };
 
   const handleKeyUp = (event) => {
-    if (inspection && event.code === "Space" && !inspectionCompleted) {
+    if (inspection && event.code === "Space" && !inspectionCompleted && !isAlertOpened()) {
       event.preventDefault();
       return;
     }
@@ -125,37 +134,45 @@ function Timer(
       console.log(inspectionCompleted);
       resetInspectionParams();
     }
-
-    function resetInspectionParams() {
-      setInspectionCompleted(false);
-      setInspectionTime(15);
-      setisInspectionPressed(false);
-      setIsInspectionRunning(false);
-      setInspectionElpased(false);
-    }
   };
-
+  function resetInspectionParams() {
+    setInspectionCompleted(false);
+    setInspectionTime(15);
+    setisInspectionPressed(false);
+    setIsInspectionRunning(false);
+    setInspectionElpased(false);
+  }
   const handleMouseDown = () => {
-    if (!isScramEditing && isRunning) {
-      setIsRunning(false);
-      saveSolveTime();
-    } else {
+    if (inspection && !inspectionCompleted && !isScramEditing) {
+      return;
+    }
+    if (!isRunning && !isScramEditing) {
+      if (timerTextRef.current) timerTextRef.current.style.color = "orange";
       setHoldTimeStart(Date.now());
+
       setHandlePress(true);
-      timerTextRef.current.style.color = "pink";
+    } else {
+      setIsRunning(false);
+      setTimeout(saveSolveTime, 20); ///saving time after 220 milliseconds so that the accurate time will saved
     }
   };
 
   const handleMouseUp = () => {
-    if (holdTimeStart && handlePress) {
+    if (inspection && !inspectionCompleted) {
+      return;
+    }
+    if (handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
       if (holdtime > 200) {
         if (isRunning) {
           setIsRunning(false);
+
           setElapsedTime(Date.now() - startTime);
         } else {
+          clearInspectionInterval();
           if (timerTextRef.current) timerTextRef.current.style.color = "black";
+
           setStartTime(Date.now());
           // setElapsedTime(0);
           setIsRunning(true);
@@ -163,19 +180,25 @@ function Timer(
       } else {
         if (timerTextRef.current) timerTextRef.current.style.color = "black";
       }
-
-      setHoldTimeStart(null);
+    } else if (!handlePress) {
+      console.log(inspectionCompleted);
+      resetInspectionParams();
     }
   };
 
   useImperativeHandle(ref, () => ({
     handleTouchStart(event) {
+      if (isScramEditing) return;
+      else if (inspection) inspectionKeydown("touch");
       handleMouseDown();
-      if (event.code === "Space") event.preventDefault(); // Prevent default touch behavior
+
     },
     handleTouchEnd(event) {
+      if (isScramEditing) return;
+      else if (inspection) inspectionKeyup("touch");
       handleMouseUp();
-      if (event.code === "Space") event.preventDefault(); // Prevent default touch behavior
+
+
     },
   }));
 
@@ -184,7 +207,8 @@ function Timer(
     const solveTimeMilli = timeStrToInt(timerTextRef.current.innerText);
     const sessions = JSON.parse(localStorage.getItem("sessions"));
 
-    if (inspectionElapsed=="+2") solveTimeStr = FormatTime(solveTimeMilli + 2000);
+    if (inspectionElapsed == "+2")
+      solveTimeStr = FormatTime(solveTimeMilli + 2000);
 
     const updatedSessions = sessions.map((session) => {
       if (session.id === currSession) {
@@ -202,8 +226,8 @@ function Timer(
             minute: "numeric",
             hour12: true,
           }),
-          isPlus2: inspectionElapsed=="+2" ? true : false,
-          isDNF: inspectionElapsed=="DNF" ? true : false,
+          isPlus2: inspectionElapsed == "+2" ? true : false,
+          isDNF: inspectionElapsed == "DNF" ? true : false,
           notes: "",
         };
 
@@ -283,9 +307,22 @@ function Timer(
         setIsScramEditing={setIsScramEditing}
       ></Scramble>
       <p ref={timerTextRef} className="timerText">
-        {isInspectionRunning ? (inspectionTime> 0 ? inspectionTime : inspectionTime <=0 && inspectionTime>-2  ? "+2" :"DNF" ): FormatTime(elapsedTime)}
+        {isInspectionRunning
+          ? inspectionTime > 0
+            ? inspectionTime
+            : inspectionTime <= 0 && inspectionTime > -2
+            ? "+2"
+            : "DNF"
+          : FormatTime(elapsedTime)}
       </p>
-      <br />
+      {/* <div className="smDeviceScramblevisuals">
+        <ScrambleVisualizer
+          currPuzzle={currPuzzle}
+          currScramble={currScramble}
+          visualDimension={"2D"}
+          styles={{ height: "200px", width: "200px" }}
+        />
+      </div> */}
     </div>
   );
 }

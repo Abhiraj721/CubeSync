@@ -162,6 +162,7 @@ export default function Solves({
                   >
                     X
                   </p>
+
                 </div>
               </div>
             );

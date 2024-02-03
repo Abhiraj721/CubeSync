@@ -6,10 +6,11 @@ export default function ScrambleVisualizer({
   currPuzzle,
   currScramble,
   visualDimension,
+  styles
 }) {
 
   return <div className="scrambleContainer">      <twisty-player
-  style={{ width: "280px", height: "280px" }}
+  style={styles ? styles :{ width: "280px", height: "280px" }}
   alg={currScramble}
   puzzle={currPuzzle}
   hint-facelets="none"

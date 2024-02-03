@@ -22,7 +22,7 @@ export default function SolveAlert({
   }, [clickedSection]);
 
   return (
-    <div className="solveInfo">
+    <div className="solveInfo" style={{maxHeight:"70vh",overflowY:"scroll"}}>
      <h3>Solve no.{solve.sno}</h3>
       <h4>{solve.solveTime}</h4>
       <p className="puzzleType">
