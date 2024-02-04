@@ -11,6 +11,9 @@ import SessionInsights from "./components/SessionInsights/SessionInsights";
 import DashboardSelect from "./components/DashboardSelect/DashboardSelect";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
+import { Routes, Route, Link, Router } from "react-router-dom";
+import temp from "./components/temp";
+import Settings from "./components/Settings/Settings";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -64,7 +67,6 @@ function App() {
       setScrambleDimension("3D");
     } else setScrambleDimension("2D");
   }
-
   const touchRef = useRef(null);
 
   useEffect(() => {
@@ -122,68 +124,91 @@ function App() {
         {window.innerWidth <= 767 ? <MobileNavbar /> : <Navbar />}
       </div>
 
-      <div className="col col-lg-7 col-md-7 col-12" style={{ padding: 0 }}>
-        <div className="timerPlayGround" style={{ width: "100%" }} onTouchStart={(event)=>touchRef.current.handleTouchStart(event)}
-      onTouchEnd={(event)=>touchRef.current.handleTouchEnd(event)}>
-          <PuzzleSettings
-            currScramble={currScramble}
-            setCurrScramble={setCurrScramble}
-            isRunning={isRunning}
-            currPuzzle={currPuzzle}
-            setCurrPuzzle={setCurrPuzzle}
-            sessions={sessions}
-            setSession={setSession}
-            currSession={currSession}
-            setCurrsession={setCurrsession}
-          />
-          <Timer
-            currScramble={currScramble}
-            setCurrScramble={setCurrScramble}
-            isRunning={isRunning}
-            setIsRunning={setIsRunning}
-            currPuzzle={currPuzzle}
-            setCurrPuzzle={setCurrPuzzle}
-            currSession={currSession}
-            setSession={setSession}
-            isScramEditing={isScramEditing}
-            setIsScramEditing={setIsScramEditing}
-            ref={touchRef}
-          />
-        </div>
-      </div>
-
-      <div className="col col-lg-3 col-md-4 col-12" style={{ padding: 0 }}>
-        {window.innerWidth >= 767 ? (
-          <>
-            <DashboardSelect
-              dashboardComponent={dashboardComponent}
-              intialDashboard={"scramble"}
-            />
-            <DashboardSelect
-              dashboardComponent={dashboardComponent}
-              intialDashboard={"solves"}
-            />
-          </>
-        ) : (
-          ""
-        )}
-        {window.innerWidth <= 767 && (
-          <div className="fixed-bottom bg-dark p-2">
-            <Button variant="secondary" onClick={toogleFooterDashboard}>
-              Toggle Content
-            </Button>
-            <Collapse in={isFooterdashboardVisible}>
-              <div>
-                <DashboardSelect
-                  dashboardComponent={dashboardComponent}
-                  intialDashboard={"solves"}
-                  dashboardHeight="30vh"
-                />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div
+                className="col col-lg-7 col-md-7 col-12"
+                style={{ padding: 0 }}
+              >
+                <div
+                  className="timerPlayGround"
+                  style={{ width: "100%" }}
+                  onTouchStart={(event) =>
+                    touchRef.current.handleTouchStart(event)
+                  }
+                  onTouchEnd={(event) => touchRef.current.handleTouchEnd(event)}
+                >
+                  <PuzzleSettings
+                    currScramble={currScramble}
+                    setCurrScramble={setCurrScramble}
+                    isRunning={isRunning}
+                    currPuzzle={currPuzzle}
+                    setCurrPuzzle={setCurrPuzzle}
+                    sessions={sessions}
+                    setSession={setSession}
+                    currSession={currSession}
+                    setCurrsession={setCurrsession}
+                  />
+                  <Timer
+                    currScramble={currScramble}
+                    setCurrScramble={setCurrScramble}
+                    isRunning={isRunning}
+                    setIsRunning={setIsRunning}
+                    currPuzzle={currPuzzle}
+                    setCurrPuzzle={setCurrPuzzle}
+                    currSession={currSession}
+                    setSession={setSession}
+                    isScramEditing={isScramEditing}
+                    setIsScramEditing={setIsScramEditing}
+                    ref={touchRef}
+                  />
+                </div>
               </div>
-            </Collapse>
-          </div>
-        )}
-      </div>
+
+              <div
+                className="col col-lg-3 col-md-4 col-12"
+                style={{ padding: 0 }}
+              >
+                {window.innerWidth >= 767 ? (
+                  <>
+                    <DashboardSelect
+                      dashboardComponent={dashboardComponent}
+                      intialDashboard={"scramble"}
+                    />
+                    <DashboardSelect
+                      dashboardComponent={dashboardComponent}
+                      intialDashboard={"solves"}
+                    />
+                  </>
+                ) : (
+                  ""
+                )}
+                {window.innerWidth <= 767 && (
+                  <div className="fixed-bottom bg-dark p-2">
+                    <Button variant="secondary" onClick={toogleFooterDashboard}>
+                      Toggle Content
+                    </Button>
+                    <Collapse in={isFooterdashboardVisible}>
+                      <div>
+                        <DashboardSelect
+                          dashboardComponent={dashboardComponent}
+                          intialDashboard={"solves"}
+                          dashboardHeight="30vh"
+                        />
+                      </div>
+                    </Collapse>
+                  </div>
+                )}
+              </div>
+            </>
+          }
+        />
+        <Route path="/settings" element={<Settings/>} />
+
+      </Routes>
     </div>
   );
 }

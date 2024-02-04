@@ -1,0 +1,11 @@
+.settingsPanel {
+  color: black;
+display: flex;
+flex-direction: column;
+align-items:flex-start;
+gap: 14px;
+}
+
+.settingsChoiceBtn:not(:last-child) {
+    margin-right: 10px; /* Adjust the value according to your preference */
+  }
