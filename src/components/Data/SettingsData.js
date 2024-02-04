@@ -1,23 +1,29 @@
 const timerSettings = [
     {
-      title: "Enable Inspection",
-      description: "Toggle to enable a 15-second inspection",
-      inputType: "select",
-      settingValue: "inspection",
-      options: ["Option 1", "Option 2"]
+      title: "Pause Duration (seconds)",
+      description: "Time to hold the space bar before the timer starts.",
+      inputType: "integer",
+      settingValue: "freezeTime",
     },
-    {
-      title: "Greet User",
-      description: "Enable a friendly greeting",
-      inputType: "checkbox",
-      settingValue: "good",
-    },
-    {
-      title: "Adjust Volume",
-      description: "Adjust the volume level",
-      inputType: "range",
-      settingValue: "justtest",
-    }
+    // {
+    //   title: "Greet User",
+    //   description: "Enable a friendly greeting",
+    //   inputType: "checkbox",
+    //   settingValue: "good",
+    // },
+    // {
+    //   title: "Adjust Volume",
+    //   description: "Adjust the volume level",
+    //   inputType: "range",
+    //   settingValue: "justtest",
+    // },
+
+    // {
+    //   title: "Adjust Volume",
+    //   description: "Adjust thdfe volume level",
+    //   inputType: "button",
+    //   settingValue: "click me",
+    // }
   ];
   
   export { timerSettings };

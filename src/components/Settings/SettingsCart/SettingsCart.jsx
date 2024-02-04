@@ -10,7 +10,10 @@ export default function SettingCart({
   function helper() {
     const settingState = settings.timerSettings[settingInfo.settingValue];
     const settingInputType = settingInfo.inputType;
-    if (settingInputType == "select") {
+    if(settingInputType=="button"){
+      return <button>{settingInfo.settingValue}</button>
+    }
+   else if (settingInputType == "select") {
       return (
         <select
           name=""
@@ -34,7 +37,19 @@ export default function SettingCart({
         />
       );
     } else if (settingInputType === "range") {
-      return <input type="range" name="" id="" value={settingState} onChange={(e)=>handleSettingChange(e.target.value)} />
+      return (
+        <input
+          type={settingInputType}
+          name=""
+          id=""
+          value={settingState}
+          onChange={(e) => handleSettingChange(e.target.value)}
+        />
+      );
+    } else if (settingInputType == "integer") {
+      return (
+        <input type="number" name="quantity" value={settingState} onChange={(e) => handleSettingChange(e.target.value)} min="0" max="100" step="1"></input>
+      );
     }
   }
   function handleSettingChange(changedValue) {
@@ -48,24 +63,13 @@ export default function SettingCart({
       };
     });
   }
-  // function handleCheckBoxChange(changedValue){
-  //   setSettings((prevSettings) => {
-  //     return {
-  //       ...prevSettings,
-  //       [settingsType]: {
-  //         ...prevSettings.timerSettings,
-  //         [settingInfo.settingValue]: changedValue,
-  //       },
-  //     };
-  //   });
-  // }
 
   return (
     <div className="settingsWrap">
       <div className="row">
         <div className="col col-lg-5 col-md-6 col-sm-6 settingInfo">
           <h3>{settingInfo.title}</h3>
-          <p>{settingInfo.discription}</p>
+          <p>{settingInfo.description}</p>
         </div>
         <div className="col col-lg-5 col-md-6 col-sm-6 settingsInput">
           {helper()}

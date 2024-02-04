@@ -114,7 +114,7 @@ function Timer(
     if (event.code === "Space" && handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-      if (holdtime > 200) {
+      if (holdtime >200) {
         if (isRunning) {
           setIsRunning(false);
 
@@ -164,7 +164,7 @@ function Timer(
     if (handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-      if (holdtime > 200) {
+      if (holdtime >200 ) {
         if (isRunning) {
           setIsRunning(false);
 

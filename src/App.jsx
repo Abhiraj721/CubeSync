@@ -12,7 +12,6 @@ import DashboardSelect from "./components/DashboardSelect/DashboardSelect";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { Routes, Route, Link, Router } from "react-router-dom";
-import temp from "./components/temp";
 import Settings from "./components/Settings/Settings";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
@@ -26,7 +25,7 @@ function App() {
   const [scrambleDimension, setScrambleDimension] = useState("2D");
   const [isFooterdashboardVisible, setisFooterdashboardVisible] =
     useState(false);
-
+  const touchRef = useRef(null);
   const toogleFooterDashboard = () => {
     setisFooterdashboardVisible(!isFooterdashboardVisible);
   };
@@ -67,7 +66,6 @@ function App() {
       setScrambleDimension("3D");
     } else setScrambleDimension("2D");
   }
-  const touchRef = useRef(null);
 
   useEffect(() => {
     const sessions = localStorage.getItem("sessions");
@@ -206,7 +204,7 @@ function App() {
             </>
           }
         />
-        <Route path="/settings" element={<Settings/>} />
+        <Route path="/settings" element={<Settings />} />
 
       </Routes>
     </div>

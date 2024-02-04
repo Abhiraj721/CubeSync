@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "./Settings.css";
 import { timerSettings } from "../Data/SettingsData";
 import SettingCart from "./SettingsCart/SettingsCart";
-export default function Settings() {
-  const[settings,setSettings]=useState({
-    "timerSettings":{
-      inspection:"2",
-      good:true,
-      justtest:45
+import { useEffect } from "react";
 
-    },
-    "themeSettings":{
+function Settings() {
+  const [settings, setSettings] = useState(null);
+  useEffect(() => {
+    const currSettings = localStorage.getItem("settings");
+    const intialSettings = {
+      timerSettings: {
+        freezeTime: 0.5,
+      },
+      themeSettings: {},
+    };
+    if (currSettings == null) {
+      localStorage.setItem("settings", JSON.stringify(intialSettings));
+      setSettings(intialSettings);
+    } else {
+      setSettings(JSON.parse(currSettings));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("settings", JSON.stringify(settings));
+  }, [settings]);
 
-    },
-  })
+
   return (
     <div className="col col-lg-10 col-md-11 col-12">
       <div className="settingsPanel">
@@ -24,15 +36,21 @@ export default function Settings() {
           <button className="settingsChoiceBtn">Appearance</button>
           <button className="settingsChoiceBtn">Data</button>
         </div>
-     
-      {
-        timerSettings.map((setting)=>{
-      return <SettingCart settingInfo={setting} settings={settings} setSettings={setSettings} settingsType={"timerSettings"}/>
-    
-        })
-      }
+
+        {settings &&
+          timerSettings.map((setting) => {
+            return (
+              <SettingCart
+                settingInfo={setting}
+                settings={settings}
+                setSettings={setSettings}
+                settingsType={"timerSettings"}
+              />
+            );
+          })}
       </div>
-    {  console.log(settings)}
+      {console.log(localStorage.getItem("settings"))}
     </div>
   );
 }
+export default Settings;
