@@ -4,28 +4,8 @@ import { timerSettings } from "../Data/SettingsData";
 import SettingCart from "./SettingsCart/SettingsCart";
 import { useEffect } from "react";
 
-function Settings() {
-  const [settings, setSettings] = useState(null);
-  useEffect(() => {
-    const currSettings = localStorage.getItem("settings");
-    const intialSettings = {
-      timerSettings: {
-        freezeTime: 0.5,
-      },
-      themeSettings: {},
-    };
-    if (currSettings == null) {
-      localStorage.setItem("settings", JSON.stringify(intialSettings));
-      setSettings(intialSettings);
-    } else {
-      setSettings(JSON.parse(currSettings));
-    }
-  }, []);
-  useEffect(() => {
-    localStorage.setItem("settings", JSON.stringify(settings));
-  }, [settings]);
-
-
+function Settings({settings, setSettings}) {
+  
   return (
     <div className="col col-lg-10 col-md-11 col-12">
       <div className="settingsPanel">

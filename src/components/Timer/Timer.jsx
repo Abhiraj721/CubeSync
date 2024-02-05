@@ -23,6 +23,7 @@ function Timer(
     setSession,
     isScramEditing,
     setIsScramEditing,
+    settings
   },
   ref
 ) {
@@ -36,14 +37,22 @@ function Timer(
   const [inspectionTime, setInspectionTime] = useState(15);
   const [isInspectionRunning, setIsInspectionRunning] = useState(false);
   const [inspectionID, setInspectionID] = useState(null);
+  console.log(settings.timerSettings.isInspectionEnabled)
   const [inspection, setinspection] = useState(false);
   const [inspectionElapsed, setInspectionElpased] = useState(false);
-
+  const [freezeTime,setFreezeTime]=useState(0.4)
+  const [hideTimer,sethideTimer]=useState(false)
   function decrementInspectionTimer() {
     setInspectionTime((prev) => {
       return prev - 1;
     });
   }
+  useEffect(() => {
+    setinspection(settings.timerSettings.isInspectionEnabled);
+    setFreezeTime((settings.timerSettings.freezeTime)*1000)
+    sethideTimer(settings.timerSettings.hideTimer)
+  }, [settings]);
+  
   useEffect(() => {
     if (inspectionTime === 0) {
       setInspectionElpased("+2");
@@ -101,7 +110,7 @@ function Timer(
       setHandlePress(true);
     } else if (event.code === "Space") {
       setIsRunning(false);
-      setTimeout(saveSolveTime, 20); ///saving time after 220 milliseconds so that the accurate time will saved
+      setTimeout(saveSolveTime, 20); ///saving time after 20 milliseconds so that the accurate time will saved
     }
     if (event.code === "Space" && !isScramEditing) event.preventDefault();
   };
@@ -114,7 +123,7 @@ function Timer(
     if (event.code === "Space" && handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-      if (holdtime >200) {
+      if (holdtime >freezeTime) {
         if (isRunning) {
           setIsRunning(false);
 
@@ -164,7 +173,7 @@ function Timer(
     if (handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-      if (holdtime >200 ) {
+      if (holdtime >freezeTime ) {
         if (isRunning) {
           setIsRunning(false);
 
@@ -313,7 +322,7 @@ function Timer(
             : inspectionTime <= 0 && inspectionTime > -2
             ? "+2"
             : "DNF"
-          : FormatTime(elapsedTime)}
+          : hideTimer && isRunning ? "solve" : FormatTime(elapsedTime)}
       </p>
       {/* <div className="smDeviceScramblevisuals">
         <ScrambleVisualizer

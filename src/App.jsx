@@ -13,12 +13,14 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { Routes, Route, Link, Router } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
+import intialSettings from "./components/Data/DefaultSettings";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
   const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
   const [currSession, setCurrsession] = useState("");
   const [sessions, setSession] = useState([]);
+  const [settings, setSettings] = useState(intialSettings);
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
   const [isFooterVisible, setIsFooterVisible] = useState(true);
@@ -66,7 +68,21 @@ function App() {
       setScrambleDimension("3D");
     } else setScrambleDimension("2D");
   }
+  ///settings setup
+  useEffect(() => {
+    const currSettings = localStorage.getItem("settings");
 
+    if (currSettings === null) {
+      localStorage.setItem("settings", JSON.stringify(intialSettings));
+    } else {
+      console.log(currSettings);
+      setSettings(JSON.parse(currSettings));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("settings", JSON.stringify(settings));
+  }, [settings]);
+//session setup
   useEffect(() => {
     const sessions = localStorage.getItem("sessions");
     if (sessions == null) {
@@ -131,13 +147,21 @@ function App() {
                 className="col col-lg-7 col-md-7 col-12"
                 style={{ padding: 0 }}
               >
+            
                 <div
                   className="timerPlayGround"
                   style={{ width: "100%" }}
-                  onTouchStart={(event) =>
+                  onTouchStart={(event) =>{
+                    if(!event.target.closest('.alterScramBtn') && !event.target.closest('.scrambleArea') ){
                     touchRef.current.handleTouchStart(event)
-                  }
-                  onTouchEnd={(event) => touchRef.current.handleTouchEnd(event)}
+                    }
+                    
+                  }}
+                  onTouchEnd={(event) => {
+                    if(!event.target.closest('.alterScramBtn') && !event.target.closest('.scrambleArea') ){
+                    touchRef.current.handleTouchEnd(event)
+                    }
+                  }}
                 >
                   <PuzzleSettings
                     currScramble={currScramble}
@@ -161,6 +185,7 @@ function App() {
                     setSession={setSession}
                     isScramEditing={isScramEditing}
                     setIsScramEditing={setIsScramEditing}
+                    settings={settings}
                     ref={touchRef}
                   />
                 </div>
@@ -204,8 +229,10 @@ function App() {
             </>
           }
         />
-        <Route path="/settings" element={<Settings />} />
-
+        <Route
+          path="/settings"
+          element={<Settings settings={settings} setSettings={setSettings} />}
+        />
       </Routes>
     </div>
   );

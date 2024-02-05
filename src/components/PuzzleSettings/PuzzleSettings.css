@@ -4,7 +4,7 @@ body {
 }
 
 .scrambleArea {
-  height: 90px;
+margin-bottom: 3rem;
   width: 100%;
   /* You can add other styling as needed */
 }

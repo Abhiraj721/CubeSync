@@ -5,19 +5,24 @@ const timerSettings = [
       inputType: "integer",
       settingValue: "freezeTime",
     },
-    // {
-    //   title: "Greet User",
-    //   description: "Enable a friendly greeting",
-    //   inputType: "checkbox",
-    //   settingValue: "good",
-    // },
+    {
+      title: "WCA Inspection",
+      description: "Use timed inspections to improve your skills,ideal for competition preparation.",
+      inputType: "checkbox",
+      settingValue: "isInspectionEnabled",
+    },
+    {
+      title: "Keep time hidden while solving.",
+      description: "",
+      inputType: "checkbox",
+      settingValue: "hideTimer",
+    },
     // {
     //   title: "Adjust Volume",
     //   description: "Adjust the volume level",
     //   inputType: "range",
     //   settingValue: "justtest",
     // },
-
     // {
     //   title: "Adjust Volume",
     //   description: "Adjust thdfe volume level",
