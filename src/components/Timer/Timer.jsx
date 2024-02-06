@@ -10,6 +10,10 @@ import Scramble from "../Scramble/Scramble";
 import { FormatTime, timeStrToInt } from "../Data/FormetTime";
 import ScrambleVisualizer from "../ScrambleVisualizer/ScrambleVisualizer";
 import isAlertOpened from "../Data/CheckForAlert";
+import eight_seconds_male from "../../utility/InspectionVoices/eight_seconds_male.wav"
+import twelve_seconds_male from "../../utility/InspectionVoices/twelve_seconds_male.wav"
+import eight_seconds_female from "../../utility/InspectionVoices/ggs.mp3"
+import twelve_seconds_female from "../../utility/InspectionVoices/twelve_seconds_female.wav"
 
 function Timer(
   {
@@ -23,7 +27,7 @@ function Timer(
     setSession,
     isScramEditing,
     setIsScramEditing,
-    settings
+    settings,
   },
   ref
 ) {
@@ -37,11 +41,12 @@ function Timer(
   const [inspectionTime, setInspectionTime] = useState(15);
   const [isInspectionRunning, setIsInspectionRunning] = useState(false);
   const [inspectionID, setInspectionID] = useState(null);
-  console.log(settings.timerSettings.isInspectionEnabled)
-  const [inspection, setinspection] = useState(false);
+  console.log(settings.timerSettings.isInspectionEnabled);
+  const [inspection, setinspection] = useState(true);
+  const [inspectionVoiceAlerts,setInspectionVoiceAlerts]=useState(true)
   const [inspectionElapsed, setInspectionElpased] = useState(false);
-  const [freezeTime,setFreezeTime]=useState(0.4)
-  const [hideTimer,sethideTimer]=useState(false)
+  const [freezeTime, setFreezeTime] = useState(0.4 * 1000);
+  const [hideTimer, sethideTimer] = useState(false);
   function decrementInspectionTimer() {
     setInspectionTime((prev) => {
       return prev - 1;
@@ -49,10 +54,13 @@ function Timer(
   }
   useEffect(() => {
     setinspection(settings.timerSettings.isInspectionEnabled);
-    setFreezeTime((settings.timerSettings.freezeTime)*1000)
-    sethideTimer(settings.timerSettings.hideTimer)
+    setFreezeTime(settings.timerSettings.freezeTime * 1000);
+    console.log(settings.timerSettings.isInspectionEnabled);
+    sethideTimer(settings.timerSettings.hideTimer);
+    setInspectionTime(settings.timerSettings.inspectionTime);
+    setInspectionVoiceAlerts(settings.timerSettings.inspectionVoiceEnabled)
   }, [settings]);
-  
+
   useEffect(() => {
     if (inspectionTime === 0) {
       setInspectionElpased("+2");
@@ -61,12 +69,26 @@ function Timer(
     }
   }, [inspectionTime]);
 
+  useEffect(()=>{  ///playing alert sounds of 8 and 12 seconds
+    if(inspectionVoiceAlerts!="none"){
+      if(inspectionTime==8){
+       
+      }
+      else if(inspectionTime==3){
+     
+
+
+      }
+    }
+  },[inspectionTime])
+
   const inspectionKeydown = (event) => {
     if (
       (event.code === "Space" || event === "touch") &&
       inspectionCompleted === false &&
       !isInspectionPressed &&
-      !isScramEditing && !isAlertOpened()
+      !isScramEditing &&
+      !isAlertOpened()
     ) {
       if (event.code === "Space") event.preventDefault();
       setisInspectionPressed(true);
@@ -78,7 +100,8 @@ function Timer(
     if (
       (event.code === "Space" || event == "touch") &&
       inspectionCompleted === false &&
-      !isScramEditing && !isAlertOpened()
+      !isScramEditing &&
+      !isAlertOpened()
     ) {
       const intervalId = setInterval(decrementInspectionTimer, 1000);
       setIsInspectionRunning(true);
@@ -94,17 +117,21 @@ function Timer(
     clearInterval(inspectionID);
   }
   const handleKeyDown = (event) => {
+    // if (inspection && !inspectionCompleted && !isScramEditing) {
+      console.log(inspection+" "+inspectionCompleted+" "+isScramEditing+" "+isAlertOpened())
     if (
-      inspection &&
       event.code === "Space" &&
+      inspection &&
       !inspectionCompleted &&
-      !isScramEditing && !isAlertOpened()
+      !isScramEditing &&
+      !isAlertOpened()
     ) {
       event.preventDefault();
       return;
     }
     if (event.code === "Space" && !isRunning && !isScramEditing) {
       if (timerTextRef.current) timerTextRef.current.style.color = "orange";
+      console.log("56565");
       setHoldTimeStart(Date.now());
       event.preventDefault();
       setHandlePress(true);
@@ -116,14 +143,20 @@ function Timer(
   };
 
   const handleKeyUp = (event) => {
-    if (inspection && event.code === "Space" && !inspectionCompleted && !isAlertOpened()) {
+    if (
+      inspection &&
+      event.code === "Space" &&
+      !inspectionCompleted &&
+      !isAlertOpened()
+    ) {
       event.preventDefault();
       return;
     }
     if (event.code === "Space" && handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-      if (holdtime >freezeTime) {
+      console.log(holdtime);
+      if (holdtime > 400) {
         if (isRunning) {
           setIsRunning(false);
 
@@ -173,7 +206,7 @@ function Timer(
     if (handlePress) {
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
-      if (holdtime >freezeTime ) {
+      if (holdtime > freezeTime) {
         if (isRunning) {
           setIsRunning(false);
 
@@ -200,14 +233,11 @@ function Timer(
       if (isScramEditing) return;
       else if (inspection) inspectionKeydown("touch");
       handleMouseDown();
-
     },
     handleTouchEnd(event) {
       if (isScramEditing) return;
       else if (inspection) inspectionKeyup("touch");
       handleMouseUp();
-
-
     },
   }));
 
@@ -322,7 +352,9 @@ function Timer(
             : inspectionTime <= 0 && inspectionTime > -2
             ? "+2"
             : "DNF"
-          : hideTimer && isRunning ? "solve" : FormatTime(elapsedTime)}
+          : hideTimer && isRunning
+          ? "solve"
+          : FormatTime(elapsedTime)}
       </p>
       {/* <div className="smDeviceScramblevisuals">
         <ScrambleVisualizer

@@ -12,11 +12,32 @@ const timerSettings = [
       settingValue: "isInspectionEnabled",
     },
     {
+      title: "Inspection Time (seconds)",
+      description: "Customize Inspection time as per your need.",
+      inputType: "integer",
+      settingValue: "inspectionTime",
+      isSubSetting:true
+    },
+    {
+      title: "Voice alerts of WCA inspection.",
+      description: "Activate voice alerts at 8 and 12 seconds.",
+      inputType: "select",
+      options:[
+        "male",
+        "female",
+        "none"
+      ],
+      settingValue: "inspectionVoiceEnabled",
+      isSubSetting:true
+      
+    },
+    {
       title: "Keep time hidden while solving.",
       description: "",
       inputType: "checkbox",
       settingValue: "hideTimer",
     },
+
     // {
     //   title: "Adjust Volume",
     //   description: "Adjust the volume level",

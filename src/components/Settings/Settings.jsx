@@ -18,14 +18,17 @@ function Settings({settings, setSettings}) {
         </div>
 
         {settings &&
-          timerSettings.map((setting) => {
+          timerSettings.map((setting,index) => {
             return (
+              <>
+         {index!=0 && !setting.isSubSetting && <hr/>}
               <SettingCart
                 settingInfo={setting}
                 settings={settings}
                 setSettings={setSettings}
                 settingsType={"timerSettings"}
               />
+              </>
             );
           })}
       </div>

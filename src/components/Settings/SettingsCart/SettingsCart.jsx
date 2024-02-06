@@ -67,11 +67,11 @@ export default function SettingCart({
   return (
     <div className="settingsWrap">
       <div className="row">
-        <div className="col col-lg-5 col-md-6 col-sm-6 settingInfo">
-          <h3>{settingInfo.title}</h3>
+        <div className="col col-lg-6 col-md-6 col-sm-6 settingInfo" style={settingInfo.isSubSetting ? {position:"relative",left:"4vw"} : {}}> 
+          <h5>{settingInfo.title}</h5>
           <p>{settingInfo.description}</p>
         </div>
-        <div className="col col-lg-5 col-md-6 col-sm-6 settingsInput">
+        <div className="col col-lg-6 col-md-6 col-sm-6 settingsInput">
           {helper()}
         </div>
       </div>

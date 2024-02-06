@@ -2,7 +2,9 @@ const intialSettings = {
     timerSettings: {
       freezeTime: 0.5,
       isInspectionEnabled:false,
-      hideTimer:false
+      inspectionTime:15,
+      hideTimer:false,
+      inspectionVoiceEnabled:true
     },
     themeSettings: {},
   };
