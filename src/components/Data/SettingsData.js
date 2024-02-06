@@ -27,7 +27,7 @@ const timerSettings = [
         "female",
         "none"
       ],
-      settingValue: "inspectionVoiceEnabled",
+      settingValue: "inspectionVoiceAlerts",
       isSubSetting:true
       
     },

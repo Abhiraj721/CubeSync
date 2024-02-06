@@ -4,7 +4,7 @@ const intialSettings = {
       isInspectionEnabled:false,
       inspectionTime:15,
       hideTimer:false,
-      inspectionVoiceEnabled:true
+      inspectionVoiceAlerts:"male"
     },
     themeSettings: {},
   };

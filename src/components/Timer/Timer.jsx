@@ -10,10 +10,10 @@ import Scramble from "../Scramble/Scramble";
 import { FormatTime, timeStrToInt } from "../Data/FormetTime";
 import ScrambleVisualizer from "../ScrambleVisualizer/ScrambleVisualizer";
 import isAlertOpened from "../Data/CheckForAlert";
-import eight_seconds_male from "../../utility/InspectionVoices/eight_seconds_male.wav"
-import twelve_seconds_male from "../../utility/InspectionVoices/twelve_seconds_male.wav"
-import eight_seconds_female from "../../utility/InspectionVoices/ggs.mp3"
-import twelve_seconds_female from "../../utility/InspectionVoices/twelve_seconds_female.wav"
+import eight_seconds_male from "../../utility/InspectionVoices/eight_seconds_male.wav";
+import twelve_seconds_male from "../../utility/InspectionVoices/twelve_seconds_male.wav";
+import eight_seconds_female from "../../utility/InspectionVoices/eight_seconds_female.wav";
+import twelve_seconds_female from "../../utility/InspectionVoices/twelve_seconds_female.wav";
 
 function Timer(
   {
@@ -43,7 +43,7 @@ function Timer(
   const [inspectionID, setInspectionID] = useState(null);
   console.log(settings.timerSettings.isInspectionEnabled);
   const [inspection, setinspection] = useState(true);
-  const [inspectionVoiceAlerts,setInspectionVoiceAlerts]=useState(true)
+  const [inspectionVoiceAlerts, setInspectionVoiceAlerts] = useState("male");
   const [inspectionElapsed, setInspectionElpased] = useState(false);
   const [freezeTime, setFreezeTime] = useState(0.4 * 1000);
   const [hideTimer, sethideTimer] = useState(false);
@@ -58,7 +58,8 @@ function Timer(
     console.log(settings.timerSettings.isInspectionEnabled);
     sethideTimer(settings.timerSettings.hideTimer);
     setInspectionTime(settings.timerSettings.inspectionTime);
-    setInspectionVoiceAlerts(settings.timerSettings.inspectionVoiceEnabled)
+    console.log(settings.timerSettings.inspectionVoiceAlerts)
+    setInspectionVoiceAlerts(settings.timerSettings.inspectionVoiceAlerts);
   }, [settings]);
 
   useEffect(() => {
@@ -69,18 +70,34 @@ function Timer(
     }
   }, [inspectionTime]);
 
-  useEffect(()=>{  ///playing alert sounds of 8 and 12 seconds
-    if(inspectionVoiceAlerts!="none"){
-      if(inspectionTime==8){
-       
+  useEffect(() => {
+    ///playing alert sounds of 8 and 12 seconds
+    if (inspectionVoiceAlerts != "none") {
+      if (inspectionTime == 8) {
+        console.log(inspectionVoiceAlerts)
+        if(inspectionVoiceAlerts=="male"){
+          console.log("4545454")
+            let voiceAlertMale=new Audio(eight_seconds_male)
+            voiceAlertMale.play()
+        }
+        else if(inspectionVoiceAlerts=="female"){
+          let voiceAlertFemale=new Audio(eight_seconds_female)
+          voiceAlertFemale.play()
+
+        }
+      } else if (inspectionTime == 3) {
+        if(inspectionVoiceAlerts=="male"){
+          let voiceAlertMale=new Audio(twelve_seconds_male)
+          voiceAlertMale.play()
       }
-      else if(inspectionTime==3){
-     
+      else if(inspectionVoiceAlerts=="female"){
+        let voiceAlertFemale=new Audio(twelve_seconds_female)
+        voiceAlertFemale.play()
 
-
+      }
       }
     }
-  },[inspectionTime])
+  }, [inspectionTime]);
 
   const inspectionKeydown = (event) => {
     if (
@@ -118,7 +135,15 @@ function Timer(
   }
   const handleKeyDown = (event) => {
     // if (inspection && !inspectionCompleted && !isScramEditing) {
-      console.log(inspection+" "+inspectionCompleted+" "+isScramEditing+" "+isAlertOpened())
+    console.log(
+      inspection +
+        " " +
+        inspectionCompleted +
+        " " +
+        isScramEditing +
+        " " +
+        isAlertOpened()
+    );
     if (
       event.code === "Space" &&
       inspection &&
