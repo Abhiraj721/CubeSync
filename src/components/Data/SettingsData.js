@@ -65,7 +65,23 @@ const timerSettings = [
         inputType: "color",
         settingValue: "fontColor",
    
-    }
+    },
+    {
+      
+      title: "Background color",
+      description: "",
+      inputType: "color",
+      settingValue: "backgroundColor",
+ 
+  },
+  {
+      
+    title: "Board color",
+    description: "",
+    inputType: "color",
+    settingValue: "boardColor",
+
+},
   ]
   export { timerSettings,themeSettings };
   

@@ -7,7 +7,6 @@ gap: 14px;
 
 }
 .settings{
-  background-color: rgb(21, 14, 0);
   height: 100vh;
   /* overflow-x: hidden; */
  overflow-y: scroll; 

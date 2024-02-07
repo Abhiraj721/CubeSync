@@ -8,7 +8,9 @@ const intialSettings = {
       isConfirmBeforeDelete:false
     },
     themeSettings: {
-      fontColor:"blue"
+      fontColor:"#00141A",
+      backgroundColor:"#00141A",
+      boardColor:"#141A29"
     },
   };
 

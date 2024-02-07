@@ -7,8 +7,10 @@ export default function SettingCart({
   setSettings,
   settingsType,
 }) {
-  function helper() {
-    const settingState = settings.timerSettings[settingInfo.settingValue];
+  function inputAssigner() {
+    console.log(settingsType)
+    const settingState = settings[settingsType][settingInfo.settingValue];
+    console.log(settingState)
     const settingInputType = settingInfo.inputType;
     if(settingInputType=="button"){
       return <button>{settingInfo.settingValue}</button>
@@ -58,6 +60,7 @@ export default function SettingCart({
       );
     }
     else if(settingInputType=="color"){
+      console.log(settingState)
       return <input type="color" value={settingState} onChange={(e)=>handleSettingChange(e.target.value)} name="" id="" />
     }
   }
@@ -81,7 +84,7 @@ export default function SettingCart({
           <p>{settingInfo.description}</p>
         </div>
         <div className="col col-lg-6 col-md-6 col-sm-6 settingsInput">
-          {helper()}
+          {inputAssigner()}
         </div>
       </div>
     </div>

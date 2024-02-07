@@ -3,7 +3,7 @@
     min-height: 50vh;
     max-height: 50vh;
     overflow: auto;
-    border: 1px solid black;
+    border: 1px solid rgb(217, 217, 217);
     padding: 4px;
     overflow: hidden;
   }
