@@ -45,6 +45,7 @@ function App() {
       currSession={currSession}
       setCurrPuzzle={setCurrPuzzle}
       solvesArr={currSessionsSolves}
+      settings={settings}
     />
   );
   const scramble = (

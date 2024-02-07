@@ -55,10 +55,8 @@ function Timer(
   useEffect(() => {
     setinspection(settings.timerSettings.isInspectionEnabled);
     setFreezeTime(settings.timerSettings.freezeTime * 1000);
-    console.log(settings.timerSettings.isInspectionEnabled);
     sethideTimer(settings.timerSettings.hideTimer);
     setInspectionTime(settings.timerSettings.inspectionTime);
-    console.log(settings.timerSettings.inspectionVoiceAlerts)
     setInspectionVoiceAlerts(settings.timerSettings.inspectionVoiceAlerts);
   }, [settings]);
 
@@ -72,30 +70,32 @@ function Timer(
 
   useEffect(() => {
     ///playing alert sounds of 8 and 12 seconds
+    let audioFile;
+    let timeInSeconds;
+
     if (inspectionVoiceAlerts != "none") {
-      if (inspectionTime == 8) {
-        console.log(inspectionVoiceAlerts)
-        if(inspectionVoiceAlerts=="male"){
-          console.log("4545454")
-            let voiceAlertMale=new Audio(eight_seconds_male)
-            voiceAlertMale.play()
-        }
-        else if(inspectionVoiceAlerts=="female"){
-          let voiceAlertFemale=new Audio(eight_seconds_female)
-          voiceAlertFemale.play()
+      if (inspectionTime === 8) {
+        console.log(inspectionTime);
+        audioFile =
+          inspectionVoiceAlerts === "male"
+            ? eight_seconds_male
+            : eight_seconds_female;
+        timeInSeconds = 8;
+      } else if (inspectionTime === 3) {
+        audioFile =
+          inspectionVoiceAlerts === "male"
+            ? twelve_seconds_male
+            : twelve_seconds_female;
+        timeInSeconds = 3;
+      }
 
-        }
-      } else if (inspectionTime == 3) {
-        if(inspectionVoiceAlerts=="male"){
-          let voiceAlertMale=new Audio(twelve_seconds_male)
-          voiceAlertMale.play()
+      if (audioFile && timeInSeconds) {
+        playAudio(audioFile);
       }
-      else if(inspectionVoiceAlerts=="female"){
-        let voiceAlertFemale=new Audio(twelve_seconds_female)
-        voiceAlertFemale.play()
-
-      }
-      }
+    }
+    function playAudio(audioFile) {
+      let voiceAlert = new Audio(audioFile);
+      voiceAlert.play();
     }
   }, [inspectionTime]);
 
@@ -135,23 +135,14 @@ function Timer(
   }
   const handleKeyDown = (event) => {
     // if (inspection && !inspectionCompleted && !isScramEditing) {
-    console.log(
-      inspection +
-        " " +
-        inspectionCompleted +
-        " " +
-        isScramEditing +
-        " " +
-        isAlertOpened()
-    );
     if (
       event.code === "Space" &&
       inspection &&
       !inspectionCompleted &&
-      !isScramEditing &&
+      isScramEditing &&
       !isAlertOpened()
     ) {
-      event.preventDefault();
+      // event.preventDefault();
       return;
     }
     if (event.code === "Space" && !isRunning && !isScramEditing) {

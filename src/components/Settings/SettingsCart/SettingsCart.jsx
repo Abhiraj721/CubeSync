@@ -28,6 +28,8 @@ export default function SettingCart({
       );
     } else if (settingInputType == "checkbox") {
       return (
+        <div class="checkbox-wrapper-59">
+  <label class="switch">
         <input
           type="checkbox"
           name=""
@@ -35,6 +37,10 @@ export default function SettingCart({
           checked={settingState}
           onChange={() => handleSettingChange(!settingState)}
         />
+            <span class="slider"></span>
+  </label>
+</div>
+
       );
     } else if (settingInputType === "range") {
       return (
@@ -50,6 +56,9 @@ export default function SettingCart({
       return (
         <input type="number" name="quantity" value={settingState} onChange={(e) => handleSettingChange(e.target.value)} min="0" max="100" step="1"></input>
       );
+    }
+    else if(settingInputType=="color"){
+      return <input type="color" value={settingState} onChange={(e)=>handleSettingChange(e.target.value)} name="" id="" />
     }
   }
   function handleSettingChange(changedValue) {

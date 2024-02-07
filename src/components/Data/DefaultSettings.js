@@ -4,9 +4,12 @@ const intialSettings = {
       isInspectionEnabled:false,
       inspectionTime:15,
       hideTimer:false,
-      inspectionVoiceAlerts:"male"
+      inspectionVoiceAlerts:"male",
+      isConfirmBeforeDelete:false
     },
-    themeSettings: {},
+    themeSettings: {
+      fontColor:"blue"
+    },
   };
 
   export default intialSettings

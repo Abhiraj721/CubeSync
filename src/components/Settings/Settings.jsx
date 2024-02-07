@@ -1,24 +1,28 @@
 import React, { useState} from "react";
 import "./Settings.css";
-import { timerSettings } from "../Data/SettingsData";
+import { timerSettings,themeSettings } from "../Data/SettingsData";
 import SettingCart from "./SettingsCart/SettingsCart";
 import { useEffect } from "react";
 
 function Settings({settings, setSettings}) {
-  
+  const [currSettingChoice,setcurrSettingChoice]=useState(timerSettings)
+
+ function handleSettingChoiceChange(changedSetting){
+  setcurrSettingChoice(changedSetting)
+  } 
   return (
-    <div className="col col-lg-10 col-md-11 col-12">
+    <div className="col col-lg-10 col-md-11 col-12 settings">
       <div className="settingsPanel">
         <h1>Settings</h1>
 
         <div className="settingsChoices">
-          <button className="settingsChoiceBtn">Timer</button>
-          <button className="settingsChoiceBtn">Appearance</button>
-          <button className="settingsChoiceBtn">Data</button>
+          <button onClick={(e)=> handleSettingChoiceChange(timerSettings)}  className="settingsChoiceBtn">Timer</button>
+          <button onClick={(e)=> handleSettingChoiceChange(themeSettings)}  className="settingsChoiceBtn">Appearance</button>
+          <button onClick={(e)=> handleSettingChoiceChange(e.target.value)}  className="settingsChoiceBtn">Data</button>
         </div>
 
         {settings &&
-          timerSettings.map((setting,index) => {
+          currSettingChoice.map((setting,index) => {
             return (
               <>
          {index!=0 && !setting.isSubSetting && <hr/>}
@@ -32,7 +36,6 @@ function Settings({settings, setSettings}) {
             );
           })}
       </div>
-      {console.log(localStorage.getItem("settings"))}
     </div>
   );
 }

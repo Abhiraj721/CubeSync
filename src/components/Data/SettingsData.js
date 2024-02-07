@@ -37,6 +37,12 @@ const timerSettings = [
       inputType: "checkbox",
       settingValue: "hideTimer",
     },
+    {
+      title: "Confirm Delete Solves",
+      description: "Confirmation will be asked before deleting the solve.",
+      inputType: "checkbox",
+      settingValue: "isConfirmBeforeDelete",
+    },
 
     // {
     //   title: "Adjust Volume",
@@ -51,6 +57,15 @@ const timerSettings = [
     //   settingValue: "click me",
     // }
   ];
-  
-  export { timerSettings };
+  const themeSettings=[
+    {
+      
+        title: "font color",
+        description: "",
+        inputType: "color",
+        settingValue: "fontColor",
+   
+    }
+  ]
+  export { timerSettings,themeSettings };
   

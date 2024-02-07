@@ -1,9 +1,16 @@
 .settingsPanel {
-  color: black;
 display: flex;
 flex-direction: column;
+width: 100%;
 align-items:flex-start;
 gap: 14px;
+
+}
+.settings{
+  background-color: rgb(21, 14, 0);
+  height: 100vh;
+  /* overflow-x: hidden; */
+ overflow-y: scroll; 
 }
 
 .settingsChoiceBtn:not(:last-child) {
