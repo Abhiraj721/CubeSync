@@ -29,6 +29,12 @@ const styleInfo=[
       nameOfClass:"boardContainer",
       styleName:"backgroundColor",
       settingName:"boardColor"
+    },
+    {
+      
+      nameOfClass:"body",
+      styleName:"fontFamily",
+      settingName:"fontFamily"
     }
   
 ]
