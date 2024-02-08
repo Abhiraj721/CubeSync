@@ -71,7 +71,7 @@ const timerSettings = [
       title: "Background color",
       description: "",
       inputType: "color",
-      settingValue: "backgroundColor",
+      settingValue: "backColor",
  
   },
   {

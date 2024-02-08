@@ -13,7 +13,7 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { Routes, Route, Link, Router } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
-import intialSettings from "./components/Data/DefaultSettings";
+import { intialSettings, styleInfo } from "./components/Data/DefaultSettings";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -67,9 +67,24 @@ function App() {
   function toggleScrambleDimension(currDimension) {
     if (currDimension == "2D") {
       setScrambleDimension("3D");
-    } else setScrambleDimension("2D");
+    } else setScrambleDimension("3D");
   }
   ///settings setup
+  useEffect(() => {    //uptading theme
+    styleInfo.forEach((style) => {
+      if (style.nameOfClass == "body") {
+        document.body.style[style.styleName] =
+          settings.themeSettings[style.settingName];
+      } else {
+        const test = document.querySelectorAll("." + style.nameOfClass);
+
+        test.forEach((element) => {
+          element.style[style.styleName] =
+            settings.themeSettings[style.settingName];
+        });
+      }
+    });
+  }, [settings.themeSettings]);
   useEffect(() => {
     const currSettings = localStorage.getItem("settings");
 
@@ -83,7 +98,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("settings", JSON.stringify(settings));
   }, [settings]);
-//session setup
+  //session setup
   useEffect(() => {
     const sessions = localStorage.getItem("sessions");
     if (sessions == null) {
@@ -148,19 +163,23 @@ function App() {
                 className="col col-lg-7 col-md-7 col-12"
                 style={{ padding: 0 }}
               >
-            
                 <div
                   className="timerPlayGround"
                   style={{ width: "100%" }}
-                  onTouchStart={(event) =>{
-                    if(!event.target.closest('.alterScramBtn') && !event.target.closest('.scrambleArea') ){
-                    touchRef.current.handleTouchStart(event)
+                  onTouchStart={(event) => {
+                    if (
+                      !event.target.closest(".alterScramBtn") &&
+                      !event.target.closest(".scrambleArea")
+                    ) {
+                      touchRef.current.handleTouchStart(event);
                     }
-                    
                   }}
                   onTouchEnd={(event) => {
-                    if(!event.target.closest('.alterScramBtn') && !event.target.closest('.scrambleArea') ){
-                    touchRef.current.handleTouchEnd(event)
+                    if (
+                      !event.target.closest(".alterScramBtn") &&
+                      !event.target.closest(".scrambleArea")
+                    ) {
+                      touchRef.current.handleTouchEnd(event);
                     }
                   }}
                 >

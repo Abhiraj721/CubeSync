@@ -69,11 +69,12 @@ export default function SettingCart({
       return {
         ...prevSettings,
         [settingsType]: {
-          ...prevSettings.timerSettings,
+          ...prevSettings[settingsType],
           [settingInfo.settingValue]: changedValue,
         },
       };
     });
+    console.log(settings)
   }
 
   return (

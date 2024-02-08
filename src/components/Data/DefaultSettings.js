@@ -9,9 +9,27 @@ const intialSettings = {
     },
     themeSettings: {
       fontColor:"#00141A",
-      backgroundColor:"#00141A",
+      backColor:"#00141A",
       boardColor:"#141A29"
     },
   };
-
-  export default intialSettings
+const styleInfo=[
+  
+    {
+      nameOfClass:"body",
+      styleName:"color",
+      settingName:"fontColor"
+    },
+    {
+      nameOfClass:"body",
+      styleName:"backgroundColor",
+      settingName:"backColor"
+    },
+    {
+      nameOfClass:"boardContainer",
+      styleName:"backgroundColor",
+      settingName:"boardColor"
+    }
+  
+]
+  export  {intialSettings,styleInfo}

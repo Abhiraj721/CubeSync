@@ -14,7 +14,6 @@ import eight_seconds_male from "../../utility/InspectionVoices/eight_seconds_mal
 import twelve_seconds_male from "../../utility/InspectionVoices/twelve_seconds_male.wav";
 import eight_seconds_female from "../../utility/InspectionVoices/eight_seconds_female.wav";
 import twelve_seconds_female from "../../utility/InspectionVoices/twelve_seconds_female.wav";
-
 function Timer(
   {
     currScramble,

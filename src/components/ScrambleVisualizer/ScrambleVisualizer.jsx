@@ -9,7 +9,7 @@ export default function ScrambleVisualizer({
   styles
 }) {
 
-  return <div className="scrambleContainer">      <twisty-player
+  return <div className="scrambleContainer ">      <twisty-player
   style={styles ? styles :{ width: "280px", height: "280px" }}
   alg={currScramble}
   puzzle={currPuzzle}

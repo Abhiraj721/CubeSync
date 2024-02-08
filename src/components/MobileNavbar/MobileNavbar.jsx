@@ -14,6 +14,8 @@ export default function MobileNavbar() {
     <li><a class="dropdown-item" href="#"></a></li>
     <li><a class="dropdown-item" href="#">Another action</a></li>
  <li><a class="dropdown-item" href="#">Something else here</a></li>
+ <Link to={"/settings"}> <li>Contact</li></Link>
+
   </ul>
 </div>
 <div   style={{color:"black",margin:"0 auto"}}>
