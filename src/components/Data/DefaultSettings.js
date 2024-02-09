@@ -10,7 +10,9 @@ const intialSettings = {
     themeSettings: {
       fontColor:"#00141A",
       backColor:"#00141A",
-      boardColor:"#141A29"
+      boardColor:"#141A29",
+      backgroundImageUrl:"no",
+      backgroundType:"Gif"
     },
   };
 const styleInfo=[
@@ -35,6 +37,12 @@ const styleInfo=[
       nameOfClass:"body",
       styleName:"fontFamily",
       settingName:"fontFamily"
+    },
+    {
+      nameOfClass:"timerPlayGround",
+      styleName:"backgroundImage",
+      settingName:"backgroundImageUrl"
+
     }
   
 ]

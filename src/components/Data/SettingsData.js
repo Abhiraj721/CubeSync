@@ -1,3 +1,4 @@
+
 const timerSettings = [
   {
     title: "Pause Duration (seconds)",
@@ -160,5 +161,38 @@ const themeSettings = [
     ],
     settingValue: "fontFamily",
   },
+  {
+    title:"Timer Background"
+  },
+  {
+    title:"Background Type",
+    inputType:"select",
+    options:[
+      "image url",
+      "image upload",
+      "Gif"
+    ],
+    settingValue: "backgroundType",
+    isSubSetting:true
+
+  },
+ {
+    title: "Background Image Url",
+    description: "Give URL of background image",
+    inputType: "text",
+    settingValue: "backgroundImageUrl",
+    isSubSetting: true
+ },
+  {
+    title: "Gif as timer background",
+    description: "give url of bacmground image",
+    inputType: "gif",
+    settingValue: "backgroundImageUrl",
+    isSubSetting:true
+
+
+  }
 ];
+
+
 export { timerSettings, themeSettings };

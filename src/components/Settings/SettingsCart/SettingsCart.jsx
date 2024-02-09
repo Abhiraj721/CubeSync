@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./SettingsCart.css";
 import { useState } from "react";
+import {ReactGiphySearchBox} from 'react-giphy-searchbox'
 export default function SettingCart({
   settingInfo,
   settings,
@@ -8,12 +9,14 @@ export default function SettingCart({
   settingsType,
 }) {
   function inputAssigner() {
-    console.log(settingsType)
     const settingState = settings[settingsType][settingInfo.settingValue];
-    console.log(settingState)
     const settingInputType = settingInfo.inputType;
     if(settingInputType=="button"){
       return <button>{settingInfo.settingValue}</button>
+    }
+    else if(settingInputType=="text"){
+    return   <input type="text"  value={settingState} onChange={(e) => handleSettingChange(e.target.value)}></input>
+       
     }
    else if (settingInputType == "select") {
       return (
@@ -62,6 +65,12 @@ export default function SettingCart({
     else if(settingInputType=="color"){
       console.log(settingState)
       return <input type="color" value={settingState} onChange={(e)=>handleSettingChange(e.target.value)} name="" id="" />
+    }
+    else if(settingInputType=="gif"){
+      return         <ReactGiphySearchBox
+      apiKey="21mUcz382SFTDGHLY2Wk5nWbYG5rDmjI" // Required: get your on https://developers.giphy.com
+      onSelect={item => handleSettingChange(item.url)}
+    />
     }
   }
   function handleSettingChange(changedValue) {

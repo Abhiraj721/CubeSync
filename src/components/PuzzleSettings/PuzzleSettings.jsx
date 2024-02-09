@@ -34,14 +34,14 @@ export default function PuzzleSettings({
   }
   useEffect(()=>{
 
-sessions.map((session)=>{
+{sessions && sessions.map((session)=>{
 
   if(session.id==currSession){
     session.puzzleType=currPuzzle
     localStorage.setItem("sessions",JSON.stringify(sessions))
   }
   
-})
+})}
   },[currPuzzle])
   return (
     <div className="scrambleArea container-fluid">
@@ -49,6 +49,7 @@ sessions.map((session)=>{
         name=""
         id=""
         value={currPuzzle}
+        className="puzzleSelect "
         onChange={(e) => setCurrPuzzle(e.target.value)}
       >
         <option value="3x3x3">3x3x3</option>
@@ -70,6 +71,7 @@ sessions.map((session)=>{
       <select
         name=""
         value={currSession}
+        className="sessionSelect "
         id=""
         onChange={(e) => {
           if(e.target.value=="newSession"){

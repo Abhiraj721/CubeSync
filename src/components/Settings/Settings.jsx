@@ -4,6 +4,7 @@ import { timerSettings,themeSettings } from "../Data/SettingsData";
 import SettingCart from "./SettingsCart/SettingsCart";
 import { useEffect } from "react";
 
+
 function Settings({settings, setSettings}) {
   const [currSettingsType,setcurrSettingsType]=useState(timerSettings)
 
@@ -16,8 +17,8 @@ function Settings({settings, setSettings}) {
         <h1>Settings</h1>
 
         <div className="settingsChoices">
-          <button onClick={(e)=> handleSettingsTypeChange(timerSettings)}  className="settingsChoiceBtn">Timer</button>
-          <button onClick={(e)=> handleSettingsTypeChange(themeSettings)}  className="settingsChoiceBtn">Appearance</button>
+          <button onClick={()=> handleSettingsTypeChange(timerSettings)}  className="settingsChoiceBtn">Timer</button>
+          <button onClick={()=> handleSettingsTypeChange(themeSettings)}  className="settingsChoiceBtn">Appearance</button>
           <button onClick={(e)=> handleSettingsTypeChange(e.target.value)}  className="settingsChoiceBtn">Data</button>
         </div>
 {console.log(currSettingsType==timerSettings)}
@@ -37,6 +38,7 @@ function Settings({settings, setSettings}) {
             );
           })}
       </div>
+
     </div>
   );
 }
