@@ -75,12 +75,16 @@ function App() {
       if (style.nameOfClass == "body") {
         document.body.style[style.styleName] =
           settings.themeSettings[style.settingName];
-      } else {
+      } 
+      else {
         const test = document.querySelectorAll("." + style.nameOfClass);
-
+        let styleValue=settings.themeSettings[style.settingName];
+        if(style.styleName=="backgroundImage"){
+          styleValue="url("+styleValue+")"
+        }
         test.forEach((element) => {
           element.style[style.styleName] =
-            settings.themeSettings[style.settingName];
+          styleValue
         });
       }
     });

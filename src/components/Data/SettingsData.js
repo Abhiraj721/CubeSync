@@ -181,6 +181,7 @@ const themeSettings = [
     description: "Give URL of background image",
     inputType: "text",
     settingValue: "backgroundImageUrl",
+    conditionRule:["backgroundType","image url"],
     isSubSetting: true
  },
   {
@@ -188,6 +189,17 @@ const themeSettings = [
     description: "give url of bacmground image",
     inputType: "gif",
     settingValue: "backgroundImageUrl",
+    conditionRule:["backgroundType","Gif"],
+    isSubSetting:true
+
+
+  },
+  {
+    title: "upload Image",
+    description: "give url of bacmground image",
+    inputType: "file",
+    settingValue: "backgroundImageUrl",
+    conditionRule:["backgroundType","image upload"],
     isSubSetting:true
 
 

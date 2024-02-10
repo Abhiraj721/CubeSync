@@ -7,7 +7,10 @@ export default function SettingCart({
   settings,
   setSettings,
   settingsType,
-}) {
+}) 
+
+{
+  const [image, setImage] = useState(null);
   function inputAssigner() {
     const settingState = settings[settingsType][settingInfo.settingValue];
     const settingInputType = settingInfo.inputType;
@@ -66,10 +69,14 @@ export default function SettingCart({
       console.log(settingState)
       return <input type="color" value={settingState} onChange={(e)=>handleSettingChange(e.target.value)} name="" id="" />
     }
+    else if(settingInputType=="file"){
+      return   <input type="file" accept="image/*" onChange={handleImageChange} />
+
+    }
     else if(settingInputType=="gif"){
       return         <ReactGiphySearchBox
       apiKey="21mUcz382SFTDGHLY2Wk5nWbYG5rDmjI" // Required: get your on https://developers.giphy.com
-      onSelect={item => handleSettingChange(item.url)}
+      onSelect={item => handleSettingChange(item.images.downsized_large.url)}
     />
     }
   }
@@ -85,7 +92,19 @@ export default function SettingCart({
     });
     console.log(settings)
   }
+  const handleImageChange = (event) => {
+    const selectedFile = event.target.files[0];
+    const reader = new FileReader();
 
+    reader.onloadend = () => {
+      setImage(reader.result);
+      handleSettingChange("url("+reader.result+")")
+    };
+
+    if (selectedFile) {
+      reader.readAsDataURL(selectedFile);
+    }
+  };
   return (
     <div className="settingsWrap">
       <div className="row">

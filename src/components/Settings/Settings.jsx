@@ -11,6 +11,9 @@ function Settings({settings, setSettings}) {
  function handleSettingsTypeChange(changedSetting){
   setcurrSettingsType(changedSetting)
   } 
+  function getCurrSettingType(){
+    return currSettingsType==timerSettings ? "timerSettings" :currSettingsType==themeSettings ? "themeSettings" : "dataSettings"
+  }
   return (
     <div className="col col-lg-10 col-md-11 col-12 settings">
       <div className="settingsPanel">
@@ -28,15 +31,18 @@ function Settings({settings, setSettings}) {
               <>
 
          {index!=0 && !setting.isSubSetting && <hr/>}
-              <SettingCart
+         { setting.conditionRule==null || settings[getCurrSettingType()][setting.conditionRule[0]]==setting.conditionRule[1] ?     <SettingCart
                 settingInfo={setting}
                 settings={settings}
                 setSettings={setSettings}
-                settingsType={currSettingsType==timerSettings ? "timerSettings" :currSettingsType==themeSettings ? "themeSettings" : "dataSettings" }
-              />
+                settingsType={getCurrSettingType()}
+              /> :   ""
+              }
+               {setting.conditionRule ? console.log(setting.conditionRule): ""}
               </>
             );
           })}
+         
       </div>
 
     </div>
