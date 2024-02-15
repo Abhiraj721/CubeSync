@@ -14,6 +14,7 @@ import Collapse from "react-bootstrap/Collapse";
 import { Routes, Route, Link, Router } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import { intialSettings, styleInfo } from "./components/Data/DefaultSettings";
+import { useLocation } from 'react-router-dom';
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -48,6 +49,15 @@ function App() {
       settings={settings}
     />
   );
+ const location = useLocation();
+
+  useEffect(() => {
+
+
+    applyCustomStyles();
+
+
+  }, [location]);
   const scramble = (
     <>
       {" "}
@@ -72,21 +82,7 @@ function App() {
   ///settings setup
   useEffect(() => {    //uptading theme
     styleInfo.forEach((style) => {
-      if (style.nameOfClass == "body") {
-        document.body.style[style.styleName] =
-          settings.themeSettings[style.settingName];
-      } 
-      else {
-        const test = document.querySelectorAll("." + style.nameOfClass);
-        let styleValue=settings.themeSettings[style.settingName];
-        if(style.styleName=="backgroundImage"){
-          styleValue="url("+styleValue+")"
-        }
-        test.forEach((element) => {
-          element.style[style.styleName] =
-          styleValue
-        });
-      }
+     applyCustomStyles(style)
     });
   }, [settings.themeSettings]);
   useEffect(() => {
@@ -152,6 +148,25 @@ function App() {
   const toggleFooter = () => {
     setIsFooterVisible(!isFooterVisible);
   };
+  function applyCustomStyles(style){
+    styleInfo.forEach((style) => {
+      if (style.nameOfClass == "body") {
+        document.body.style[style.styleName] =
+          settings.themeSettings[style.settingName];
+      } 
+      else {
+        const test = document.querySelectorAll("." + style.nameOfClass);
+        let styleValue=settings.themeSettings[style.settingName];
+        if(style.styleName=="backgroundImage"){
+          styleValue="url("+styleValue+")"
+        }
+        test.forEach((element) => {
+          element.style[style.styleName] =
+          styleValue
+        });
+      }
+    });
+  }
   return (
     <div className="App row">
       <div className="col col-lg-2 col-md-1 col-12" style={{ padding: 0 }}>

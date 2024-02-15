@@ -11,7 +11,7 @@ const intialSettings = {
       fontColor:"#00141A",
       backColor:"#00141A",
       boardColor:"#141A29",
-      backgroundImageUrl:"no",
+      backgroundImageUrl:"",
       backgroundType:"Gif"
     },
   };
