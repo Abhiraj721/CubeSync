@@ -170,7 +170,8 @@ const themeSettings = [
     options:[
       "image url",
       "image upload",
-      "Gif"
+      "Gif",
+      "none"
     ],
     settingValue: "backgroundType",
     isSubSetting:true

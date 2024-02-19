@@ -14,7 +14,7 @@ import Collapse from "react-bootstrap/Collapse";
 import { Routes, Route, Link, Router } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import { intialSettings, styleInfo } from "./components/Data/DefaultSettings";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -49,14 +49,10 @@ function App() {
       settings={settings}
     />
   );
- const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
-
-
     applyCustomStyles();
-
-
   }, [location]);
   const scramble = (
     <>
@@ -80,9 +76,10 @@ function App() {
     } else setScrambleDimension("3D");
   }
   ///settings setup
-  useEffect(() => {    //uptading theme
+  useEffect(() => {
+    //uptading theme
     styleInfo.forEach((style) => {
-     applyCustomStyles(style)
+      applyCustomStyles();
     });
   }, [settings.themeSettings]);
   useEffect(() => {
@@ -148,21 +145,23 @@ function App() {
   const toggleFooter = () => {
     setIsFooterVisible(!isFooterVisible);
   };
-  function applyCustomStyles(style){
+  function applyCustomStyles() {
+    backgroundImageToNull();
     styleInfo.forEach((style) => {
       if (style.nameOfClass == "body") {
         document.body.style[style.styleName] =
           settings.themeSettings[style.settingName];
-      } 
-      else {
+      } else {
         const test = document.querySelectorAll("." + style.nameOfClass);
-        let styleValue=settings.themeSettings[style.settingName];
-        if(style.styleName=="backgroundImage"){
-          styleValue="url("+styleValue+")"
+        let styleValue = settings.themeSettings[style.settingName];
+        if (style.styleName == "backgroundImage") {
+          console.log(settings.themeSettings.backgroundType);
+          if (settings.themeSettings.backgroundType != "image upload") {
+            styleValue = "url(" + styleValue + ")";
+          }
         }
         test.forEach((element) => {
-          element.style[style.styleName] =
-          styleValue
+          element.style[style.styleName] = styleValue;
         });
       }
     });
@@ -275,6 +274,15 @@ function App() {
       </Routes>
     </div>
   );
+
+  function backgroundImageToNull() {
+    if (
+      settings.themeSettings.backgroundType == "none" &&
+      settings.themeSettings.backgroundImageUrl != ""
+    ) {
+      settings.themeSettings.backgroundImageUrl = "";
+    }
+  }
 }
 
 export default App;
