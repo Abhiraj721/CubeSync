@@ -59,10 +59,17 @@ const themeSettings = [
     title: "Colors", //resolve this later
   },
   {
-    title: "font color",
+    title: "font color(global)",
     description: "",
     inputType: "color",
     settingValue: "fontColor",
+    isSubSetting: true,
+  },
+  {
+    title: "font color(timer)",
+    description: "",
+    inputType: "color",
+    settingValue: "timerFontColor",
     isSubSetting: true,
   },
   {
@@ -179,7 +186,7 @@ const themeSettings = [
   },
  {
     title: "Background Image Url",
-    description: "Give URL of background image",
+    description: "",
     inputType: "text",
     settingValue: "backgroundImageUrl",
     conditionRule:["backgroundType","image url"],
@@ -187,7 +194,7 @@ const themeSettings = [
  },
   {
     title: "Gif as timer background",
-    description: "give url of bacmground image",
+    description: "",
     inputType: "gif",
     settingValue: "backgroundImageUrl",
     conditionRule:["backgroundType","Gif"],
@@ -197,7 +204,7 @@ const themeSettings = [
   },
   {
     title: "upload Image",
-    description: "give url of bacmground image",
+    description: "",
     inputType: "file",
     settingValue: "backgroundImageUrl",
     conditionRule:["backgroundType","image upload"],

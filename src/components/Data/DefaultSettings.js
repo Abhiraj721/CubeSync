@@ -8,7 +8,8 @@ const intialSettings = {
       isConfirmBeforeDelete:false
     },
     themeSettings: {
-      fontColor:"#00141A",
+      fontColor:"#FFFFFF",
+      timerFontColor:"#FFFFFF",
       backColor:"#00141A",
       boardColor:"#141A29",
       backgroundImageUrl:"",
@@ -21,6 +22,11 @@ const styleInfo=[
       nameOfClass:"body",
       styleName:"color",
       settingName:"fontColor"
+    },
+    {
+      nameOfClass:"timerPlayGround",
+      styleName:"color",
+      settingName:"timerFontColor"
     },
     {
       nameOfClass:"body",

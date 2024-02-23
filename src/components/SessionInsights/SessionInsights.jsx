@@ -10,7 +10,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
   const [ao5, setAo5] = useState("--");
   const [ao12, setAo12] = useState("--");
   const [currAo5Solves, setCurrAo5Solves] = useState([]);
-  const [currao12Solves, setCurrAo12Solves] = useState([]);
+  const [currAo12Solves, setcurrAo12Solves] = useState([]);
   const [pb, setPb] = useState("--");
   const [ao5Pb, setAo5Pb] = useState("--");
   const [ao12Pb, setAo12Pb] = useState("--");
@@ -263,11 +263,10 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
       getAvgOfAllSolves();
       getBestAo12();
       getCurrAo5Solves();
-      getCurrAo12Solves();
+      getcurrAo12Solves();
     }
   }, [sessions, currSession]);
   function getAo5PbSolves() {
-    console.log("gajab");
     let ao5PbSolves = [];
     sessions.map((session) => {
       if (session.id == currSession) {
@@ -292,10 +291,10 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
       }
     });
   }
-  function getCurrAo12Solves() {
+  function getcurrAo12Solves() {
     sessions.map((session) => {
       if (session.id == currSession) {
-        setCurrAo12Solves(session.solves.slice(0, 12));
+        setcurrAo12Solves(session.solves.slice(0, 12));
       }
     });
   }
@@ -314,31 +313,42 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
   }
   return (
     <div className="angry-grid">
-      <div id="item-0">
-        <p onClick={() => showSolveStats([pb],"pb")}>{pb} pb</p>
+      <div id="item-0" className="combined-item">
+        <h4>Best</h4>
+        <p onClick={() => showSolveStats([pb],"pb")}>{pb}</p>
       </div>
-      <div id="item-1-2" className="combined-item">
+      <div id="item-1" className="combined-item">
+      <h4>Mean</h4>
         <p onClick={() => showSolveStats(getAllsolves(),"all")}>{avg}</p>
       </div>
-      <div id="item-3">
+      <div id="item-2" className="combined-item">
+      <h4>Ao5</h4>
         <p
           onClick={() => {
             if (NumOfSolves() >= 5) showSolveStats(currAo5Solves,"ao5");
           }}
         >
-          {ao5} ao5
+   
+         Current: {ao5} 
+         <br />
+         Best:{ao5Pb}
+      
         </p>
       </div>
-      <div id="item-4">
+      <div id="item-3" className="combined-item">
+      <h4>Ao12</h4>
         <p
           onClick={() => {
-            if (NumOfSolves() >= 12) showSolveStats(currao12Solves,"ao12");
+            if (NumOfSolves() >= 12) showSolveStats(currAo12Solves,"ao12");
           }}
         >
-          {ao12} ao12
+         Current: {ao12} 
+         <br />
+         Best:{ao12Pb}
         </p>
       </div>
-      <div id="item-5">
+
+      {/* <div id="item-5">
         {
           <p
             onClick={() => {
@@ -357,7 +367,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
         >
           {ao12Pb} ao12Pb
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -170,3 +170,8 @@ select::-ms-expand {
   color: #f39c12;
 }
 
+@media only screen and (max-width: 599px) {
+  input[type="file"]{
+    width:100%
+  }
+}
