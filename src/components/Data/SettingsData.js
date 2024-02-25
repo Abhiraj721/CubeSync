@@ -40,6 +40,14 @@ const timerSettings = [
     inputType: "checkbox",
     settingValue: "isConfirmBeforeDelete",
   },
+  {
+    title: "import & export",
+    description: "Activate voice alerts at 8 and 12 seconds.",
+    inputType: "select",
+    options: ["export", "import"],
+    settingValue: "",
+    isSubSetting: false,
+  },
 
   // {
   //   title: "Adjust Volume",

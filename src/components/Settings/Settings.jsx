@@ -3,7 +3,7 @@ import "./Settings.css";
 import { timerSettings,themeSettings } from "../Data/SettingsData";
 import SettingCart from "./SettingsCart/SettingsCart";
 import { useEffect } from "react";
-
+import ExportImportModule from "./ExportImportModule/ExportImportModule";
 
 function Settings({settings, setSettings}) {
   const [currSettingsType,setcurrSettingsType]=useState(timerSettings)
@@ -24,7 +24,6 @@ function Settings({settings, setSettings}) {
           <button onClick={()=> handleSettingsTypeChange(themeSettings)}  className="settingsChoiceBtn">Appearance</button>
           <button onClick={(e)=> handleSettingsTypeChange(e.target.value)}  className="settingsChoiceBtn">Data</button>
         </div>
-{console.log(currSettingsType==timerSettings)}
         {settings &&
           currSettingsType.map((setting,index) => {
             return (
@@ -38,11 +37,12 @@ function Settings({settings, setSettings}) {
                 settingsType={getCurrSettingType()}
               /> :   ""
               }
-               {setting.conditionRule ? console.log(setting.conditionRule): ""}
+
               </>
             );
           })}
-         
+   
+        
       </div>
 
     </div>
