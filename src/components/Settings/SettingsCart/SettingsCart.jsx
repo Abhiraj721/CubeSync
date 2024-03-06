@@ -142,14 +142,11 @@ export default function SettingCart({
         <div className="col col-lg-6 col-md-6 col-sm-6 settingsInput">
           {inputAssigner()}
         </div>
-
-        {/* {
-  settingInfo.title === "import & export" && (
-
-    <ExportImportModule settings={settings}/>
-  )
-} */}
       </div>
+      {settingInfo.title === "import & export" &&
+           (
+            <ExportImportModule settings={settings} setSettings={setSettings} settingsType={settingsType} />
+          )}
     </div>
   );
 }

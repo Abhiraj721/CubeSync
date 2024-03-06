@@ -5,7 +5,8 @@ const intialSettings = {
       inspectionTime:15,
       hideTimer:false,
       inspectionVoiceAlerts:"male",
-      isConfirmBeforeDelete:false
+      isConfirmBeforeDelete:false,
+      importAndexport:"export"
     },
     themeSettings: {
       fontColor:"#FFFFFF",
@@ -13,7 +14,8 @@ const intialSettings = {
       backColor:"#00141A",
       boardColor:"#141A29",
       backgroundImageUrl:"",
-      backgroundType:"Gif"
+      backgroundType:"Gif",
+      importAndexport:"export"
     },
   };
 const styleInfo=[

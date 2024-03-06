@@ -42,10 +42,10 @@ const timerSettings = [
   },
   {
     title: "import & export",
-    description: "Activate voice alerts at 8 and 12 seconds.",
+    description: "",
     inputType: "select",
     options: ["export", "import"],
-    settingValue: "",
+    settingValue: "importAndexport",
     isSubSetting: false,
   },
 
@@ -219,7 +219,15 @@ const themeSettings = [
     isSubSetting:true
 
 
-  }
+  },
+  {
+    title: "import & export",
+    description: "",
+    inputType: "select",
+    options: ["export", "import"],
+    settingValue: "importAndexport",
+    isSubSetting: false,
+  },
 ];
 
 
