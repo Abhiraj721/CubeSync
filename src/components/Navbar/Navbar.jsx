@@ -9,6 +9,7 @@ export default function Navbar() {
       <ul>
       <Link to={"/"}><li>timer</li></Link>
         <li>About</li>
+        <Link to={"/trainer/3x3x3/OLL"}> <li>Trainer</li></Link>
         <Link to={"/settings"}> <li>Settings</li></Link>
       </ul>
     </nav>

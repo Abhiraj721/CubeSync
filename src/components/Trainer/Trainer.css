@@ -1,0 +1,10 @@
+.trainerPanel{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items:flex-start;
+    gap: 13px;  
+}
+.algosChoiceSelect:not(:last-child) {
+    margin-right: 10px; /* Adjust the value according to your preference */
+  }

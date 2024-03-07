@@ -65,7 +65,6 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
             // const avgAo12 = sumAo12 / 12;
 
             setAo12(handleAvgs(ao12Solves));
-
           }
         } else {
           setAo12("--");
@@ -112,7 +111,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
           let bestAo5Time = Infinity;
           let bestAo5DnfCount = Infinity;
           let ao5PbSolves = [];
-  
+
           for (let i = 0; i <= solves.length - 5; i++) {
             let ao5Arr = [];
             const ao5SolveTimes = solves.slice(i, i + 5).map((solve) => {
@@ -120,29 +119,26 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
               if (solve.isDNF) return -1;
               else return solve.solveTimeInt;
             });
-  
+
             const dnfCount = ao5SolveTimes.filter((time) => time === -1).length;
             if (dnfCount <= 1) {
               const ao5TimeSum = ao5SolveTimes.reduce(
                 (acc, time) => acc + (time === -1 ? 0 : time),
                 0
               );
-  
+
               if (
                 (dnfCount === 0 && ao5TimeSum / 5 < bestAo5Time) ||
-                (dnfCount === 1 &&
-                  ao5TimeSum / (5 - dnfCount) < bestAo5Time)
+                (dnfCount === 1 && ao5TimeSum / (5 - dnfCount) < bestAo5Time)
               ) {
                 bestAo5Time =
-                  dnfCount === 0
-                    ? ao5TimeSum / 5
-                    : ao5TimeSum / (5 - dnfCount);
+                  dnfCount === 0 ? ao5TimeSum / 5 : ao5TimeSum / (5 - dnfCount);
                 bestAo5DnfCount = dnfCount;
                 ao5PbSolves = [...ao5Arr];
               }
             }
           }
-  
+
           if (bestAo5DnfCount <= 1) {
             setAo5Pb(FormatTime(bestAo5Time));
             session.ao5Pb = FormatTime(bestAo5Time);
@@ -159,16 +155,13 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
       return session;
     });
     if (ao5_Pb_Solves.length !== 0) {
-     setAo5Pb(handleAvgs(ao5_Pb_Solves));
+      setAo5Pb(handleAvgs(ao5_Pb_Solves));
     }
   }
-  
-  
- 
-  
+
   function getBestAo12() {
     let ao12_Pb_Solves = [];
-    
+
     sessions.map((session) => {
       if (session.id === currSession) {
         const solves = session.solves;
@@ -176,7 +169,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
           let bestAo12Time = Infinity;
           let bestAo12DnfCount = Infinity;
           let ao12PbSolves = [];
-  
+
           for (let i = 0; i <= solves.length - 12; i++) {
             let ao12Arr = [];
             const ao12SolveTimes = solves.slice(i, i + 12).map((solve) => {
@@ -184,18 +177,19 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
               if (solve.isDNF) return -1;
               else return solve.solveTimeInt;
             });
-  
-            const dnfCount = ao12SolveTimes.filter((time) => time === -1).length;
+
+            const dnfCount = ao12SolveTimes.filter(
+              (time) => time === -1
+            ).length;
             if (dnfCount <= 1) {
               const ao12TimeSum = ao12SolveTimes.reduce(
                 (acc, time) => acc + (time === -1 ? 0 : time),
                 0
               );
-  
+
               if (
                 (dnfCount === 0 && ao12TimeSum / 12 < bestAo12Time) ||
-                (dnfCount === 1 &&
-                  ao12TimeSum / (12 - dnfCount) < bestAo12Time)
+                (dnfCount === 1 && ao12TimeSum / (12 - dnfCount) < bestAo12Time)
               ) {
                 bestAo12Time =
                   dnfCount === 0
@@ -206,7 +200,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
               }
             }
           }
-  
+
           if (bestAo12DnfCount <= 1) {
             setAo12Pb(FormatTime(bestAo12Time));
             session.ao12Pb = FormatTime(bestAo12Time);
@@ -214,7 +208,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
             setAo12Pb("DNF");
             session.ao12Pb = "DNF";
           }
-  
+
           session.ao12PbSolves = ao12PbSolves;
           ao12_Pb_Solves = ao12PbSolves;
         } else {
@@ -223,13 +217,12 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
       }
       return session;
     });
-  
+
     if (ao12_Pb_Solves.length !== 0) {
       setAo12Pb(handleAvgs(ao12_Pb_Solves));
     }
   }
-  
-  
+
   function getAvgOfAllSolves() {
     let avgOfSolves = 0;
     let nofSolves = 0;
@@ -298,16 +291,16 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
       }
     });
   }
-  function getAllsolves(){
-    let avgofAll=[]
+  function getAllsolves() {
+    let avgofAll = [];
     sessions.map((session) => {
       if (session.id == currSession) {
-        avgofAll=session.solves;
+        avgofAll = session.solves;
       }
     });
-    return avgofAll
+    return avgofAll;
   }
-  function showSolveStats(solves,statsType) {
+  function showSolveStats(solves, statsType) {
     console.log(sessions[0].ao5PbSolves);
     MySwal.fire(<SolveStats solves={solves} statsType={statsType} />);
   }
@@ -315,36 +308,54 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
     <div className="angry-grid">
       <div id="item-0" className="combined-item">
         <h4>Best</h4>
-        <p onClick={() => showSolveStats([pb],"pb")}>{pb}</p>
+        <p onClick={() => showSolveStats([pb], "pb")}>{pb}</p>
       </div>
       <div id="item-1" className="combined-item">
-      <h4>Mean</h4>
-        <p onClick={() => showSolveStats(getAllsolves(),"all")}>{avg}</p>
+        <h4>Mean</h4>
+        <p onClick={() => showSolveStats(getAllsolves(), "all")}>{avg}</p>
       </div>
       <div id="item-2" className="combined-item">
-      <h4>Ao5</h4>
-        <p
-          onClick={() => {
-            if (NumOfSolves() >= 5) showSolveStats(currAo5Solves,"ao5");
-          }}
-        >
-   
-         Current: {ao5} 
-         <br />
-         Best:{ao5Pb}
-      
+        <h4>Ao5</h4>
+        <p>
+          <p
+            onClick={() => {
+              if (NumOfSolves() >= 5) showSolveStats(currAo5Solves, "ao5");
+            }}
+          >
+            Current: {ao5}
+          </p>
+
+          <p
+            onClick={() => {
+              if (NumOfSolves() >= 5) showSolveStats(getAo5PbSolves(), "ao5");
+            }}
+          >
+            Best: {ao5Pb}
+          </p>
         </p>
       </div>
       <div id="item-3" className="combined-item">
-      <h4>Ao12</h4>
+        <h4>Ao12</h4>
         <p
           onClick={() => {
-            if (NumOfSolves() >= 12) showSolveStats(currAo12Solves,"ao12");
+            if (NumOfSolves() >= 12) showSolveStats(currAo12Solves, "ao12");
           }}
         >
-         Current: {ao12} 
-         <br />
-         Best:{ao12Pb}
+          <p
+            onClick={() => {
+              if (NumOfSolves() >= 12) showSolveStats(currAo12Solves, "ao12");
+            }}
+          >
+            Current: {ao12}
+          </p>
+
+          <p
+            onClick={() => {
+              if (NumOfSolves() >= 12) showSolveStats(getBestAo12(), "ao12");
+            }}
+          >
+            Best:{ao12Pb}
+          </p>
         </p>
       </div>
 

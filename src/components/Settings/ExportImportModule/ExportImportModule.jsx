@@ -13,8 +13,8 @@ export default function ExportImportModule({ settings,setSettings, settingsType 
       <textarea
         name=""
         id=""
-        cols="30"
-        rows="7"
+        cols="50"
+        rows="5"
         value={JSON.stringify(settings[settingsType])}
       ></textarea>
       <button onClick={() => copy(JSON.stringify(settings[settingsType]))}>copy</button>
@@ -25,8 +25,8 @@ export default function ExportImportModule({ settings,setSettings, settingsType 
         <textarea
         name=""
         id=""
-        cols="30"
-        rows="7"
+        cols="50"
+        rows="5"
         value={importCode}
         placeholder="Enter your code here"
         onChange={(e)=>SetimportCode(e.target.value)}
