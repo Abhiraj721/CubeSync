@@ -1,15 +1,19 @@
 /* VerticalNavbar.css */
 
 .vertical-navbar {
+
+position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  position: fixed;
   height: 100vh;
+  width: inherit;
   color: white;
   padding: 20px;
-}
+  ;
 
+}
 @media only screen and (max-width: 599px) {
   .vertical-navbar  {
   height: 10vh;

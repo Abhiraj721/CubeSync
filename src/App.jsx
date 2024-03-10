@@ -16,7 +16,7 @@ import Settings from "./components/Settings/Settings";
 import { intialSettings, styleInfo } from "./components/Data/DefaultSettings";
 import { useLocation } from "react-router-dom";
 import Trainer from "./components/Trainer/Trainer";
-import { puzzles, methodOptions} from "./components/Trainer/utiliity/AlgoInfo";
+import { puzzles, methodOptions} from "./components/Trainer/utility/AlgoInfo";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -278,7 +278,7 @@ function App() {
           puzzles.map((puzzle)=>{
            return methodOptions[puzzle].map((method)=>{
               console.log(puzzle+" "+method)
-              return  <Route path={`/trainer/${puzzle}/${method}`} element={<Trainer/>} />
+              return  <Route path={`/trainer/${puzzle}/${method}`} element={<Trainer puzzle={puzzle} method={method}/>} />
             
             })
           })
