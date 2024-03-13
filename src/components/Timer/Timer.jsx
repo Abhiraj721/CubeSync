@@ -27,6 +27,8 @@ function Timer(
     isScramEditing,
     setIsScramEditing,
     settings,
+    stats,
+    setStats,
   },
   ref
 ) {
@@ -40,7 +42,6 @@ function Timer(
   const [inspectionTime, setInspectionTime] = useState(15);
   const [isInspectionRunning, setIsInspectionRunning] = useState(false);
   const [inspectionID, setInspectionID] = useState(null);
-  console.log(settings.timerSettings.isInspectionEnabled);
   const [inspection, setinspection] = useState(true);
   const [inspectionVoiceAlerts, setInspectionVoiceAlerts] = useState("male");
   const [inspectionElapsed, setInspectionElpased] = useState(false);
@@ -255,10 +256,37 @@ function Timer(
       handleMouseUp();
     },
   }));
+  function  handleActivity ()  {
 
+  
+  };
   const saveSolveTime = () => {
+    const date = new Date();
+    const formattedDate = date.toISOString().split("T")[0];
+    let dateAlreadyExist=false
+  stats.activeDays.forEach((data, index) => {
+    if (data.date === formattedDate) {
+      dateAlreadyExist = true;
+      setStats((prevState) => {
+        const updatedStats = [...prevState.activeDays]; // Create a copy of activeDays array
+        updatedStats[index] = { ...updatedStats[index], count: updatedStats[index].count + 1 }; // Update the count
+        return { ...prevState, activeDays: updatedStats }; // Update the state
+      });
+    }
+  });
+    if(!dateAlreadyExist){
+      let prevState=stats
+      setStats((prevStats)=>({
+        ...prevStats,
+       activeDays :[...prevStats.activeDays,{ date: formattedDate, count: 1 }]
+      }))
+
+    }
+  console.log(stats)
+  console.log(localStorage.getItem("stats"))
     let solveTimeStr = timerTextRef.current.innerText;
     const solveTimeMilli = timeStrToInt(timerTextRef.current.innerText);
+    handleActivity();
     const sessions = JSON.parse(localStorage.getItem("sessions"));
 
     if (inspectionElapsed == "+2")
@@ -299,6 +327,7 @@ function Timer(
   };
 
   useEffect(() => {
+
     if (inspection) {
       document.addEventListener("keydown", inspectionKeydown);
       document.addEventListener("keyup", inspectionKeyup);

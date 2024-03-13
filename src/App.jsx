@@ -16,8 +16,9 @@ import Settings from "./components/Settings/Settings";
 import { intialSettings, styleInfo } from "./components/Data/DefaultSettings";
 import { useLocation } from "react-router-dom";
 import Trainer from "./components/Trainer/Trainer";
-import { puzzles, methodOptions} from "./components/Trainer/utility/AlgoInfo";
+import { puzzles, methodOptions } from "./components/Trainer/utility/AlgoInfo";
 import Stats from "./components/Stats/Stats";
+import { defaultStats } from "./components/Stats/utility/StatsInfo";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -25,17 +26,24 @@ function App() {
   const [currSession, setCurrsession] = useState("");
   const [sessions, setSession] = useState([]);
   const [settings, setSettings] = useState(intialSettings);
+  const [stats, setStats] = useState(getstats());
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
   const [isFooterVisible, setIsFooterVisible] = useState(true);
   const [scrambleDimension, setScrambleDimension] = useState("2D");
+
   const [isFooterdashboardVisible, setisFooterdashboardVisible] =
     useState(false);
   const touchRef = useRef(null);
+  function getstats() {
+    const currStats = JSON.parse(localStorage.getItem("stats"));
+    if (currStats === null) return defaultStats;
+    else return currStats;
+  }
   const toogleFooterDashboard = () => {
     setisFooterdashboardVisible(!isFooterdashboardVisible);
   };
-  const stats = (
+  const insights = (
     <SessionInsights
       sessions={sessions}
       setSession={setSession}
@@ -86,40 +94,15 @@ function App() {
     });
   }, [settings.themeSettings]);
   useEffect(() => {
-    const currSettings = localStorage.getItem("settings");
-
-    if (currSettings === null) {
-      localStorage.setItem("settings", JSON.stringify(intialSettings));
-    } else {
-      console.log(currSettings);
-      setSettings(JSON.parse(currSettings));
-    }
-  }, []);
-  useEffect(() => {
     localStorage.setItem("settings", JSON.stringify(settings));
   }, [settings]);
-  //session setup
   useEffect(() => {
-    const sessions = localStorage.getItem("sessions");
-    if (sessions == null) {
-      const sessions = [
-        {
-          id: "session_1",
-          puzzleType: currPuzzle,
-          pb: "",
-          ao5Pb: "",
-          ao5PbSolves: [],
-          ao12Pb: "",
-          ao12PbSolves: [],
-          solves: [],
-        },
-      ];
-      localStorage.setItem("sessions", JSON.stringify(sessions));
-      localStorage.setItem("currSession", "session_1");
-      setCurrsession("session_1");
-    } else {
-      setCurrsession(localStorage.getItem("currSession"));
-    }
+    localStorage.setItem("stats", JSON.stringify(stats));
+  }, [stats]);
+  useEffect(() => {
+    settingsSetUp();
+    sessionsSetUp();
+    statsSetUp();
   }, []);
 
   useLayoutEffect(() => {
@@ -142,12 +125,55 @@ function App() {
 
   const dashboardComponent = (dashboardType) => {
     if (dashboardType === "solves") return solves;
-    if (dashboardType === "stats") return stats;
+    if (dashboardType === "insights") return insights;
     if (dashboardType === "scramble") return scramble;
   };
   const toggleFooter = () => {
     setIsFooterVisible(!isFooterVisible);
   };
+  function sessionsSetUp() {
+    const sessions = localStorage.getItem("sessions");
+    if (sessions == null) {
+      const sessions = [
+        {
+          id: "session_1",
+          puzzleType: currPuzzle,
+          pb: "",
+          ao5Pb: "",
+          ao5PbSolves: [],
+          ao12Pb: "",
+          ao12PbSolves: [],
+          solves: [],
+        },
+      ];
+      localStorage.setItem("sessions", JSON.stringify(sessions));
+      localStorage.setItem("currSession", "session_1");
+      setCurrsession("session_1");
+    } else {
+      setCurrsession(localStorage.getItem("currSession"));
+    }
+  }
+  function statsSetUp() {
+    const currStats = localStorage.getItem("stats");
+    if (currStats === null) {
+      localStorage.setItem("stats", JSON.stringify(defaultStats));
+    } else {
+      setStats(JSON.parse(currStats));
+
+    }
+  }
+
+  function settingsSetUp() {
+    const currSettings = localStorage.getItem("settings");
+
+    if (currSettings === null) {
+      localStorage.setItem("settings", JSON.stringify(intialSettings));
+    } else {
+      console.log(currSettings);
+      setSettings(JSON.parse(currSettings));
+    }
+  }
+
   function applyCustomStyles() {
     backgroundImageToNull();
     styleInfo.forEach((style) => {
@@ -169,6 +195,7 @@ function App() {
       }
     });
   }
+
   return (
     <div className="App row">
       <div className="col col-lg-2 col-md-1 col-12" style={{ padding: 0 }}>
@@ -227,6 +254,8 @@ function App() {
                     isScramEditing={isScramEditing}
                     setIsScramEditing={setIsScramEditing}
                     settings={settings}
+                    stats={stats}
+                    setStats={setStats}
                     ref={touchRef}
                   />
                 </div>
@@ -274,21 +303,20 @@ function App() {
           path="/settings"
           element={<Settings settings={settings} setSettings={setSettings} />}
         />
-           <Route
-          path="/stats"
-          element={<Stats/>}
-        />
-     
+        <Route path="/stats" element={<Stats stats={stats} />} />
+
         {/* <Route path="/trainer/3x3x3/OLL" element={<Trainer/>} /> */}
-        {
-          puzzles.map((puzzle)=>{
-           return methodOptions[puzzle].map((method)=>{
-              console.log(puzzle+" "+method)
-              return  <Route path={`/trainer/${puzzle}/${method}`} element={<Trainer puzzle={puzzle} method={method}/>} />
-            
-            })
-          })
-        }
+        {puzzles.map((puzzle) => {
+          return methodOptions[puzzle].map((method) => {
+            console.log(puzzle + " " + method);
+            return (
+              <Route
+                path={`/trainer/${puzzle}/${method}`}
+                element={<Trainer puzzle={puzzle} method={method} />}
+              />
+            );
+          });
+        })}
       </Routes>
     </div>
   );
