@@ -11,6 +11,7 @@ position: fixed;
   width: inherit;
   color: white;
   padding: 20px;
+
   ;
 
 }
@@ -20,18 +21,30 @@ position: fixed;
 
   }
 }
-
+.navTitle{
+  margin-bottom: 30px;
+}
 .NavbarHeader ul {
   list-style-type: none; /* Remove list bullets */
   padding: 0;
   margin: 0;
+  text-align: left;
 }
 
 .NavbarHeader li {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+width: 100%;
   cursor: pointer;
 }
 
 nav li:hover {
   text-decoration: underline;
+}
+ .NavbarHeader .navItem {
+gap: 12px;
+
+  text-decoration:none;
+  color: white;
+  display: flex;
+
 }

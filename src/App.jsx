@@ -17,6 +17,7 @@ import { intialSettings, styleInfo } from "./components/Data/DefaultSettings";
 import { useLocation } from "react-router-dom";
 import Trainer from "./components/Trainer/Trainer";
 import { puzzles, methodOptions} from "./components/Trainer/utility/AlgoInfo";
+import Stats from "./components/Stats/Stats";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -273,6 +274,11 @@ function App() {
           path="/settings"
           element={<Settings settings={settings} setSettings={setSettings} />}
         />
+           <Route
+          path="/stats"
+          element={<Stats/>}
+        />
+     
         {/* <Route path="/trainer/3x3x3/OLL" element={<Trainer/>} /> */}
         {
           puzzles.map((puzzle)=>{

@@ -391,21 +391,21 @@ var algsInfo = {
         visualization:"experimental-2D-LL"
     },
   },
-  "skewb":{   // add any more puzzle here
-    3334:{ 
-      algos: oll,
-      experimentalStickering:"OLL",
-      visualization:"experimental-2D-LL"
-    }
-  }
+  // "skewb":{   // add any more puzzle here
+  //   3334:{ 
+  //     algos: oll,
+  //     experimentalStickering:"OLL",
+  //     visualization:"experimental-2D-LL"
+  //   }
+  // }
 
 };
 
-const puzzles = ["3x3x3", "skewb"];
+const puzzles = ["3x3x3"];
 
 const methodOptions = {
   "3x3x3": ["OLL", "PLL"],
-  "skewb": ["3334"],
+
 };
 
 export { algsInfo, puzzles, methodOptions };
