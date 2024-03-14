@@ -20,7 +20,7 @@ export default function DashboardSelect({dashboardComponent,intialDashboard,dash
           })
         }
       >
-        <option value="stats">Stats</option>
+        <option value="insights">Insights</option>
         <option value="solves">Solves</option>
         <option value="scramble">Scramble</option>
 

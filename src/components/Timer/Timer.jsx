@@ -257,10 +257,6 @@ function Timer(
     },
   }));
   function  handleActivity ()  {
-
-  
-  };
-  const saveSolveTime = () => {
     const date = new Date();
     const formattedDate = date.toISOString().split("T")[0];
     let dateAlreadyExist=false
@@ -282,8 +278,11 @@ function Timer(
       }))
 
     }
-  console.log(stats)
-  console.log(localStorage.getItem("stats"))
+  
+  };
+  const saveSolveTime = () => {
+
+
     let solveTimeStr = timerTextRef.current.innerText;
     const solveTimeMilli = timeStrToInt(timerTextRef.current.innerText);
     handleActivity();

@@ -14,3 +14,29 @@
 width: 100%;
 
 }
+.heatMapStats{
+    display: flex;
+    justify-content: end;
+    gap: 17px;
+}
+/* .lineChart{
+ 
+} */
+/* .react-calendar-heatmap .color-scale-75 { fill: #d6e685; } */
+/* Very bright green for count 5 */
+.react-calendar-heatmap .color-scale-1 {
+    fill: #eeeeee;
+  }
+  .react-calendar-heatmap .color-scale-2 {
+    fill: #d6e685;
+  }
+  .react-calendar-heatmap .color-scale-3 {
+    fill: #8cc665;
+  }
+  .react-calendar-heatmap .color-scale-4 {
+    fill: #44a340;
+  }
+  .react-calendar-heatmap .color-scale-highlyActive {
+    fill: #1e6823;
+  }
+  

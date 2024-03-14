@@ -24,8 +24,17 @@ function App() {
   const [currScramble, setCurrScramble] = useState("");
   const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
   const [currSession, setCurrsession] = useState("");
-  const [sessions, setSession] = useState([]);
-  const [settings, setSettings] = useState(intialSettings);
+  const [sessions, setSession] = useState([        {
+    id: "session_1",
+    puzzleType: currPuzzle,
+    pb: "",
+    ao5Pb: "",
+    ao5PbSolves: [],
+    ao12Pb: "",
+    ao12PbSolves: [],
+    solves: [],
+  },]);
+  const [settings, setSettings] = useState(getSettings());
   const [stats, setStats] = useState(getstats());
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
   const [isScramEditing, setIsScramEditing] = useState(false); ///for checking wheather scramble is curretly in edit mode or not
@@ -39,6 +48,11 @@ function App() {
     const currStats = JSON.parse(localStorage.getItem("stats"));
     if (currStats === null) return defaultStats;
     else return currStats;
+  }
+  function getSettings() {
+    const currSettings = JSON.parse(localStorage.getItem("settings"));
+    if (currSettings === null) return intialSettings;
+    else return currSettings;
   }
   const toogleFooterDashboard = () => {
     setisFooterdashboardVisible(!isFooterdashboardVisible);
@@ -132,20 +146,8 @@ function App() {
     setIsFooterVisible(!isFooterVisible);
   };
   function sessionsSetUp() {
-    const sessions = localStorage.getItem("sessions");
-    if (sessions == null) {
-      const sessions = [
-        {
-          id: "session_1",
-          puzzleType: currPuzzle,
-          pb: "",
-          ao5Pb: "",
-          ao5PbSolves: [],
-          ao12Pb: "",
-          ao12PbSolves: [],
-          solves: [],
-        },
-      ];
+    const currSessions = localStorage.getItem("sessions");
+    if (currSessions == null) {
       localStorage.setItem("sessions", JSON.stringify(sessions));
       localStorage.setItem("currSession", "session_1");
       setCurrsession("session_1");
@@ -303,7 +305,7 @@ function App() {
           path="/settings"
           element={<Settings settings={settings} setSettings={setSettings} />}
         />
-        <Route path="/stats" element={<Stats stats={stats} />} />
+        <Route path="/stats" element={<Stats stats={stats} sessions={sessions} />} />
 
         {/* <Route path="/trainer/3x3x3/OLL" element={<Trainer/>} /> */}
         {puzzles.map((puzzle) => {

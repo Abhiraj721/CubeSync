@@ -3,3 +3,11 @@
     justify-content: flex-start;
     
   }
+ .navItem {
+    gap: 12px;
+    
+      text-decoration:none;
+color: black;
+      display: flex;
+    
+    }
