@@ -220,6 +220,9 @@ const themeSettings = [
 
 
   },
+{
+  title:"themes"
+},
   {
     title: "import & export",
     description: "",

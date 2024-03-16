@@ -172,7 +172,7 @@ function Timer(
       const holdtime = Date.now() - holdTimeStart;
       setHandlePress(false);
       console.log(holdtime);
-      if (holdtime > 400) {
+      if (holdtime > freezeTime) {
         if (isRunning) {
           setIsRunning(false);
 

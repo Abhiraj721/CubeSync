@@ -8,7 +8,7 @@
 }
 
 .solveTime {
-  color: green;
+  color: rgb(0, 253, 0);
   width: 82px;
 }
 .solveSno {
@@ -16,33 +16,31 @@
   width: 45px;
 }
 .solveDelete{
-  color: grey;
+  color: white;
 
 }
 .solveDelete:hover {
-  color: white;
+  color: rgb(59, 174, 195);
   cursor: pointer;
 }
 .solveDNF {
-  color: grey;
-}
-.solveDNF:hover {
   color: white;
 }
 .solveDNF:hover {
-  color: white;
+  color: rgb(59, 174, 195);
+
   cursor: pointer;
 }
 .solvePlus2 {
-  color: grey;
-  cursor: pointer;
-}
-.solvePlus2:hover {
   color: white;
   cursor: pointer;
 }
+.solvePlus2:hover {
+  color: rgb(59, 174, 195);
+  cursor: pointer;
+}
 .solveDelete {
-  color: grey;
+  color: white;
 }
 .solvesContainer {
   overflow-y: auto;

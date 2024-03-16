@@ -1,0 +1,8 @@
+.themePresetsContainer{
+    width: 80%;
+}
+@media only screen and (max-width: 599px) {
+    .themePresetsContainer{
+        width: 95%;
+    }
+  }

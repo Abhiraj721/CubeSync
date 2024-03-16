@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ReactGiphySearchBox } from "react-giphy-searchbox";
 import ExportImportModule from "../ExportImportModule/ExportImportModule";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import ThemePresets from "../ThemePresets/ThemePresets";
 export default function SettingCart({
   settingInfo,
   settings,
@@ -143,10 +144,18 @@ export default function SettingCart({
           {inputAssigner()}
         </div>
       </div>
-      {settingInfo.title === "import & export" &&
-           (
-            <ExportImportModule settings={settings} setSettings={setSettings} settingsType={settingsType} />
-          )}
+      {settingInfo.title === "themes" && (
+        <ThemePresets setSettings={setSettings}/>
+      )}
+      
+      {settingInfo.title === "import & export" && (
+        <ExportImportModule
+          settings={settings}
+          setSettings={setSettings}
+          settingsType={settingsType}
+        />
+      )}
+      
     </div>
   );
 }

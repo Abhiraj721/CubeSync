@@ -33,7 +33,7 @@ function App() {
     ao12Pb: "",
     ao12PbSolves: [],
     solves: [],
-  },]);
+  }]);
   const [settings, setSettings] = useState(getSettings());
   const [stats, setStats] = useState(getstats());
   const [currSessionsSolves, setCurrSessionsSolves] = useState([]);
@@ -75,7 +75,6 @@ function App() {
     />
   );
   const location = useLocation();
-
   useEffect(() => {
     applyCustomStyles();
   }, [location]);

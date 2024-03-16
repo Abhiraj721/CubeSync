@@ -76,14 +76,14 @@ export default function Stats({ stats, sessions }) {
   const [totalActiveDays, setTotalActiveDays] = useState(
     stats.activeDays.length
   );
-
+console.log(sessions)
   const maxSolvesIndex = sessions
     .map((session) => session.solves.length)
     .indexOf(Math.max(...sessions.map((session) => session.solves.length))); //finding session index with most solves for labels
   const data = {
-    labels: sessions[maxSolvesIndex].solves.map((solve) =>
-      new Date().toLocaleDateString()
-    ),
+    labels: (sessions[maxSolvesIndex].solves.map((solve) =>
+      solve.date
+    )).reverse(),
     datasets: sessions.map((session) => {
       return {
         label: session.id,

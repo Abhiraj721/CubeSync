@@ -3,7 +3,8 @@ import ScrambleVisualizer from "../../ScrambleVisualizer/ScrambleVisualizer";
 import "./AlgoCart.css"
 export default function AlgoCart({ algoInfo, methodInfo, algoIndex,puzzle,method }) {
   return (
-    <div className="algo col col-lg-4 col-md-6 col-12">
+    <div className="algo col col-lg-4 col-md-6 col-12 ">
+      <div className="algoCart boardContainer">
       <div className="algoInfo">
       {console.log(puzzle+" "+method)}
       <p>{algoIndex } .{algoInfo.name}</p>
@@ -19,6 +20,7 @@ export default function AlgoCart({ algoInfo, methodInfo, algoIndex,puzzle,method
         control-panel="none"
         background="none"
       ></twisty-player>
+      </div>
     </div>
   );
 }

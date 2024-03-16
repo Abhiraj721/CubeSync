@@ -45,7 +45,7 @@ function SolveNotes({ sessions, setSession, currSession, solve }, ref) {
     console.log("4sa");
   }
   async function editNoteAlert() {
-    const { value: noteText } = await Swal.fire({
+    let { value:noteText} = await Swal.fire({
       input: "textarea",
       inputLabel: "Notes",
       confirmButtonText: "Save",
@@ -54,8 +54,10 @@ function SolveNotes({ sessions, setSession, currSession, solve }, ref) {
         "aria-label": "Type your message here",
       },
       showCancelButton: true,
+      inputValue:currSolveNote
     });
 
+    
     if (noteText) {
       uptadeSolveNote(noteText);
       Swal.fire({
