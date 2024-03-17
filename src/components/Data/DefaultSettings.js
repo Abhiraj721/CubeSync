@@ -19,6 +19,9 @@ const intialSettings = {
     fontFamily: "Muli, sans-serif",
     theme:"default"
   },
+  dataSettings:{
+    
+  }
 };
 const styleInfo = [
   {

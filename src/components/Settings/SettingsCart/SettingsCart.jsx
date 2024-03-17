@@ -10,13 +10,18 @@ export default function SettingCart({
   settings,
   setSettings,
   settingsType,
+  sessions,
+  setSessions
 }) {
   const [image, setImage] = useState(null);
+  const [userData,setUserData]=useState(null)
+
+
   function inputAssigner() {
-    const settingState = settings[settingsType][settingInfo.settingValue];
+ const settingState = settings[settingsType][settingInfo.settingValue];
     const settingInputType = settingInfo.inputType;
-    if (settingInputType == "button") {
-      return <button>{settingInfo.settingValue}</button>;
+    if (settingInputType == "button" && settingInfo.title=="export") {
+      return <button onClick={downloadCurrSessions}>{settingInfo.settingValue}</button>;
     } else if (settingInputType == "text") {
       return (
         <input
@@ -75,6 +80,8 @@ export default function SettingCart({
           step="1"
         ></input>
       );
+
+      {console.log(userData)}
     } else if (settingInputType == "color") {
       console.log(settingState);
       return (
@@ -87,9 +94,17 @@ export default function SettingCart({
         />
       );
     } else if (settingInputType == "file") {
-      return (
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-      );
+      if(settingInfo.title=="upload Image"){
+        return (
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        );
+      }else  if(settingInfo.title=="Import Data"){
+        return (
+          <input type="file" accept=".txt" onChange={(e)=>handleTextFileChange(e)} />
+
+        );
+      }
+
     } else if (settingInputType == "gif") {
       return (
         <ReactGiphySearchBox
@@ -126,6 +141,50 @@ export default function SettingCart({
       reader.readAsDataURL(selectedFile);
     }
   };
+  const handleTextFileChange = (event) => {
+    console.log("text");
+
+    const selectedFile = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        const text = reader.result;
+        setUserData(JSON.parse(text))
+        setSessions(JSON.parse(text))
+    };
+
+    if (selectedFile) {
+        reader.readAsText(selectedFile);
+    }
+};
+function downloadCurrSessions(){
+  const currentDate = new Date();
+  const dateString = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+  const timeString = currentDate.toTimeString().slice(0, 8).replace(/:/g, '-'); // Format: HH-MM-SS
+  const fileName = `cubesync-${dateString}-${timeString}.txt`;
+  const fileContent = JSON.stringify(sessions);
+
+  // Create a Blob with the file content
+  const blob = new Blob([fileContent], { type: 'text/plain' });
+
+  // Create a link element
+  const link = document.createElement('a');
+
+  // Set the href attribute of the link to the Blob object
+  link.href = URL.createObjectURL(blob);
+
+  // Set the download attribute to specify the filename
+  link.download = fileName;
+
+  // Append the link to the document body
+  document.body.appendChild(link);
+
+  // Programmatically click the link to initiate the download
+  link.click();
+
+  // Remove the link from the document body
+  document.body.removeChild(link);
+}
   return (
     <div className="settingsWrap">
       <div className="row">
@@ -148,7 +207,7 @@ export default function SettingCart({
         <ThemePresets setSettings={setSettings}/>
       )}
       
-      {settingInfo.title === "import & export" && (
+      {settingInfo.title === "import & export" && settingsType!="dataSettings" && (
         <ExportImportModule
           settings={settings}
           setSettings={setSettings}

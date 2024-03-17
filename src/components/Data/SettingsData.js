@@ -231,7 +231,23 @@ const themeSettings = [
     settingValue: "importAndexport",
     isSubSetting: false,
   },
+  
 ];
+const dataSettings=[
+  {
+    title: "export",
+    description: "Think of this data like a safety backup for your solving and session records, giving you a way to restore them later if you need to",
+    inputType: "button",
+    settingValue:"export",
+    isSubSetting: false,
+  },
+  {
+    title: "Import Data",
+    description: "Importing from CubeSync will replace all your current data. Please note that your existing data will be overwritten.",
+    inputType: "file",
+    settingValue:"",
+    isSubSetting: false,
+  }
+]
 
-
-export { timerSettings, themeSettings };
+export { timerSettings, themeSettings ,dataSettings};

@@ -302,7 +302,7 @@ function App() {
         />
         <Route
           path="/settings"
-          element={<Settings settings={settings} setSettings={setSettings} />}
+          element={<Settings settings={settings} setSettings={setSettings} sessions={sessions} setSessions={setSession} />}
         />
         <Route path="/stats" element={<Stats stats={stats} sessions={sessions} />} />
 
