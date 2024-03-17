@@ -1,0 +1,26 @@
+
+.chatbot{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+.senderType{
+    text-align: right;
+    font-weight: 700;
+    margin-top: 5px;
+    color: white;
+}
+.assistantPanel{
+    text-align: left;
+}
+.chatbotContainer{
+    position:relative;
+    height: 80vh;
+     width: 90%;
+}
+@media only screen and (max-width: 599px) {
+    .chatbotContainer{
+        height: 70vh;
+         width: 100%;
+    }
+}

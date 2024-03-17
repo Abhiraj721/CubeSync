@@ -19,6 +19,8 @@ import Trainer from "./components/Trainer/Trainer";
 import { puzzles, methodOptions } from "./components/Trainer/utility/AlgoInfo";
 import Stats from "./components/Stats/Stats";
 import { defaultStats } from "./components/Stats/utility/StatsInfo";
+import Chatbot from "./components/Chatbot/Chatbot";
+
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -306,6 +308,7 @@ function App() {
         />
         <Route path="/stats" element={<Stats stats={stats} sessions={sessions} />} />
 
+        <Route path="/assistant" element={<Chatbot />} />
         {/* <Route path="/trainer/3x3x3/OLL" element={<Trainer/>} /> */}
         {puzzles.map((puzzle) => {
           return methodOptions[puzzle].map((method) => {

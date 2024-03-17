@@ -1,7 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import { faClock,faGear,faBolt,faChartSimple } from "@fortawesome/free-solid-svg-icons";
+import { faClock,faGear,faBolt,faChartSimple,faRobot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Navbar() {
   return (
@@ -19,9 +19,13 @@ export default function Navbar() {
           <Link className="navItem" to={"/stats"}>
           <FontAwesomeIcon icon={faChartSimple} /><li>Stats</li>
           </Link>
+          <Link className="navItem" to={"/assistant"}>
+          <FontAwesomeIcon icon={faRobot} />  <li>AI assistant</li>
+          </Link>
           <Link className="navItem" to={"/settings"}>
           <FontAwesomeIcon icon={faGear} />  <li>Settings</li>
           </Link>
+
         </ul>
       </nav>
     </div>

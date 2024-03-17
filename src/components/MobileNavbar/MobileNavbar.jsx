@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import "./MobileNavbar.css"
-import { faClock,faGear,faBolt,faChartSimple } from "@fortawesome/free-solid-svg-icons";
+import { faClock,faGear,faBolt,faChartSimple,faRobot } from "@fortawesome/free-solid-svg-icons";
 
 import { Link } from 'react-router-dom';
 export default function MobileNavbar() {
@@ -22,6 +22,9 @@ export default function MobileNavbar() {
           </Link>
           <Link className="navItem" to={"/stats"}>
           <FontAwesomeIcon icon={faChartSimple} /><li>Stats</li>
+          </Link>
+          <Link className="navItem" to={"/assistant"}>
+          <FontAwesomeIcon icon={faRobot} />  <li>AI assistant</li>
           </Link>
           <Link className="navItem" to={"/settings"}>
           <FontAwesomeIcon icon={faGear} />  <li>Settings</li>
