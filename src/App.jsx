@@ -20,7 +20,8 @@ import { puzzles, methodOptions } from "./components/Trainer/utility/AlgoInfo";
 import Stats from "./components/Stats/Stats";
 import { defaultStats } from "./components/Stats/utility/StatsInfo";
 import Chatbot from "./components/Chatbot/Chatbot";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretUp} from "@fortawesome/free-solid-svg-icons";
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currScramble, setCurrScramble] = useState("");
@@ -306,7 +307,7 @@ function App() {
                 {window.innerWidth <= 767 && (
                   <div className="fixed-bottom bg-dark p-2">
                     <Button variant="secondary" onClick={toogleFooterDashboard}>
-                      Toggle Content
+                      Footer   <FontAwesomeIcon icon={faCaretUp} />
                     </Button>
                     <Collapse in={isFooterdashboardVisible}>
                       <div>
