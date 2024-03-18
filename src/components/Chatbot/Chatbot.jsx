@@ -10,7 +10,7 @@ import {
   TypingIndicator,
 } from '@chatscope/chat-ui-kit-react';
 
-const API_KEY =process.env.OPEN_AI_KEY
+const API_KEY ="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"
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
@@ -93,13 +93,13 @@ const Chatbot = () => {
             >
               {messages.map((message, i) => {
             
-                return <div>
+                return <div >
                     <p className='senderType'>{message.sender}</p>
-                    <Message   key={i} model={message} />
+                    <Message  key={i} model={message} />
                     </div>
               })}
             </MessageList>
-            <MessageInput style={{backgroundColor:"#000b1c"}} placeholder="Send a Message" onSend={handleSendRequest} />        
+            <MessageInput style={{backgroundColor:"#13131f"}} placeholder="Send a Message" onSend={handleSendRequest} />        
           </ChatContainer>
         </MainContainer>
         </div>

@@ -179,14 +179,15 @@ function Timer(
           setElapsedTime(Date.now() - startTime);
         } else {
           clearInspectionInterval();
-          if (timerTextRef.current) timerTextRef.current.style.color = "black";
+          if (timerTextRef.current) timerTextRef.current.style.color = settings["themeSettings"].fontColor;
 
           setStartTime(Date.now());
           // setElapsedTime(0);
           setIsRunning(true);
         }
       } else {
-        if (timerTextRef.current) timerTextRef.current.style.color = "black";
+        if (timerTextRef.current) timerTextRef.current.style.color = settings["themeSettings"].fontColor;
+
       }
     } else if (event.code === "Space" && !handlePress) {
       console.log(inspectionCompleted);

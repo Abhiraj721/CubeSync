@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./DashboardSelect.css"
-export default function DashboardSelect({dashboardComponent,intialDashboard,dashboardHeight}) {
+export default function DashboardSelect({dashboardSno,dashboardComponent,intialDashboard,dashboardHeight,dash}) {
   const [layout, setLayout] = useState({
     dashboard: intialDashboard,
   });
@@ -26,7 +26,7 @@ export default function DashboardSelect({dashboardComponent,intialDashboard,dash
 
       </select>}
     </div>
-      {dashboardComponent(layout.dashboard)}
+      {dashboardComponent(layout.dashboard,dashboardSno)}
     </div>
   )
 }

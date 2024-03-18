@@ -49,7 +49,7 @@ export default function PuzzleSettings({
         name=""
         id=""
         value={currPuzzle}
-        className="puzzleSelect "
+        className="puzzleSelect"
         onChange={(e) => setCurrPuzzle(e.target.value)}
       >
         <option value="3x3x3">3x3x3</option>

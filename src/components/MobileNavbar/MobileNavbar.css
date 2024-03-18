@@ -1,13 +1,15 @@
 .mobileNavbar {
-    display: flex;
-    justify-content: flex-start;
-    
-  }
- .navItem {
-    gap: 12px;
-    
-      text-decoration:none;
-color: black;
-      display: flex;
-    
-    }
+  display: flex;
+  justify-content: flex-start;
+}
+.navItem {
+  gap: 12px;
+
+  text-decoration: none;
+  color: black;
+  display: flex;
+}
+.logoimg {
+  width: 40px;
+  border-radius: 20%;
+}

@@ -26,6 +26,7 @@ function App() {
   const [currScramble, setCurrScramble] = useState("");
   const [currPuzzle, setCurrPuzzle] = useState("3x3x3");
   const [currSession, setCurrsession] = useState("");
+  const [dashboardValues,setdashboardValues]=useState(getDashboardValues())
   const [sessions, setSession] = useState([        {
     id: "session_1",
     puzzleType: currPuzzle,
@@ -56,6 +57,17 @@ function App() {
     if (currSettings === null) return intialSettings;
     else return currSettings;
   }
+  function getDashboardValues(){
+
+    const currDashboardValues=localStorage.getItem("dashboardValues")
+    console.log(currDashboardValues)
+    if(currDashboardValues==null){
+      localStorage.setItem("dashboardValues",JSON.stringify(["scramble","solves"]))
+      return ["scramble","solves"]
+    }
+
+    else return JSON.parse(currDashboardValues)
+  }
   const toogleFooterDashboard = () => {
     setisFooterdashboardVisible(!isFooterdashboardVisible);
   };
@@ -64,6 +76,7 @@ function App() {
       sessions={sessions}
       setSession={setSession}
       currSession={currSession}
+      settings={settings}
     />
   );
   const solves = (
@@ -92,14 +105,14 @@ function App() {
         onClick={() => toggleScrambleDimension(scrambleDimension)}
         className="toggleScrambleDimension"
       >
-        {scrambleDimension}
+        {scrambleDimension=="2D" ?"3D":"2D"}
       </button>
     </>
   );
   function toggleScrambleDimension(currDimension) {
     if (currDimension == "2D") {
       setScrambleDimension("3D");
-    } else setScrambleDimension("3D");
+    } else setScrambleDimension("2D");
   }
   ///settings setup
   useEffect(() => {
@@ -114,6 +127,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("stats", JSON.stringify(stats));
   }, [stats]);
+
   useEffect(() => {
     settingsSetUp();
     sessionsSetUp();
@@ -138,7 +152,12 @@ function App() {
     }
   }, [sessions, currSession]);
 
-  const dashboardComponent = (dashboardType) => {
+  const dashboardComponent = (dashboardType,dashboardSno) => {
+    setdashboardValues((prevValue)=>{
+      prevValue[dashboardSno-1]=dashboardType
+      localStorage.setItem("dashboardValues",JSON.stringify(prevValue))
+      return prevValue
+    })
     if (dashboardType === "solves") return solves;
     if (dashboardType === "insights") return insights;
     if (dashboardType === "scramble") return scramble;
@@ -271,12 +290,14 @@ function App() {
                 {window.innerWidth >= 767 ? (
                   <>
                     <DashboardSelect
+                    dashboardSno={1}
                       dashboardComponent={dashboardComponent}
-                      intialDashboard={"scramble"}
+                      intialDashboard={dashboardValues[0]}
                     />
                     <DashboardSelect
+                    dashboardSno={2}
                       dashboardComponent={dashboardComponent}
-                      intialDashboard={"solves"}
+                      intialDashboard={dashboardValues[1]}
                     />
                   </>
                 ) : (

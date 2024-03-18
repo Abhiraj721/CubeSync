@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import handleAvgs from "../Data/HandleAvgsCriteria";
 import SolveStats from "../SolveStats/SolveStats";
 const MySwal = withReactContent(Swal);
-export default function SessionInsights({ sessions, setSession, currSession }) {
+export default function SessionInsights({ sessions, setSession, currSession,settings }) {
   const [ao5, setAo5] = useState("--");
   const [ao12, setAo12] = useState("--");
   const [currAo5Solves, setCurrAo5Solves] = useState([]);
@@ -277,6 +277,20 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
     });
     return ao12PbSolves;
   }
+  function getPbSolve(){
+    let pbSolve={}
+    sessions.map((session)=>{
+      if(session.id==currSession){
+        session.solves.map((solve)=>{
+          if(solve.solveTime==pb){
+            pbSolve=solve
+          } 
+        })
+      }
+    })
+    console.log(pbSolve)
+    return pbSolve
+  }
   function getCurrAo5Solves() {
     sessions.map((session) => {
       if (session.id == currSession) {
@@ -305,16 +319,16 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
     MySwal.fire(<SolveStats solves={solves} statsType={statsType} />);
   }
   return (
-    <div className="angry-grid">
-      <div id="item-0" className="combined-item">
+    <div className="angry-grid boardContainer"style={{backgroundColor: settings["themeSettings"].boardColor}}>
+      <div id="item-0" className="combined-item ">
         <h4>Best</h4>
-        <p onClick={() => showSolveStats([pb], "pb")}>{pb}</p>
+        <p onClick={() => showSolveStats([getPbSolve()], "pb")}>{pb}</p>
       </div>
-      <div id="item-1" className="combined-item">
+      <div id="item-1" className="combined-item ">
         <h4>Mean</h4>
         <p onClick={() => showSolveStats(getAllsolves(), "all")}>{avg}</p>
       </div>
-      <div id="item-2" className="combined-item">
+      <div id="item-2" className="combined-item ">
         <h4>Ao5</h4>
         <p>
           <p
@@ -334,7 +348,7 @@ export default function SessionInsights({ sessions, setSession, currSession }) {
           </p>
         </p>
       </div>
-      <div id="item-3" className="combined-item">
+      <div id="item-3" className="combined-item ">
         <h4>Ao12</h4>
         <p
           onClick={() => {

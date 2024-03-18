@@ -26,13 +26,11 @@ position: fixed;
 }
 .NavbarHeader ul {
   list-style-type: none; /* Remove list bullets */
-  padding: 0;
-  margin: 0;
-  text-align: left;
+
 }
 
 .NavbarHeader li {
-  margin-bottom: 30px;
+
 width: 100%;
   cursor: pointer;
 }
@@ -41,10 +39,14 @@ nav li:hover {
   text-decoration: underline;
 }
  .NavbarHeader .navItem {
-gap: 12px;
-
+margin-right: 12px;
+margin-bottom: 30px;
   text-decoration:none;
   color: white;
   display: flex;
 
+}
+.logoimg{
+  width: 45px;
+  border: 20%;
 }
