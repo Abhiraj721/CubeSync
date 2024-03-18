@@ -10,7 +10,7 @@ import {
   TypingIndicator,
 } from '@chatscope/chat-ui-kit-react';
 
-const API_KEY ="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"
+const API_KEY ="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"
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
