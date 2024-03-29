@@ -224,6 +224,7 @@ export default function SessionInsights({ sessions, setSession, currSession,sett
   }
 
   function getAvgOfAllSolves() {
+    if(NumOfSolves()==0)return
     let avgOfSolves = 0;
     let nofSolves = 0;
     sessions.map((session) => {
@@ -326,7 +327,7 @@ export default function SessionInsights({ sessions, setSession, currSession,sett
       </div>
       <div id="item-1" className="combined-item ">
         <h4>Mean</h4>
-        <p onClick={() => showSolveStats(getAllsolves(), "all")}>{avg}</p>
+        <p onClick={() =>{ if (NumOfSolves() > 0)  showSolveStats(getAllsolves(), "all")}}>{avg}</p>
       </div>
       <div id="item-2" className="combined-item ">
         <h4>Ao5</h4>
