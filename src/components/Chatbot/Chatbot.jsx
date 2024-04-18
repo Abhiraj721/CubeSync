@@ -10,9 +10,9 @@ import {
   TypingIndicator,
 } from '@chatscope/chat-ui-kit-react';
 
-const API_KEY ="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"
+const API_KEY ="sk-proj-Qwqls7INLhXNcZMhLFIYT3BlbkFJewPzpLCuvLKIDamnr3mb"
 
-const Chatbot = () => {
+const Chatbot = ({sessions}) => {
   const [messages, setMessages] = useState([
     {
       message: "Hello! I'm the Cubixi, your personal assistant for all things speedcubing. Ask me anything related to speedcubing and I'll do my best to assist you.",
@@ -58,7 +58,7 @@ const Chatbot = () => {
     const apiRequestBody = {
       "model": "gpt-3.5-turbo",
       "messages": [
-        { role: "system", content: "I'm a Student using Cubixi for learning speedcubing only answer question related to speedcubing" },
+        { role: "system", content: "I'm a Student using Cubixi for learning speedcubing only answer question related to speedcubing and if suer ask for his insights or feedback of his solve on cubesync analyze this data which is"+JSON.stringify(sessions)+"and give hum insights all in deailed" },
         ...apiMessages,
       ],
     };

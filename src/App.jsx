@@ -330,7 +330,7 @@ function App() {
         />
         <Route path="/stats" element={<Stats stats={stats} sessions={sessions} />} />
 
-        <Route path="/assistant" element={<Chatbot />} />
+        <Route path="/assistant" element={<Chatbot sessions={sessions} />} />
         {/* <Route path="/trainer/3x3x3/OLL" element={<Trainer/>} /> */}
         {puzzles.map((puzzle) => {
           return methodOptions[puzzle].map((method) => {
