@@ -124,8 +124,8 @@ console.log(sessions)
             <p>Max Streak:{getMaxConsecutiveDays(stats.activeDays)}</p>
           </div>
           <CalendarHeatmap
-            startDate={new Date("2024-01-01")}
-            endDate={new Date("2024-12-31")}
+            startDate={new Date("2025-01-01")}
+            endDate={new Date("2025-12-31")}
             values={stats.activeDays}
             showWeekdayLabels={true}
             classForValue={(value) => {
