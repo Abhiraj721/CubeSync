@@ -122,7 +122,10 @@ export default function SessionInsights({ sessions, setSession, currSession,sett
 
             const dnfCount = ao5SolveTimes.filter((time) => time === -1).length;
             if (dnfCount <= 1) {
-              const ao5TimeSum = ao5SolveTimes.reduce(
+              var sortedSolves=ao5SolveTimes.sort(function(a, b) { return a - b; }); 
+              sortedSolves.shift();
+              sortedSolves.pop();
+              const ao5TimeSum = sortedSolves.reduce(
                 (acc, time) => acc + (time === -1 ? 0 : time),
                 0
               );
