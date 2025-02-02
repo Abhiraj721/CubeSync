@@ -9,6 +9,10 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 height: 332px;
+      user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 @font-face {
   font-family: timefont;
@@ -17,10 +21,10 @@ height: 332px;
 .timerText{
     font-size: 77px;
     font-family: timefont;
-    user-select: none;
+/*     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select: none;
+    -ms-user-select: none; */
 }
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
     /* Tablet styles go here */
