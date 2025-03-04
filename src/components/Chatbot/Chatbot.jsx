@@ -34,6 +34,7 @@ const Chatbot = ({sessions}) => {
 
     try {
       const response = await processMessageToCubixi([...messages, newMessage]);
+      console.log(response);
       const content = response.choices[0]?.message?.content;
       if (content) {
         const CubixiResponse = {
